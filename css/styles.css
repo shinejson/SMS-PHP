@@ -1,0 +1,561 @@
+/*
+ * Updated Student Management Stylesheet
+ * ---------------------------------------------
+ * A consolidated stylesheet for the Student Management page,
+ * incorporating user feedback for button colors and dark mode.
+ */
+
+/* ========================================= */
+/* === Base Student Management Styles === */
+/* ========================================= */
+*{
+    margin: 0;
+    padding: 0;
+}
+.student-management {
+    padding: 20px;
+}
+
+.card {
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+}
+
+.card-header {
+    padding: 15px 20px;
+    border-bottom: 1px solid #eee;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.card-header h3 {
+    margin: 0;
+    font-size: 18px;
+}
+
+.card-body {
+    padding: 20px;
+}
+
+/* ========================================= */
+/* === Button Styles === */
+/* ========================================= */
+.btn-primary {
+    background-color: #4e73df;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.btn-primary:hover {
+    background-color: #3a5bc7;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+}
+
+.btn-icon {
+    background: none;
+    border: none;
+    color: #6c757d;
+    cursor: pointer;
+    font-size: 16px;
+    margin: 0 5px;
+    transition: all 0.3s ease;
+    padding: 8px;
+    border-radius: 50%;
+    width: 36px;
+    height: 36px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.btn-icon:hover {
+    color: #4e73df;
+    background-color: rgba(78, 115, 223, 0.1);
+    transform: scale(1.1);
+}
+
+.btn-icon.delete-student:hover {
+    color: #e74a3b;
+    background-color: rgba(231, 74, 59, 0.1);
+}
+
+.btn-cancel {
+    background: #f8f9fa;
+    color: #6c757d;
+    border: 1px solid #ddd;
+    padding: 0.6rem 1rem;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-right: 10px;
+}
+
+.btn-submit {
+    background-color: #4e73df;
+    color: white;
+    border: none;
+    padding: 0.6rem 1rem;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+/* ========================================= */
+/* === DataTable Buttons === */
+/* ========================================= */
+.dataTables_wrapper .dt-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 10px;
+}
+
+.dataTables_wrapper .dt-button {
+    color: white !important;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 14px;
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.2);
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.dataTables_wrapper .dt-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+}
+
+.dataTables_wrapper .buttons-copy {
+    background-color: #4e73df;
+}
+
+.dataTables_wrapper .buttons-copy:hover {
+    background-color: #3a5bc7;
+}
+
+.dataTables_wrapper .buttons-csv {
+    background-color: #1cc88a;
+}
+
+.dataTables_wrapper .buttons-csv:hover {
+    background-color: #17a673;
+}
+
+.dataTables_wrapper .buttons-excel {
+    background-color: #20a86e;
+}
+
+.dataTables_wrapper .buttons-excel:hover {
+    background-color: #1a8f5c;
+}
+
+.dataTables_wrapper .buttons-pdf {
+    background-color: #e74a3b;
+}
+
+.dataTables_wrapper .buttons-pdf:hover {
+    background-color: #d13d2f;
+}
+
+.dataTables_wrapper .buttons-print {
+    background-color: #858796;
+}
+
+.dataTables_wrapper .buttons-print:hover {
+    background-color: #6a6c7b;
+}
+
+/* ========================================= */
+/* === Modal Styles === */
+/* ========================================= */
+.modal {
+     display: none; /* Hidden by default */
+    position: fixed;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+   
+    justify-content: center;
+    align-items: center;
+}
+
+.modal-content {
+    background-color: #fff;
+    padding: 15px;
+    border: 1px solid #888;
+    border-radius: 8px;
+    width: 90%;
+    max-width: 450px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    position: relative;
+    animation-name: animatetop;
+    animation-duration: 0.4s;
+}
+
+.modal-content h2 {
+    margin-bottom: 1rem;
+    color: var(--primary-color);
+}
+
+.modal .close {
+    position: absolute;
+    right: 20px;
+    top: 15px;
+    font-size: 24px;
+    cursor: pointer;
+    color: #aaa;
+}
+
+.modal .close:hover {
+    color: #333;
+}
+
+/* ========================================= */
+/* === Form Styles === */
+/* ========================================= */
+.form-group {
+    margin-bottom: 0.75rem;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+    color: #333;
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+    width: 100%;
+    padding: 0.6rem;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 0.95rem;
+    box-sizing: border-box;
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+    outline: none;
+    border-color: #4e73df;
+}
+
+#passwordHelp {
+    color: #6c757d;
+    font-size: 12px;
+    display: block;
+    margin-top: 5px;
+}
+
+.form-actions {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 1rem;
+    gap: 0.75rem;
+}
+
+/* ========================================= */
+/* === Alert Messages === */
+/* ========================================= */
+.alert {
+    padding: 10px 15px;
+    margin-bottom: 20px;
+    border-radius: 4px;
+}
+
+.alert-success {
+    background-color: #d4edda;
+    color: #155724;
+    border: 1px solid #c3e6cb;
+}
+
+.alert-danger {
+    background-color: #f8d7da;
+    color: #721c24;
+    border: 1px solid #f5c6cb;
+}
+
+/* ========================================= */
+/* === Dark Mode Styles === */
+/* ========================================= */
+body.dark-mode .card,
+body.dark-mode .modal-content {
+    background-color: #1a1a1a;
+    color: #f8f9fa;
+}
+
+body.dark-mode .card-header {
+    border-bottom: 1px solid #2e2e2e;
+}
+
+body.dark-mode .form-group label {
+    color: #d1d3e2;
+}
+
+body.dark-mode .form-group input,
+body.dark-mode .form-group select,
+body.dark-mode .form-group textarea {
+    background-color: #2e2e2e;
+    border-color: #444;
+    color: #f8f9fa;
+}
+
+body.dark-mode .btn-primary {
+    /* New style for Add Student button in dark mode */
+    background-color: #1cc88a;
+    color: white;
+}
+
+body.dark-mode .btn-primary:hover {
+    background-color: #17a673;
+}
+
+body.dark-mode .btn-icon {
+    color: #adb5bd;
+}
+
+body.dark-mode .btn-icon:hover {
+    background-color: rgba(78, 115, 223, 0.2);
+    color: white;
+}
+
+body.dark-mode .btn-icon.delete-student:hover {
+    background-color: rgba(231, 74, 59, 0.2);
+    color: #e74a3b;
+}
+
+body.dark-mode .btn-cancel {
+    background-color: #444;
+    color: white;
+    border-color: #555;
+}
+
+body.dark-mode .btn-submit {
+    background-color: #4e73df;
+    color: white;
+}
+
+body.dark-mode .alert-success {
+    background-color: #155724;
+    border-color: #0c3d1a;
+    color: #d4edda;
+}
+
+body.dark-mode .alert-danger {
+    background-color: #721c24;
+    border-color: #4a1318;
+    color: #f8d7da;
+}
+
+/* --- Dark Mode DataTable Specifics --- */
+body.dark-mode .dataTables_wrapper .dataTables_filter,
+body.dark-mode .dataTables_wrapper .dataTables_length,
+body.dark-mode .dataTables_wrapper .dataTables_info,
+body.dark-mode .dataTables_wrapper .dataTables_paginate {
+    color: #f8f9fa;
+}
+
+body.dark-mode .dataTables_wrapper .dataTables_filter input {
+    background-color: #2e2e2e;
+    border-color: #444;
+    color: #f8f9fa;
+}
+
+body.dark-mode .dataTables_wrapper .buttons-copy,
+body.dark-mode .dataTables_wrapper .buttons-csv,
+body.dark-mode .dataTables_wrapper .buttons-excel,
+body.dark-mode .dataTables_wrapper .buttons-pdf,
+body.dark-mode .dataTables_wrapper .buttons-print {
+    color: white !important;
+}
+
+body.dark-mode #studentsTable.dataTable {
+    background-color: #1a1a1a;
+    color: #f8f9fa;
+}
+
+body.dark-mode #studentsTable.dataTable thead th {
+    background-color: #2e2e2e;
+    color: #f8f9fa;
+    border-bottom: 1px solid #444;
+}
+
+body.dark-mode #studentsTable.dataTable tbody tr {
+    background-color: #1a1a1a;
+    color: #f8f9fa;
+}
+
+body.dark-mode #studentsTable.dataTable tbody tr.odd {
+    background-color: #212121;
+}
+
+body.dark-mode #studentsTable.dataTable tbody tr.even {
+    background-color: #1a1a1a;
+}
+
+body.dark-mode #studentsTable.dataTable tbody td {
+    border-top: 1px solid #2e2e2e;
+}
+
+body.dark-mode .dataTables_wrapper .dataTables_paginate .paginate_button {
+    color: #e0e0e0 !important;
+    border: 1px solid #444 !important;
+}
+
+body.dark-mode .dataTables_wrapper .dataTables_paginate .paginate_button.current {
+    background: #4e73df !important;
+    color: white !important;
+    border: 1px solid #4e73df !important;
+}
+
+body.dark-mode .dataTables_wrapper .dataTables_paginate .paginate_button:hover {
+    background: #3a5bc7 !important;
+    color: white !important;
+}
+
+/* ========================================= */
+/* === Animations === */
+/* ========================================= */
+@keyframes animatetop {
+    from { top: -200px; opacity: 0; }
+    to { top: 0; opacity: 1; }
+}
+
+/* ========================================= */
+/* === Responsive Styles === */
+/* ========================================= */
+@media (max-width: 768px) {
+    .modal-content {
+        margin: 10% auto;
+    }
+
+    .form-actions {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .btn-cancel, .btn-submit {
+        width: 100%;
+        margin-right: 0;
+    }
+
+    .dataTables_wrapper .dt-buttons {
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+}
+/* Add this CSS to your main stylesheet or create alerts.css */
+
+/* Alert base styles */
+.alert {
+    opacity: 1;
+    transition: opacity 0.5s ease-out, transform 0.5s ease-out;
+    transform: translateY(0);
+    margin-bottom: 1rem;
+    padding: 0.75rem 1rem;
+    border-radius: 4px;
+    position: relative;
+    cursor: pointer; /* Indicates alerts are clickable to dismiss */
+}
+
+/* Fade-out animation */
+.alert.fade-out {
+    opacity: 0;
+    transform: translateY(-10px);
+    margin-bottom: 0;
+    padding-top: 0;
+    padding-bottom: 0;
+    height: 0;
+    overflow: hidden;
+}
+
+/* Success alert styling */
+.alert-success {
+    background-color: #d4edda;
+    border: 1px solid #c3e6cb;
+    color: #155724;
+}
+
+/* Error/Danger alert styling */
+.alert-danger {
+    background-color: #f8d7da;
+    border: 1px solid #f5c6cb;
+    color: #721c24;
+}
+
+/* Info alert styling */
+.alert-info {
+    background-color: #d1ecf1;
+    border: 1px solid #bee5eb;
+    color: #0c5460;
+}
+
+/* Warning alert styling */
+.alert-warning {
+    background-color: #fff3cd;
+    border: 1px solid #ffeaa7;
+    color: #856404;
+}
+
+/* Dark mode support for alerts */
+body.dark-mode .alert-success {
+    background-color: #065f46;
+    color: #d1fae5;
+    border-color: #10b981;
+}
+
+body.dark-mode .alert-danger {
+    background-color: #7f1d1d;
+    color: #fecaca;
+    border-color: #dc2626;
+}
+
+body.dark-mode .alert-info {
+    background-color: #164e63;
+    color: #cffafe;
+    border-color: #0891b2;
+}
+
+body.dark-mode .alert-warning {
+    background-color: #78350f;
+    color: #fef3c7;
+    border-color: #f59e0b;
+}
+
+/* Optional: Add a close button for manual dismissal */
+.alert .close-btn {
+    position: absolute;
+    top: 0.5rem;
+    right: 0.75rem;
+    background: none;
+    border: none;
+    font-size: 1.2rem;
+    cursor: pointer;
+    opacity: 0.7;
+    line-height: 1;
+}
+
+.alert .close-btn:hover {
+    opacity: 1;
+}

@@ -1,0 +1,21 @@
+Array
+(
+    [payment_type] => Tuition
+    [sub_field_name] => Array
+        (
+            [0] => ghuuuiuhgfff f
+            [1] => fghhgvdd
+        )
+
+    [sub_field_amount] => Array
+        (
+            [0] => 45
+            [1] => 56
+        )
+
+    [simple_amount] => 
+    [term_id] => 1
+    [academic_year] => 2025
+    [due_date] => 2025-08-29
+    [description] =>  ggdf fffg
+)

@@ -1,0 +1,17 @@
+{
+    "name": "ezeeserver/gebsco",
+    "autoload": {
+        "psr-4": {
+            "Ezeeserver\\Gebsco\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "amaze"
+        }
+    ],
+    "require": {
+        "phpmailer/phpmailer": "^6.10",
+        "setasign/fpdi-tcpdf": "^2.3"
+    }
+}

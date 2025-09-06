@@ -1,0 +1,634 @@
+/* ========================= */
+/* Base Layout & Typography  */
+/* ========================= */
+body {
+    font-family: 'Segoe UI', Arial, sans-serif;
+    color: #4e4e4e;
+    background-color: #f8f9fc;
+    margin: 0;
+    padding: 0;
+}
+
+/* ========================= */
+/* Page Header               */
+/* ========================= */
+.page-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.page-header h1 {
+    font-size: 22px;
+    margin: 0;
+}
+
+/* ========================= */
+/* Buttons                   */
+/* ========================= */
+.btn-primary {
+    background-color: #4e73df;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: background-color 0.3s;
+}
+
+.btn-primary:hover {
+    background-color: #2e59d9;
+}
+
+.btn-icon {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 8px;
+    border-radius: 4px;
+    font-size: 16px;
+    transition: all 0.3s;
+    margin: 0 3px;
+}
+
+/* Action Button Colors */
+.view-payment {
+    color: #36b9cc;
+    background-color: rgba(54, 185, 204, 0.1);
+}
+.view-payment:hover {
+    background-color: rgba(54, 185, 204, 0.2);
+}
+
+.edit-payment {
+    color: #4e73df;
+    background-color: rgba(78, 115, 223, 0.1);
+}
+.edit-payment:hover {
+    background-color: rgba(78, 115, 223, 0.2);
+}
+
+.print-receipt {
+    color: #1cc88a;
+    background-color: rgba(28, 200, 138, 0.1);
+}
+.print-receipt:hover {
+    background-color: rgba(28, 200, 138, 0.2);
+}
+
+.delete-payment {
+    color: #e74a3b;
+    background-color: rgba(231, 74, 59, 0.1);
+}
+.delete-payment:hover {
+    background-color: rgba(231, 74, 59, 0.2);
+}
+
+/* ========================= */
+/* Action Buttons Grid       */
+/* ========================= */
+.action-buttons {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 5px;
+    justify-items: center;
+    align-items: center;
+}
+@media (max-width: 768px) {
+    .action-buttons {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* ========================= */
+/* Status Badges             */
+/* ========================= */
+.status {
+    padding: 5px 10px;
+    border-radius: 12px;
+    font-size: 12px;
+    font-weight: 600;
+    display: inline-block;
+}
+.status.paid {
+    background-color: #1cc88a;
+    color: white;
+}
+.status.pending {
+    background-color: #f6c23e;
+    color: #000;
+}
+.status.overdue {
+    background-color: #e74a3b;
+    color: white;
+}
+
+/* ========================= */
+/* Modal Styles              */
+/* ========================= */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1050;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.5);
+}
+.modal-content {
+    background-color: #fff;
+    margin: 5% auto;
+    padding: 25px;
+    border-radius: 8px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
+    width: 90%;
+    max-width: 600px;
+    position: relative;
+}
+.close {
+    position: absolute;
+    right: 20px;
+    top: 15px;
+    font-size: 28px;
+    font-weight: bold;
+    color: #6e707e;
+    cursor: pointer;
+}
+.close:hover {
+    color: #4e73df;
+}
+
+/* ========================= */
+/* Form Styles               */
+/* ========================= */
+.form-group {
+    margin-bottom: 20px;
+}
+.form-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 600;
+}
+.form-group input,
+.form-group select,
+.form-group textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #d1d3e2;
+    border-radius: 4px;
+    font-size: 14px;
+}
+.form-group textarea {
+    min-height: 80px;
+    resize: vertical;
+}
+
+/* ========================= */
+/* Tuition Fields            */
+/* ========================= */
+#tuitionSection.hidden,
+#simpleFieldGroup.hidden {
+    display: none;
+}
+#tuitionSubFields {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+.sub-field-group {
+    display: grid;
+    grid-template-columns: 2fr 1fr 35px;
+    gap: 10px;
+    align-items: center;
+}
+.sub-field-group input {
+    margin: 0;
+}
+.sub-field-group .remove-sub-fee {
+    background-color: #e74a3b;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 20px;
+    line-height: 1;
+    height: 35px;
+    width: 35px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: background-color 0.3s;
+}
+.sub-field-group .remove-sub-fee:hover {
+    background-color: #c93b2c;
+}
+.tuition-total {
+    margin-top: 15px;
+    padding: 10px 0;
+    border-top: 1px solid #d1d3e2;
+    font-size: 16px;
+    font-weight: bold;
+    display: flex;
+    justify-content: space-between;
+}
+
+/* ========================= */
+/* Form Actions              */
+/* ========================= */
+.form-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 5px;
+    margin-top: 20px;
+}
+.btn-cancel {
+    background-color: #858796;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+.btn-submit {
+    background-color: #4e73df;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+/* ========================= */
+/* Alerts                    */
+/* ========================= */
+.alert {
+    padding: 15px;
+    border-radius: 4px;
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+.alert-success {
+    background-color: #d4edda;
+    border: 1px solid #c3e6cb;
+    color: #155724;
+}
+.alert-danger {
+    background-color: #f8d7da;
+    border: 1px solid #f5c6cb;
+    color: #721c24;
+    animation: shake 0.5s;
+}
+@keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); }
+    20%, 40%, 60%, 80% { transform: translateX(5px); }
+}
+
+/* ========================= */
+/* DataTables Buttons        */
+/* ========================= */
+.dataTables_wrapper .dt-buttons {
+    display: flex;
+    gap: 5px;
+    margin-bottom: 10px;
+}
+.dataTables_wrapper .dt-button {
+    background-color: #4e73df;
+    color: white;
+    border: none;
+    padding: 8px 12px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background-color 0.3s;
+}
+.dataTables_wrapper .dt-button:hover {
+    background-color: #2e59d9;
+}
+
+/* ========================= */
+/* Dark Mode                 */
+/* ========================= */
+body.dark-mode {
+    background-color: #2a3042;
+    color: #f8f9fa;
+}
+body.dark-mode .modal-content {
+    background-color: #3a4256;
+    color: #f8f9fa;
+}
+body.dark-mode .form-group label {
+    color: #d1d3e2;
+}
+body.dark-mode .form-group input,
+body.dark-mode .form-group select,
+body.dark-mode .form-group textarea {
+    background-color: #4a5063;
+    border-color: #5b6175;
+    color: #f8f9fa;
+}
+body.dark-mode .status.pending {
+    background-color: #b38f2e;
+    color: white;
+}
+body.dark-mode .dt-button {
+    background-color: #6777ef;
+}
+body.dark-mode .dt-button:hover {
+    background-color: #5d6de0;
+}
+
+/* ========================= */
+/* Main Content Spacing      */
+/* ========================= */
+main {
+    padding: 20px;
+    margin-left: 25px; /* Adjust to match your sidebar width */
+    background-color: #f8f9fc;
+}
+body.dark-mode main {
+    background-color: #2a3042;
+    color: #fff;
+}
+
+/* ========================= */
+/* DataTable Card Wrapper    */
+/* ========================= */
+.table-card {
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+    padding: 15px;
+    margin-bottom: 20px;
+}
+body.dark-mode .table-card {
+    background-color: #3a4256;
+    color: #fff;
+}
+
+/* ========================= */
+/* DataTables Export Buttons */
+/* ========================= */
+.dataTables_wrapper .dt-buttons {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 15px;
+}
+
+.dataTables_wrapper .dt-button {
+    border: none;
+    padding: 8px 14px;
+    border-radius: 4px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    color: white;
+}
+
+.dataTables_wrapper .buttons-pdf {
+    background-color: #e74a3b;
+}
+.dataTables_wrapper .buttons-pdf:hover {
+    background-color: #c93b2c;
+}
+
+.dataTables_wrapper .buttons-excel {
+    background-color: #1cc88a;
+}
+.dataTables_wrapper .buttons-excel:hover {
+    background-color: #17a673;
+}
+
+.dataTables_wrapper .buttons-csv {
+    background-color: #36b9cc;
+}
+.dataTables_wrapper .buttons-csv:hover {
+    background-color: #2c9faf;
+}
+
+.dataTables_wrapper .buttons-copy {
+    background-color: #858796;
+}
+.dataTables_wrapper .buttons-copy:hover {
+    background-color: #6c6e78;
+}
+
+.dataTables_wrapper .buttons-print {
+    background-color: #4e73df;
+}
+.dataTables_wrapper .buttons-print:hover {
+    background-color: #2e59d9;
+}
+
+/* ========================= */
+/* Table Text Colors         */
+/* ========================= */
+table.dataTable {
+    width: 100%;
+    border-collapse: collapse;
+}
+body.dark-mode table.dataTable th,
+body.dark-mode table.dataTable td {
+    color: #fff !important;
+}
+
+/* ===================== */
+/* Modal Form Grid Layout */
+/* ===================== */
+#billingForm {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); /* Two equal-width columns */
+    gap: 20px; /* Space between fields */
+}
+
+/* Full-width elements */
+#billingForm h2,
+#billingForm #billingMessage,
+#billingForm .form-actions,
+#billingForm #tuitionSection,
+#billingForm #description {
+    grid-column: span 3;
+}
+
+/* Tuition Section Styling */
+#tuitionSection {
+    background-color: #f9f9f9;
+    padding: 15px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+}
+
+.tuition-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+
+.btn-cancel {
+    background-color: #858796; /* Neutral gray */
+    color: #fff; /* White text */
+    border: none;
+    padding: 10px 20px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 500;
+    transition: background-color 0.3s ease, transform 0.1s ease;
+}
+
+/* Hover and Active Effects */
+.btn-cancel:hover {
+    background-color: #6c6f80; /* Darker gray on hover */
+}
+
+.btn-cancel:active {
+    transform: scale(0.97); /* Slight click effect */
+}
+
+/* Dark Mode Support */
+body.dark-mode .btn-cancel {
+    background-color: #5c5f70;
+}
+
+body.dark-mode .btn-cancel:hover {
+    background-color: #4a4d5b;
+}
+
+
+
+#tuitionSubFields {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.sub-field-group {
+    display: grid;
+    grid-template-columns: 2fr 1fr 40px;
+    gap: 10px;
+    align-items: center;
+}
+
+.sub-field-group .remove-sub-fee {
+    background-color: #e74a3b;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 18px;
+    height: 35px;
+    width: 35px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: background-color 0.3s;
+}
+
+.sub-field-group .remove-sub-fee:hover {
+    background-color: #c93b2c;
+}
+
+.tuition-total {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 10px;
+    font-weight: bold;
+}
+
+/* Close Button */
+
+
+/* Responsive Layout for Smaller Screens */
+@media (max-width: 768px) {
+    #billingForm {
+        grid-template-columns: 1fr; /* Stack fields in one column */
+    }
+
+    #billingForm .form-actions {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .sub-field-group {
+        grid-template-columns: 1fr 1fr 40px;
+    }
+}
+/* Cancel Button Style */
+
+/* Add this to your payments.css file */
+.form-message {
+    padding: 12px 15px;
+    margin: 15px 0;
+    border-radius: 4px;
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    animation: fadeIn 0.3s ease-in;
+    border: 1px solid transparent;
+}
+
+/* Success message styling */
+.form-message.success-message {
+    background-color: rgba(28, 200, 138, 0.1);
+    border-color: rgba(28, 200, 138, 0.3);
+    color: #155724;
+}
+
+/* Error message styling */
+.form-message.error-message {
+    background-color: rgba(231, 74, 59, 0.1);
+    border-color: rgba(231, 74, 59, 0.3);
+    color: #721c24;
+    animation: shake 0.5s, fadeIn 0.3s ease-in;
+}
+
+/* Icon styling */
+.form-message i {
+    font-size: 16px;
+}
+
+/* Dark mode support */
+body.dark-mode .form-message.success-message {
+    background-color: rgba(28, 200, 138, 0.15);
+    border-color: rgba(28, 200, 138, 0.3);
+    color: #d4edda;
+}
+
+body.dark-mode .form-message.error-message {
+    background-color: rgba(231, 74, 59, 0.15);
+    border-color: rgba(231, 74, 59, 0.3);
+    color: #f8d7da;
+}
+
+/* Animation for fade in */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Make sure the shake animation exists (should already be in your CSS) */
+@keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); }
+    20%, 40%, 60%, 80% { transform: translateX(5px); }
+}
+
+
+.success-message {
+    color: green;
+}
+.error-message {
+    color: red;
+}

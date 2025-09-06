@@ -1,0 +1,419 @@
+/*
+ * User Management Styles
+ * ---------------------------------------------
+ * A consolidated stylesheet for the User Management page.
+ * Includes base styles, modals, forms, and responsive design.
+ */
+
+/* ========================================= */
+/* === Base User Management Styles === */
+/* ========================================= */
+.user-management {
+    padding: 20px;
+}
+
+.card {
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+}
+
+.card-header {
+    padding: 15px 20px;
+    border-bottom: 1px solid #eee;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.card-header h3 {
+    margin: 0;
+    font-size: 18px;
+}
+
+.card-body {
+    padding: 20px;
+}
+
+/* ========================================= */
+/* === Button Styles === */
+/* ========================================= */
+.btn-primary {
+    background-color: #4e73df;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.btn-primary:hover {
+    background-color: #3a5bc7;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+}
+
+.btn-icon {
+    background: none;
+    border: none;
+    color: #6c757d;
+    cursor: pointer;
+    font-size: 16px;
+    margin: 0 5px;
+    transition: all 0.3s ease;
+    padding: 8px;
+    border-radius: 50%;
+    width: 36px;
+    height: 36px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.btn-icon:hover {
+    color: #4e73df;
+    background-color: rgba(78, 115, 223, 0.1);
+    transform: scale(1.1);
+}
+
+.btn-icon.delete-user:hover {
+    color: #e74a3b;
+    background-color: rgba(231, 74, 59, 0.1);
+}
+
+.btn-cancel {
+    background: #f8f9fa;
+    color: #6c757d;
+    border: 1px solid #ddd;
+    padding: 8px 15px;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-right: 10px;
+}
+
+.btn-submit {
+    background-color: #4e73df;
+    color: white;
+    border: none;
+    padding: 8px 15px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+/* ========================================= */
+/* === DataTable Buttons === */
+/* ========================================= */
+/* This section styles the export buttons from the DataTable plugin */
+.dataTables_wrapper .dt-buttons {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 10px;
+}
+
+.dataTables_wrapper .dt-button {
+    background-color: #1cc88a; /* Green for export buttons */
+    color: white !important;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 14px;
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.2);
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.dataTables_wrapper .dt-button:hover {
+    background-color: #17a673;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+}
+
+/* ========================================= */
+/* === Modal Styles === */
+/* ========================================= */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+.modal-content {
+    background-color: #fff;
+    margin: 5% auto;
+    padding: 20px;
+    border-radius: 8px;
+    width: 500px;
+    max-width: 90%;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    position: relative;
+    animation-name: animatetop;
+    animation-duration: 0.4s;
+}
+
+.modal .close {
+    position: absolute;
+    right: 20px;
+    top: 15px;
+    font-size: 24px;
+    cursor: pointer;
+    color: #aaa;
+}
+
+.modal .close:hover {
+    color: #333;
+}
+
+/* ========================================= */
+/* === Form Styles === */
+/* ========================================= */
+.form-group {
+    margin-bottom: 15px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: 500;
+}
+
+.form-group input,
+.form-group select {
+    width: 100%;
+    padding: 8px 12px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 14px;
+}
+
+.form-group input:focus,
+.form-group select:focus {
+    outline: none;
+    border-color: #4e73df;
+}
+
+#passwordHelp {
+    color: #6c757d;
+    font-size: 12px;
+    display: block;
+    margin-top: 5px;
+}
+
+.form-actions {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 20px;
+}
+
+/* ========================================= */
+/* === Alert Messages === */
+/* ========================================= */
+.alert {
+    padding: 10px 15px;
+    margin-bottom: 20px;
+    border-radius: 4px;
+}
+
+.alert-success {
+    background-color: #d4edda;
+    color: #155724;
+    border: 1px solid #c3e6cb;
+}
+
+.alert-danger {
+    background-color: #f8d7da;
+    color: #721c24;
+    border: 1px solid #f5c6cb;
+}
+
+/* ========================================= */
+/* === Dark Mode Styles === */
+/* ========================================= */
+body.dark-mode .card,
+body.dark-mode .modal-content {
+    background-color: #1a1a1a;
+    color: #f8f9fa;
+}
+
+body.dark-mode .card-header {
+    border-bottom: 1px solid #2e2e2e;
+}
+
+body.dark-mode .form-group label {
+    color: #d1d3e2;
+}
+
+body.dark-mode .form-group input,
+body.dark-mode .form-group select {
+    background-color: #2e2e2e;
+    border-color: #444;
+    color: #f8f9fa;
+}
+
+body.dark-mode .btn-primary {
+    background-color: #4e73df;
+    color: white;
+}
+
+body.dark-mode .btn-primary:hover {
+    background-color: #3a5bc7;
+}
+
+body.dark-mode .btn-icon {
+    color: #adb5bd;
+}
+
+body.dark-mode .btn-icon:hover {
+    background-color: rgba(78, 115, 223, 0.2);
+    color: white;
+}
+
+body.dark-mode .btn-icon.delete-user:hover {
+    background-color: rgba(231, 74, 59, 0.2);
+    color: #e74a3b;
+}
+
+body.dark-mode .btn-cancel {
+    background-color: #444;
+    color: white;
+    border-color: #555;
+}
+
+body.dark-mode .btn-submit {
+    background-color: #4e73df;
+    color: white;
+}
+
+body.dark-mode .alert-success {
+    background-color: #155724;
+    border-color: #0c3d1a;
+    color: #d4edda;
+}
+
+body.dark-mode .alert-danger {
+    background-color: #721c24;
+    border-color: #4a1318;
+    color: #f8d7da;
+}
+
+/* --- Dark Mode DataTable Specifics --- */
+body.dark-mode .dataTables_wrapper .dataTables_filter,
+body.dark-mode .dataTables_wrapper .dataTables_length,
+body.dark-mode .dataTables_wrapper .dataTables_info,
+body.dark-mode .dataTables_wrapper .dataTables_paginate {
+    color: #f8f9fa;
+}
+
+body.dark-mode .dataTables_wrapper .dataTables_filter input {
+    background-color: #2e2e2e;
+    border-color: #444;
+    color: #f8f9fa;
+}
+
+body.dark-mode .dataTables_wrapper .dt-button {
+    background-color: #1cc88a;
+    color: white !important;
+}
+
+body.dark-mode .dataTables_wrapper .dt-button:hover {
+    background-color: #17a673;
+}
+
+body.dark-mode #usersTable.dataTable {
+    background-color: #1a1a1a;
+    color: #f8f9fa;
+}
+
+body.dark-mode #usersTable.dataTable thead th {
+    background-color: #2e2e2e;
+    color: #f8f9fa;
+    border-bottom: 1px solid #444;
+}
+body.dark-mode .btn-primary {
+    background-color: #1cc88a;
+    color: white;
+}
+
+
+body.dark-mode .btn-primary:hover {
+    background-color: #17a673;
+}
+
+body.dark-mode #usersTable.dataTable tbody tr {
+    background-color: #1a1a1a;
+    color: #f8f9fa;
+}
+
+body.dark-mode #usersTable.dataTable tbody tr.odd {
+    background-color: #212121;
+}
+
+body.dark-mode #usersTable.dataTable tbody tr.even {
+    background-color: #1a1a1a;
+}
+
+body.dark-mode #usersTable.dataTable tbody td {
+    border-top: 1px solid #2e2e2e;
+}
+
+body.dark-mode .dataTables_wrapper .dataTables_paginate .paginate_button {
+    color: #e0e0e0 !important;
+    border: 1px solid #444 !important;
+}
+
+body.dark-mode .dataTables_wrapper .dataTables_paginate .paginate_button.current {
+    background: #4e73df !important;
+    color: white !important;
+    border: 1px solid #4e73df !important;
+}
+
+body.dark-mode .dataTables_wrapper .dataTables_paginate .paginate_button:hover {
+    background: #3a5bc7 !important;
+    color: white !important;
+}
+
+/* ========================================= */
+/* === Animations === */
+/* ========================================= */
+@keyframes animatetop {
+    from { top: -200px; opacity: 0; }
+    to { top: 0; opacity: 1; }
+}
+
+/* ========================================= */
+/* === Responsive Styles === */
+/* ========================================= */
+@media (max-width: 768px) {
+    .modal-content {
+        margin: 10% auto;
+    }
+
+    .form-actions {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .btn-cancel, .btn-submit {
+        width: 100%;
+        margin-right: 0;
+    }
+
+    .dataTables_wrapper .dt-buttons {
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+}
+
+

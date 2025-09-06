@@ -1,0 +1,175 @@
+<?php
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\Exception;
+
+require __DIR__ . '/../vendor/autoload.php';
+require_once __DIR__ . '/../config.php';
+
+/**
+ * Fixed sendEmail function for XAMPP/local development
+ * Addresses SSL certificate verification issues
+ */
+function sendEmail($to, $subject, $body, $attachmentPath = null, $isHtml = false) {
+    global $conn;
+
+    // === Fetch School Settings ===
+    $sql = "SELECT * FROM school_settings ORDER BY id DESC LIMIT 1";
+    $result = $conn->query($sql);
+    $settings = $result && $result->num_rows > 0 ? $result->fetch_assoc() : null;
+
+    if (!$settings) {
+        error_log("Email sending failed: No school settings found.");
+        return false;
+    }
+
+    $schoolEmail = $settings['email'];
+    $schoolName = $settings['school_name'];
+    $appPassword = decryptPassword($settings['app_password']);
+
+    if (!$schoolEmail || !$appPassword) {
+        error_log("Email sending failed: Missing email or app password in settings.");
+        return false;
+    }
+
+    $mail = new PHPMailer(true);
+
+    try {
+        // Server settings
+        $mail->isSMTP();
+        $mail->Host = 'smtp.gmail.com';
+        $mail->SMTPAuth = true;
+        $mail->Username = $schoolEmail;
+        $mail->Password = $appPassword;
+        $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
+        $mail->Port = 587;
+        $mail->CharSet = 'UTF-8';
+
+        // *** FIX FOR SSL CERTIFICATE ISSUES ***
+        // This disables SSL certificate verification (OK for local development)
+        $mail->SMTPOptions = array(
+            'ssl' => array(
+                'verify_peer' => false,
+                'verify_peer_name' => false,
+                'allow_self_signed' => true,
+                'cafile' => false,
+                'capath' => false,
+            ),
+            'tls' => array(
+                'verify_peer' => false,
+                'verify_peer_name' => false,
+                'allow_self_signed' => true,
+                'cafile' => false,
+                'capath' => false,
+            )
+        );
+
+        // Additional timeout and connection settings
+        $mail->Timeout = 60;  // Increased timeout
+        $mail->SMTPKeepAlive = true;
+        $mail->SMTPAutoTLS = true;  // Enable automatic TLS
+
+        // Recipients
+        $mail->setFrom($schoolEmail, $schoolName);
+        $mail->addAddress($to);
+
+        // Content
+        $mail->isHTML($isHtml);
+        $mail->Subject = $subject;
+        $mail->Body = $body;
+
+        if (!$isHtml) {
+            $mail->AltBody = strip_tags($body);
+        }
+
+        // Attachment
+        if ($attachmentPath && file_exists($attachmentPath)) {
+            $mail->addAttachment($attachmentPath);
+        }
+
+        // Send email
+        $result = $mail->send();
+        
+        if ($result) {
+            error_log("Email sent successfully to: $to");
+        }
+        
+        return $result;
+
+    } catch (Exception $e) {
+        $errorMsg = "Email sending failed: {$mail->ErrorInfo}";
+        error_log($errorMsg);
+        
+        // Log additional helpful information
+        if (strpos($e->getMessage(), 'SSL') !== false) {
+            error_log("SSL Error detected. This is common in XAMPP/local development. Error: " . $e->getMessage());
+        }
+        
+        return false;
+    }
+}
+
+/**
+ * Test the email function
+ */
+if (isset($_GET['quick_test']) && $_GET['quick_test'] === '1') {
+    $testEmail = $_GET['email'] ?? '';
+    
+    if (empty($testEmail)) {
+        echo "<h3>❌ Please provide an email address</h3>";
+        echo "<p>Usage: <code>?quick_test=1&email=your-email@gmail.com</code></p>";
+        exit;
+    }
+    
+    echo "<h2>🚀 Quick Email Test</h2>";
+    echo "<p><strong>Testing email to:</strong> " . htmlspecialchars($testEmail) . "</p>";
+    
+    $testBody = "
+    <div style='font-family: Arial, sans-serif; padding: 20px; background: #e8f5e8; border-radius: 10px;'>
+        <h2 style='color: #2e7d2e;'>✅ Email Test Successful!</h2>
+        <p>Your XAMPP email configuration is now working properly.</p>
+        <p><strong>Sent at:</strong> " . date('Y-m-d H:i:s A') . "</p>
+        <div style='background: white; padding: 15px; border-radius: 5px; margin: 15px 0;'>
+            <h4>Test Details:</h4>
+            <ul>
+                <li><strong>Server:</strong> " . ($_SERVER['HTTP_HOST'] ?? 'localhost') . "</li>
+                <li><strong>PHP Version:</strong> " . PHP_VERSION . "</li>
+                <li><strong>Test Type:</strong> Quick SSL Fix Test</li>
+            </ul>
+        </div>
+        <p style='font-size: 12px; color: #666;'>
+            This email was sent using the SSL certificate verification bypass method, 
+            which is appropriate for local development environments like XAMPP.
+        </p>
+    </div>
+    ";
+    
+    $success = sendEmail(
+        $testEmail, 
+        'Quick Email Test - SSL Fix Applied', 
+        $testBody, 
+        null, 
+        true
+    );
+    
+    if ($success) {
+        echo "<div style='background: #d4edda; color: #155724; padding: 15px; border-radius: 5px; margin: 15px 0;'>";
+        echo "<h3>✅ SUCCESS!</h3>";
+        echo "<p>Email sent successfully! Check your inbox at: <strong>$testEmail</strong></p>";
+        echo "<p>The SSL certificate issue has been resolved for your XAMPP environment.</p>";
+        echo "</div>";
+    } else {
+        echo "<div style='background: #f8d7da; color: #721c24; padding: 15px; border-radius: 5px; margin: 15px 0;'>";
+        echo "<h3>❌ FAILED</h3>";
+        echo "<p>Email could not be sent. Check your error logs for more details.</p>";
+        echo "<p>Make sure:</p>";
+        echo "<ul>";
+        echo "<li>Your Gmail App Password is correct</li>";
+        echo "<li>Your encryption keys are properly set</li>";
+        echo "<li>Your school_settings table has the correct email configuration</li>";
+        echo "</ul>";
+        echo "</div>";
+    }
+    
+    exit;
+}
+?>

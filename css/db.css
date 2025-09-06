@@ -1,0 +1,50 @@
+
+body.dark-mode .btn-submit,
+body.dark-mode .btn-primary,
+body.dark-mode .btn-icon,
+body.dark-mode button,
+body.dark-mode input[type="submit"],
+body.dark-mode input[type="button"] {
+  background-color: white; !important;
+  color: #222 !important;
+  border: 1px solid #ccc;
+}
+
+body.dark-mode .btn-submit:hover,
+body.dark-mode .btn-primary:hover,
+body.dark-mode button:hover,
+body.dark-mode input[type="submit"]:hover,
+body.dark-mode input[type="button"]:hover {
+  background-color: #f0f0f0 !important;
+  color: #000 !important;
+}
+
+/* Additional Dark Mode Fixes for DataTables TD */
+body.dark-mode table.dataTable tbody td {
+    background-color: #111 !important;
+    color: #f1f1f1 !important;
+}
+
+body.dark-mode table.dataTable thead th {
+    background-color: #222 !important;
+    color: #f1f1f1 !important;
+}
+
+body.dark-mode table.dataTable tbody tr:hover td {
+    background-color: #1c1c1c !important;
+}
+
+body.dark-mode input,
+body.dark-mode input[type="text"],
+body.dark-mode input[type="email"],
+body.dark-mode input[type="password"],
+body.dark-mode input[type="date"],
+body.dark-mode input[type="number"],
+body.dark-mode select,
+body.dark-mode textarea {
+  background-color: white !important;
+  color: #222 !important;
+  border: 1px solid #ccc;
+}
+
+

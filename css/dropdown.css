@@ -1,0 +1,91 @@
+
+/* Dropdown Menu Styling */
+/* Hide dropdown by default */
+.sidebar-nav .dropdown-menu {
+    display: none;
+    list-style: none;
+    padding-left: 1.5rem;
+    background-color: #2c3e50;
+    color: #ecf0f1;
+}
+
+.sidebar-nav .dropdown.open .dropdown-menu {
+    display: block;
+}
+
+/* Arrow rotation */
+.sidebar-nav .dropdown-arrow {
+    margin-left: auto;
+    transition: transform 0.3s ease, color 0.3s ease;
+    color: rgba(255, 255, 255, 0.7);
+}
+
+.sidebar-nav .dropdown.open .dropdown-arrow {
+    transform: rotate(180deg);
+}
+
+/* Dark mode arrow color */
+body.dark-mode .sidebar-nav .dropdown-arrow {
+    color: rgba(255, 255, 255, 0.6);
+}
+
+body.dark-mode .sidebar-nav .dropdown.open .dropdown-arrow {
+    color: var(--secondary-color);
+}
+
+/* Smooth dropdown animations */
+.dropdown-menu {
+    transition: all 0.3s ease-in-out;
+    transform-origin: top;
+}
+
+.dropdown:not(.open) .dropdown-menu {
+    opacity: 0;
+    transform: scaleY(0);
+    display: none;
+}
+
+.dropdown.open .dropdown-menu {
+    opacity: 1;
+    transform: scaleY(1);
+    display: block;
+}
+
+/* Alternative approach with max-height for smoother animation */
+.dropdown-menu {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease-in-out;
+}
+
+.dropdown.open .dropdown-menu {
+    max-height: 500px; /* Adjust based on your content height */
+}
+
+/* Mobile responsiveness */
+@media (max-width: 768px) {
+    .dropdown {
+        border-bottom: 1px solid var(--gray-200);
+    }
+    
+    body.dark-mode .dropdown {
+        border-bottom-color: var(--gray-700);
+    }
+    
+    .dropdown-menu {
+        position: relative;
+        box-shadow: none;
+        border: none;
+        border-radius: 0;
+    }
+    
+    .dropdown-menu a {
+        padding-left: 3rem;
+        border-left: 3px solid transparent;
+    }
+    
+    .dropdown-menu a:hover {
+        border-left-color: var(--primary);
+        padding-left: 3rem;
+    }
+}

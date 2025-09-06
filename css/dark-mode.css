@@ -1,0 +1,174 @@
+/* === Dark Mode Styling for School Settings === */
+body.dark-mode {
+    background: #121212;
+    color: #e0e0e0;
+    font-family: Arial, sans-serif;
+    transition: background 0.3s, color 0.3s;
+}
+
+body.dark-mode .settings-container {
+    background: #1e1e1e;
+    color: #e0e0e0;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.6);
+    border: 1px solid #333;
+}
+
+body.dark-mode .settings-container h2 {
+    color: #f0f0f0;
+    border-bottom: 1px solid #333;
+    padding-bottom: 10px;
+}
+
+/* === Labels === */
+body.dark-mode label {
+    color: #bbb;
+    font-weight: 600;
+    display: block;
+    margin-top: 10px;
+    transition: color 0.3s;
+}
+body.dark-mode label:hover {
+    color: #fff;
+}
+
+
+/* === File input === */
+body.dark-mode input[type="file"] {
+    color: #ddd;
+}
+
+/* === Buttons === */
+body.dark-mode .btn-primary {
+    background: #0d6efd;
+    color: #fff;
+    border: 1px solid #0a58ca;
+    border-radius: 4px;
+    padding: 10px 20px;
+    cursor: pointer;
+    transition: background 0.3s, transform 0.2s;
+}
+body.dark-mode .btn-primary:hover {
+    background: #0a58ca;
+    transform: translateY(-2px);
+}
+
+/* Secondary / Cancel buttons */
+body.dark-mode .btn-secondary {
+    background: #444;
+    color: #eee;
+    border: 1px solid #666;
+    border-radius: 4px;
+    padding: 10px 20px;
+    cursor: pointer;
+    transition: background 0.3s, transform 0.2s;
+}
+body.dark-mode .btn-secondary:hover {
+    background: #666;
+    transform: translateY(-2px);
+}
+
+/* === Alerts === */
+body.dark-mode .alert {
+    background: #2c2c2c;
+    color: #d4edda;
+    border: 1px solid #444;
+}
+
+/* === Images === */
+body.dark-mode img {
+    border: 2px solid #333;
+    border-radius: 6px;
+}
+/* === Flash Messages === */
+.alert {
+    padding: 12px 18px;
+    margin: 15px auto;
+    border-radius: 6px;
+    font-size: 14px;
+    font-weight: 500;
+    max-width: 600px;
+    text-align: center;
+    opacity: 1;
+    transition: opacity 0.8s ease, transform 0.8s ease;
+}
+
+.alert-success {
+    background: #d4edda;
+    color: #155724;
+    border: 1px solid #c3e6cb;
+}
+
+.alert-danger {
+    background: #f8d7da;
+    color: #721c24;
+    border: 1px solid #f5c6cb;
+}
+
+/* Dark mode tweaks */
+body.dark-mode .alert-success {
+    background: #1e2f23;
+    color: #b6f0c1;
+    border: 1px solid #2f4f2f;
+}
+body.dark-mode .alert-danger {
+    background: #2f1e1e;
+    color: #f5b5b5;
+    border: 1px solid #5a2c2c;
+}
+
+/* Hidden state */
+.alert.hide {
+    opacity: 0;
+    transform: translateY(-10px);
+    pointer-events: none;
+}
+
+        .settings-container {
+            max-width: 700px;
+            margin: 30px auto;
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        .settings-container h2 {
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        .settings-container label {
+            font-weight: bold;
+            display: block;
+            margin-top: 10px;
+        }
+        .settings-container input[type="text"],
+        .settings-container input[type="email"],
+        .settings-container input[type="password"],
+        .settings-container textarea {
+            width: 100%;
+            padding: 10px;
+            margin-top: 5px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        .settings-container input[type="file"] {
+            margin-top: 5px;
+        }
+        .settings-container img {
+            max-width: 150px;
+            margin-top: 10px;
+        }
+        .form-actions {
+            margin-top: 20px;
+            text-align: center;
+        }
+        .btn-primary {
+            background: #007bff;
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        .btn-primary:hover {
+            background: #0056b3;
+        }

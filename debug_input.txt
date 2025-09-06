@@ -1,0 +1,6 @@
+	sub_fee_name
+	sub_fee_amount
+
+
+<td>GHC<?= number_format($p['total_paid'], 2); ?></td>
+<td>GHC<?= number_format($p['billing_amount'], 2); ?></td>

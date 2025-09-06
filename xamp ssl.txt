@@ -1,0 +1,251 @@
+<?php
+/**
+ * XAMPP/Local Development Email Fix
+ * This version tries multiple connection methods to work around SSL issues
+ */
+
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\Exception;
+use PHPMailer\PHPMailer\SMTP;
+
+require __DIR__ . '/../vendor/autoload.php';
+require_once __DIR__ . '/../config.php';
+
+/**
+ * Enhanced email function specifically for XAMPP/local development
+ * Tries multiple connection methods to bypass SSL certificate issues
+ */
+function sendEmailXAMPP($to, $subject, $body, $attachmentPath = null, $isHtml = false, $debug = false) {
+    global $conn;
+    
+    $result = [
+        'success' => false,
+        'message' => '',
+        'debug_info' => [],
+        'attempts' => []
+    ];
+    
+    // Input validation (same as before)
+    if (empty($to) || !filter_var($to, FILTER_VALIDATE_EMAIL)) {
+        $result['message'] = "Invalid recipient email address: $to";
+        return $result;
+    }
+    
+    // Get settings (same validation as before)
+    $sql = "SELECT * FROM school_settings ORDER BY id DESC LIMIT 1";
+    $settingsResult = $conn->query($sql);
+    
+    if (!$settingsResult || $settingsResult->num_rows === 0) {
+        $result['message'] = "No school settings found";
+        return $result;
+    }
+    
+    $settings = $settingsResult->fetch_assoc();
+    $schoolEmail = trim($settings['email'] ?? '');
+    $schoolName = trim($settings['school_name'] ?? 'School System');
+    $appPassword = decryptPassword($settings['app_password'] ?? '');
+    
+    if (empty($schoolEmail) || empty($appPassword)) {
+        $result['message'] = "Email credentials not properly configured";
+        return $result;
+    }
+    
+    // Try different connection methods
+    $connectionMethods = [
+        [
+            'name' => 'Standard STARTTLS with SSL verification disabled',
+            'config' => [
+                'host' => 'smtp.gmail.com',
+                'port' => 587,
+                'secure' => PHPMailer::ENCRYPTION_STARTTLS,
+                'options' => [
+                    'ssl' => [
+                        'verify_peer' => false,
+                        'verify_peer_name' => false,
+                        'allow_self_signed' => true,
+                        'cafile' => false,
+                        'capath' => false,
+                    ]
+                ]
+            ]
+        ],
+        [
+            'name' => 'SSL on port 465',
+            'config' => [
+                'host' => 'smtp.gmail.com',
+                'port' => 465,
+                'secure' => PHPMailer::ENCRYPTION_SMTPS,
+                'options' => [
+                    'ssl' => [
+                        'verify_peer' => false,
+                        'verify_peer_name' => false,
+                        'allow_self_signed' => true,
+                        'cafile' => false,
+                        'capath' => false,
+                    ]
+                ]
+            ]
+        ],
+        [
+            'name' => 'No encryption (not recommended for production)',
+            'config' => [
+                'host' => 'smtp.gmail.com',
+                'port' => 587,
+                'secure' => false,
+                'options' => []
+            ]
+        ]
+    ];
+    
+    foreach ($connectionMethods as $index => $method) {
+        $attempt = [
+            'method' => $method['name'],
+            'success' => false,
+            'error' => '',
+            'debug' => []
+        ];
+        
+        try {
+            $mail = new PHPMailer(true);
+            
+            // Enable debug if requested
+            if ($debug) {
+                $mail->SMTPDebug = SMTP::DEBUG_SERVER;
+                $mail->Debugoutput = function($str, $level) use (&$attempt) {
+                    $attempt['debug'][] = "Level $level: $str";
+                };
+            }
+            
+            // Server configuration
+            $mail->isSMTP();
+            $mail->Host = $method['config']['host'];
+            $mail->SMTPAuth = true;
+            $mail->Username = $schoolEmail;
+            $mail->Password = $appPassword;
+            $mail->Port = $method['config']['port'];
+            $mail->CharSet = 'UTF-8';
+            $mail->Timeout = 30;
+            
+            // Set encryption
+            if ($method['config']['secure']) {
+                $mail->SMTPSecure = $method['config']['secure'];
+            }
+            
+            // Set SSL options if provided
+            if (!empty($method['config']['options'])) {
+                $mail->SMTPOptions = $method['config']['options'];
+            }
+            
+            // For XAMPP, try disabling auto TLS
+            if ($index === 0) {
+                $mail->SMTPAutoTLS = false;
+            }
+            
+            // Recipients
+            $mail->setFrom($schoolEmail, $schoolName);
+            $mail->addAddress($to);
+            $mail->addReplyTo($schoolEmail, $schoolName);
+            
+            // Content
+            $mail->isHTML($isHtml);
+            $mail->Subject = $subject;
+            $mail->Body = $body;
+            
+            if ($isHtml) {
+                $mail->AltBody = strip_tags($body);
+            }
+            
+            // Attachment
+            if ($attachmentPath && file_exists($attachmentPath)) {
+                $mail->addAttachment($attachmentPath);
+            }
+            
+            // Try to send
+            if ($mail->send()) {
+                $attempt['success'] = true;
+                $result['success'] = true;
+                $result['message'] = "Email sent successfully using: " . $method['name'];
+                $result['attempts'][] = $attempt;
+                break; // Success! Exit the loop
+            }
+            
+        } catch (Exception $e) {
+            $attempt['error'] = $e->getMessage();
+            error_log("Email attempt " . ($index + 1) . " failed: " . $e->getMessage());
+        }
+        
+        $result['attempts'][] = $attempt;
+        
+        // Clean up
+        if (isset($mail)) {
+            $mail->smtpClose();
+        }
+    }
+    
+    if (!$result['success']) {
+        $result['message'] = "All connection methods failed. Check debug info for details.";
+    }
+    
+    $result['debug_info'] = $result['attempts'];
+    
+    return $result;
+}
+
+/**
+ * Quick test function for XAMPP
+ */
+function testXAMPPEmail($testEmail) {
+    echo "<h2>🔧 XAMPP Email Test</h2>";
+    
+    $htmlBody = "
+    <div style='font-family: Arial, sans-serif; padding: 20px; background: #f8f9fa; border-radius: 8px;'>
+        <h2 style='color: #28a745;'>✅ XAMPP Email Test Successful!</h2>
+        <p>Your email configuration is working on XAMPP/local development environment.</p>
+        <p><strong>Test Time:</strong> " . date('Y-m-d H:i:s') . "</p>
+        <p><strong>Server:</strong> " . ($_SERVER['HTTP_HOST'] ?? 'localhost') . "</p>
+    </div>
+    ";
+    
+    $result = sendEmailXAMPP($testEmail, 'XAMPP Email Test - ' . date('H:i:s'), $htmlBody, null, true, true);
+    
+    echo "<div style='font-family: monospace; background: #f5f5f5; padding: 15px; border: 1px solid #ddd; margin: 10px 0;'>";
+    
+    if ($result['success']) {
+        echo "<p style='color: green;'>✅ Email sent successfully!</p>";
+        echo "<p><strong>Method used:</strong> " . htmlspecialchars($result['message']) . "</p>";
+    } else {
+        echo "<p style='color: red;'>❌ All methods failed</p>";
+        echo "<p><strong>Error:</strong> " . htmlspecialchars($result['message']) . "</p>";
+    }
+    
+    echo "<h4>Connection Attempts:</h4>";
+    foreach ($result['attempts'] as $i => $attempt) {
+        $status = $attempt['success'] ? '✅' : '❌';
+        echo "<h5>$status Method " . ($i + 1) . ": " . htmlspecialchars($attempt['method']) . "</h5>";
+        
+        if (!empty($attempt['error'])) {
+            echo "<p style='color: red;'>Error: " . htmlspecialchars($attempt['error']) . "</p>";
+        }
+        
+        if (!empty($attempt['debug'])) {
+            echo "<details><summary>Debug Output</summary>";
+            echo "<pre style='background: #fff; padding: 10px; border: 1px solid #ccc; font-size: 11px;'>";
+            foreach ($attempt['debug'] as $debug) {
+                echo htmlspecialchars($debug) . "\n";
+            }
+            echo "</pre></details>";
+        }
+    }
+    
+    echo "</div>";
+    
+    return $result['success'];
+}
+
+// Allow direct testing
+if (isset($_GET['test_xampp']) && $_GET['test_xampp'] === '1') {
+    $testEmail = $_GET['email'] ?? 'test@example.com';
+    testXAMPPEmail($testEmail);
+    exit;
+}
+?>

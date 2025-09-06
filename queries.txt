@@ -1,0 +1,9 @@
+SELECT sb.*, t.term_name, ay.year_name
+FROM student_bills sb
+JOIN terms t ON sb.term_id = t.id
+JOIN academic_years ay ON sb.academic_year_id = ay.id
+WHERE sb.student_id = ? AND ay.is_current = 1
+ORDER BY t.term_order;
+
+
+$bill

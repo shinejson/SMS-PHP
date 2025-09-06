@@ -1,0 +1,794 @@
+I've completed and enhanced your CSS file to ensure it's fully responsive, visually appealing, and organized. Here is the complete code.
+
+/* ========================================= */
+/* === PAYMENT MANAGEMENT BASE STYLES === */
+/* ========================================= */
+
+body {
+    font-family: 'Inter', sans-serif;
+    background-color: #f0f2f5;
+    color: #495057;
+    margin: 0;
+    padding: 20px;
+    line-height: 1.6;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+main {
+    flex: 1;
+    padding: 20px;
+    background-color: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+}
+
+.page-title {
+    font-size: 28px;
+    font-weight: 700;
+    color: #343a40;
+    margin-bottom: 20px;
+    border-bottom: 2px solid #e9ecef;
+    padding-bottom: 15px;
+}
+
+.header-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+/* Primary Button */
+.btn-primary {
+    background-color: #4e73df;
+    color: white;
+    border: none;
+    padding: 12px 20px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 500;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    transition: all 0.3s ease;
+    text-decoration: none;
+}
+
+.btn-primary:hover {
+    background-color: #2e59d9;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(78, 115, 223, 0.3);
+}
+
+/* ========================================= */
+/* === ACTION BUTTONS === */
+/* ========================================= */
+
+.action-column {
+    width: 140px !important;
+    min-width: 140px !important;
+    text-align: center !important;
+}
+
+.btn-icon {
+    display: inline-flex !important;
+    align-items: center;
+    justify-content: center;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 8px 10px;
+    border-radius: 6px;
+    font-size: 14px;
+    transition: all 0.3s ease;
+    margin: 0 3px;
+    opacity: 1 !important;
+    visibility: visible !important;
+    text-decoration: none;
+    min-width: 36px;
+    height: 36px;
+}
+
+.btn-icon:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+}
+
+.btn-icon i {
+    font-size: 14px;
+}
+
+/* View Button */
+.btn-icon:first-child,
+.view-payment {
+    color: #36b9cc;
+    background-color: rgba(54, 185, 204, 0.1);
+    border: 1px solid rgba(54, 185, 204, 0.2);
+}
+
+.btn-icon:first-child:hover,
+.view-payment:hover {
+    color: white !important;
+    background-color: #36b9cc !important;
+    border-color: #36b9cc !important;
+}
+
+/* Edit Button */
+.edit-payment {
+    color: #4e73df;
+    background-color: rgba(78, 115, 223, 0.1);
+    border: 1px solid rgba(78, 115, 223, 0.2);
+}
+
+.edit-payment:hover {
+    color: white !important;
+    background-color: #4e73df !important;
+    border-color: #4e73df !important;
+}
+
+/* Delete Button */
+.delete-payment {
+    color: #e74a3b;
+    background-color: rgba(231, 74, 59, 0.1);
+    border: 1px solid rgba(231, 74, 59, 0.2);
+}
+
+.delete-payment:hover {
+    color: white !important;
+    background-color: #e74a3b !important;
+    border-color: #e74a3b !important;
+}
+
+/* ========================================= */
+/* === STATUS BADGES === */
+/* ========================================= */
+
+.status {
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 11px;
+    font-weight: 600;
+    display: inline-block;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.status.paid {
+    background-color: #1cc88a;
+    color: white;
+}
+
+.status.pending {
+    background-color: #f6c23e;
+    color: #000;
+}
+
+.status.overdue {
+    background-color: #e74a3b;
+    color: white;
+}
+
+.status.cancelled {
+    background-color: #858796;
+    color: white;
+}
+
+/* ========================================= */
+/* === MODAL STYLES === */
+/* ========================================= */
+
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1050;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0,0,0,0.6);
+    backdrop-filter: blur(2px);
+}
+
+.modal-content {
+    background-color: #fff;
+    margin: 3% auto;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+    width: 90%;
+    max-width: 650px;
+    position: relative;
+    max-height: 90vh;
+    overflow-y: auto;
+    animation: slideDown 0.4s ease-out;
+}
+
+.close {
+    position: absolute;
+    right: 25px;
+    top: 20px;
+    font-size: 32px;
+    font-weight: bold;
+    color: #858796;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    line-height: 1;
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+}
+
+.close:hover {
+    color: #e74a3b;
+    background-color: rgba(231, 74, 59, 0.1);
+    transform: scale(1.1);
+}
+
+/* ========================================= */
+/* === FORM STYLES === */
+/* ========================================= */
+
+.form-group {
+    margin-bottom: 25px;
+    position: relative;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 600;
+    color: #4e4e4e;
+    font-size: 14px;
+}
+
+.form-group input, 
+.form-group select,
+.form-group textarea {
+    width: 100%;
+    padding: 12px 16px;
+    border: 2px solid #e3e6f0;
+    border-radius: 8px;
+    font-size: 14px;
+    transition: all 0.3s ease;
+    background-color: #fff;
+    box-sizing: border-box;
+}
+
+.form-group input:focus, 
+.form-group select:focus,
+.form-group textarea:focus {
+    border-color: #4e73df;
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(78, 115, 223, 0.1);
+}
+
+.form-group textarea {
+    min-height: 100px;
+    resize: vertical;
+    font-family: inherit;
+}
+
+/* ========================================= */
+/* === TOTAL PAID & BILLING AMOUNT === */
+/* ========================================= */
+
+.total-paid-container {
+    margin-top: 12px;
+    animation: slideDown 0.3s ease;
+}
+
+.total-paid-field,
+.total-billing-field {
+    background-color: #f8f9fa !important;
+    border: 2px solid #e9ecef !important;
+    border-radius: 8px !important;
+    padding: 12px 16px !important;
+    font-weight: 600 !important;
+    font-size: 14px !important;
+    cursor: default !important;
+    user-select: none;
+    box-sizing: border-box;
+    margin-top: 8px;
+}
+
+.total-paid-field {
+    color: #28a745 !important;
+    background-color: #d4edda !important;
+    border-color: #c3e6cb !important;
+}
+
+.total-billing-field {
+    color: #007bff !important;
+    background-color: #d1ecf1 !important;
+    border-color: #bee5eb !important;
+    display: none;
+}
+
+/* ========================================= */
+/* === FORM ACTIONS === */
+/* ========================================= */
+
+.form-actions {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+    margin-top: 30px;
+    padding-top: 20px;
+    border-top: 1px solid #e3e6f0;
+}
+
+.btn-cancel {
+    background-color: #858796;
+    color: white;
+    border: none;
+    padding: 12px 24px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+.btn-cancel:hover {
+    background-color: #6c757d;
+    transform: translateY(-1px);
+}
+
+.btn-submit {
+    background-color: #1cc88a;
+    color: white;
+    border: none;
+    padding: 12px 24px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+.btn-submit:hover {
+    background-color: #17a673;
+    transform: translateY(-1px);
+}
+
+/* ========================================= */
+/* === ALERT MESSAGES === */
+/* ========================================= */
+
+.form-message {
+    padding: 16px 20px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-weight: 500;
+    border-left: 4px solid;
+    transition: opacity 0.3s ease;
+}
+
+.form-message.success-message {
+    background-color: #d4edda;
+    border-color: #28a745;
+    color: #155724;
+}
+
+.form-message.error-message {
+    background-color: #f8d7da;
+    border-color: #e74a3b;
+    color: #721c24;
+    animation: shake 0.5s ease;
+}
+
+.form-message i {
+    font-size: 16px;
+}
+
+
+/* ========================================= */
+/* === DATATABLE ENHANCEMENTS === */
+/* ========================================= */
+
+.dataTables_wrapper {
+    padding: 0;
+}
+
+.dataTables_wrapper .dataTables_filter {
+    float: right;
+    margin-bottom: 15px;
+}
+
+.dataTables_wrapper .dataTables_filter input {
+    border: 2px solid #e3e6f0;
+    border-radius: 6px;
+    padding: 8px 12px;
+    margin-left: 8px;
+}
+
+.dataTables_wrapper .dt-buttons {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 15px;
+    flex-wrap: wrap;
+}
+
+.dataTables_wrapper .dt-button {
+    background-color: #4e73df !important;
+    color: white !important;
+    border: none !important;
+    padding: 8px 16px !important;
+    border-radius: 6px !important;
+    cursor: pointer !important;
+    font-size: 13px !important;
+    font-weight: 500 !important;
+    transition: all 0.3s ease !important;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.dataTables_wrapper .dt-button:hover {
+    background-color: #2e59d9 !important;
+    transform: translateY(-1px);
+    box-shadow: 0 3px 8px rgba(0,0,0,0.15);
+}
+
+.dataTables_wrapper .dataTables_paginate .paginate_button {
+    padding: 8px 12px !important;
+    margin: 0 2px !important;
+    border-radius: 6px !important;
+    border: 1px solid #e3e6f0 !important;
+    background: white !important;
+    color: #5a5c69 !important;
+    cursor: pointer !important;
+    transition: all 0.3s ease !important;
+}
+
+.dataTables_wrapper .dataTables_paginate .paginate_button:hover {
+    background: #4e73df !important;
+    color: white !important;
+    border-color: #4e73df !important;
+    transform: translateY(-1px);
+}
+
+.dataTables_wrapper .dataTables_paginate .paginate_button.current {
+    background: #4e73df !important;
+    color: white !important;
+    border-color: #4e73df !important;
+}
+
+/* Table Enhancements */
+table.dataTable {
+    border-collapse: separate;
+    border-spacing: 0;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+
+table.dataTable thead th {
+    background-color: #f8f9fc;
+    color: #5a5c69;
+    font-weight: 600;
+    padding: 15px 12px;
+    border-bottom: 2px solid #e3e6f0;
+}
+
+table.dataTable tbody td {
+    padding: 12px;
+    border-bottom: 1px solid #e3e6f0;
+    vertical-align: middle;
+}
+
+table.dataTable tbody tr:hover {
+    background-color: rgba(78, 115, 223, 0.05);
+}
+
+/* ========================================= */
+/* === DARK MODE STYLES === */
+/* ========================================= */
+
+body.dark-mode {
+    background-color: #1a202c;
+    color: #e2e8f0;
+}
+
+body.dark-mode main {
+    background-color: #2d3748;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+}
+
+body.dark-mode .page-title {
+    color: #cbd5e0;
+    border-bottom-color: #4a5568;
+}
+
+body.dark-mode .modal-content {
+    background-color: #2d3748;
+    color: #f7fafc;
+    border: 1px solid #4a5568;
+}
+
+body.dark-mode .close {
+    color: #a0aec0;
+}
+
+body.dark-mode .close:hover {
+    color: #f56565;
+    background-color: rgba(245, 101, 101, 0.1);
+}
+
+body.dark-mode .form-group label {
+    color: #e2e8f0;
+}
+
+body.dark-mode .form-group input,
+body.dark-mode .form-group select,
+body.dark-mode .form-group textarea {
+    background-color: #4a5568;
+    border-color: #718096;
+    color: #f7fafc;
+}
+
+body.dark-mode .form-group input:focus,
+body.dark-mode .form-group select:focus,
+body.dark-mode .form-group textarea:focus {
+    border-color: #4e73df;
+    box-shadow: 0 0 0 3px rgba(78, 115, 223, 0.2);
+}
+
+body.dark-mode .total-paid-field {
+    background-color: #1a2e1a !important;
+    border-color: #2d5a2d !important;
+    color: #4ade80 !important;
+}
+
+body.dark-mode .total-billing-field {
+    background-color: #1e293b !important;
+    border-color: #334155 !important;
+    color: #60a5fa !important;
+}
+
+body.dark-mode .form-actions {
+    border-top-color: #4a5568;
+}
+
+body.dark-mode .alert-success {
+    background-color: #22543d;
+    border-color: #2f855a;
+    color: #68d391;
+}
+
+body.dark-mode .alert-danger {
+    background-color: #742a2a;
+    border-color: #e53e3e;
+    color: #feb2b2;
+}
+
+body.dark-mode table.dataTable thead th {
+    background-color: #4a5568;
+    color: #e2e8f0;
+    border-bottom-color: #718096;
+}
+
+body.dark-mode table.dataTable tbody td {
+    border-bottom-color: #4a5568;
+    background-color: #2d3748;
+    color: #f7fafc;
+}
+
+body.dark-mode table.dataTable tbody tr:hover {
+    background-color: rgba(78, 115, 223, 0.15);
+}
+
+/* ========================================= */
+/* === ANIMATIONS === */
+/* ========================================= */
+
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    10%, 30%, 50%, 70%, 90% { transform: translateX(-8px); }
+    20%, 40%, 60%, 80% { transform: translateX(8px); }
+}
+
+.form-message.error-message {
+    animation: shake 0.6s ease;
+}
+
+/* ========================================= */
+/* === RESPONSIVE DESIGN === */
+/* ========================================= */
+
+/* General mobile-first approach */
+@media (max-width: 768px) {
+    body {
+        padding: 10px;
+    }
+    
+    main {
+        padding: 10px;
+    }
+
+    .modal-content {
+        margin: 10% auto;
+        width: 95%;
+        padding: 20px;
+        max-height: 85vh;
+    }
+    
+    .close {
+        right: 15px;
+        top: 15px;
+        font-size: 28px;
+    }
+    
+    .form-group {
+        margin-bottom: 20px;
+    }
+
+    .form-actions {
+        grid-template-columns: 1fr;
+        gap: 10px;
+        margin-top: 20px;
+    }
+
+    .btn-primary {
+        width: 100%;
+        justify-content: center;
+    }
+
+    .dataTables_wrapper .dt-buttons {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .dataTables_wrapper .dt-button {
+        width: 100%;
+        justify-content: center;
+    }
+    
+    table.dataTable thead th {
+        font-size: 12px;
+        padding: 10px 8px;
+    }
+    
+    table.dataTable tbody td {
+        font-size: 12px;
+        padding: 10px 8px;
+    }
+}
+
+@media (max-width: 480px) {
+    .page-title {
+        font-size: 24px;
+    }
+
+    .modal-content {
+        margin: 5% auto;
+    }
+}
+
+/* ====== ALERT MESSAGE STYLES ====== */
+.alert {
+    padding: 12px 20px;
+    margin: 15px 0;
+    border-radius: 6px;
+    font-size: 15px;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    animation: fadeSlideIn 0.3s ease-in-out;
+}
+
+/* Success Message */
+.alert-success {
+    background-color: #d4edda;
+    color: #155724;
+    border: 1px solid #c3e6cb;
+}
+
+/* Error Message */
+.alert-danger {
+    background-color: #f8d7da;
+    color: #721c24;
+    border: 1px solid #f5c6cb;
+}
+
+/* Optional: Warning Message */
+.alert-warning {
+    background-color: #fff3cd;
+    color: #856404;
+    border: 1px solid #ffeeba;
+}
+
+/* Close button inside alert (optional) */
+.alert .close-btn {
+    cursor: pointer;
+    font-size: 18px;
+    font-weight: bold;
+    color: inherit;
+    background: none;
+    border: none;
+    outline: none;
+}
+
+/* Small fade + slide animation */
+@keyframes fadeSlideIn {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Auto-hide fade out */
+@keyframes fadeOut {
+    from { opacity: 1; }
+    to { opacity: 0; }
+}
+
+.alert.fade-out {
+    animation: fadeOut 1s forwards; /* 1s fade-out */
+}
+.status.success { color: #28a745; font-weight: bold; }
+.status.warning { color: #ffc107; font-weight: bold; }
+.status.danger { color: #dc3545; font-weight: bold; }
+.status.info { color: #17a2b8; font-weight: bold; }
+
+/* ===== STATUS BADGES ===== */
+.status {
+    display: inline-block;
+    padding: 4px 10px;
+    border-radius: 12px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    text-transform: capitalize;
+    color: #fff;
+    min-width: 100px;
+    text-align: center;
+}
+
+/* Full Payment */
+.status.full-payment {
+    background-color: #28a745; /* Green */
+}
+
+/* Part Payment */
+.status.part-payment {
+    background-color: #ffc107; /* Yellow/Amber */
+    color: #000; /* Dark text for readability */
+}
+
+/* Over Payment */
+.status.over-payment {
+    background-color: #17a2b8; /* Teal/Info */
+}
+
+/* Unknown */
+.status.unknown {
+    background-color: #6c757d; /* Gray */
+}
+
+

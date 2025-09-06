@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Email Configuration Test</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #f5f7fa;
+        }
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 2px solid #3498db;
+        }
+        .test-section {
+            margin: 20px 0;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            background: #fafbfc;
+        }
+        .success {
+            background: #d4edda;
+            border-color: #c3e6cb;
+            color: #155724;
+        }
+        .error {
+            background: #f8d7da;
+            border-color: #f5c6cb;
+            color: #721c24;
+        }
+        .warning {
+            background: #fff3cd;
+            border-color: #ffeaa7;
+            color: #856404;
+        }
+        .info {
+            background: #cce7ff;
+            border-color: #99d5ff;
+            color: #004085;
+        }
+        .form-group {
+            margin: 15px 0;
+        }
+        label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        input[type="email"], input[type="text"] {
+            width: 100%;
+            max-width: 400px;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 14px;
+        }
+        button {
+            background: #3498db;
+            color: white;
+            padding: 12px 25px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 14px;
+            margin: 5px;
+        }
+        button:hover {
+            background: #2980b9;
+        }
+        .debug-info {
+            background: #2c3e50;
+            color: #ecf0f1;
+            padding: 15px;
+            border-radius: 5px;
+            font-family: 'Courier New', monospace;
+            font-size: 12px;
+            white-space: pre-wrap;
+            overflow-x: auto;
+            margin: 10px 0;
+        }
+        .status-indicator {
+            display: inline-block;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            margin-right: 8px;
+        }
+        .status-ok { background: #27ae60; }
+        .status-error { background: #e74c3c; }
+        .status-warning { background: #f39c12; }
+        .checklist {
+            list-style: none;
+            padding: 0;
+        }
+        .checklist li {
+            padding: 8px 0;
+            display: flex;
+            align-items: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>📧 Email Configuration Test</h1>
+            <p>Test your school management system email functionality</p>
+        </div>
+
+        <!-- Configuration Check Section -->
+        <div class="test-section">
+            <h2>1. Configuration Check</h2>
+            <div id="config-results">
+                <p>Click "Check Configuration" to validate your email settings.</p>
+                <button onclick="checkConfiguration()">🔍 Check Configuration</button>
+            </div>
+        </div>
+
+        <!-- Email Test Section -->
+        <div class="test-section">
+            <h2>2. Send Test Email</h2>
+            <form id="email-test-form">
+                <div class="form-group">
+                    <label for="test-email">Test Email Address:</label>
+                    <input type="email" id="test-email" name="test-email" placeholder="test@example.com" required>
+                </div>
+                <div class="form-group">
+                    <label for="test-subject">Subject (optional):</label>
+                    <input type="text" id="test-subject" name="test-subject" placeholder="Test Email" value="Email Test - <?php echo date('Y-m-d H:i:s'); ?>">
+                </div>
+                <button type="button" onclick="sendTestEmail()">📤 Send Test Email</button>
+            </form>
+            <div id="email-results"></div>
+        </div>
+
+        <!-- Gmail Setup Guide -->
+        <div class="test-section info">
+            <h2>3. Gmail Setup Checklist</h2>
+            <ul class="checklist">
+                <li><span class="status-indicator status-warning"></span> Enable 2-Factor Authentication on your Google account</li>
+                <li><span class="status-indicator status-warning"></span> Generate an App Password (not your regular Gmail password)</li>
+                <li><span class="status-indicator status-warning"></span> Update school_settings with correct email and encrypted App Password</li>
+                <li><span class="status-indicator status-warning"></span> Ensure encryption keys are properly configured in config.php</li>
+                <li><span class="status-indicator status-warning"></span> Test with a valid email address (e.g., user@gmail.com)</li>
+            </ul>
+        </div>
+
+        <!-- Troubleshooting Guide -->
+        <div class="test-section">
+            <h2>4. Common Issues & Solutions</h2>
+            <div style="display: grid; grid-template-columns: 1fr 2fr; gap: 15px; align-items: start;">
+                <div><strong>Username/Password not accepted</strong></div>
+                <div>Use App Password instead of regular Gmail password</div>
+                
+                <div><strong>Connection timeout</strong></div>
+                <div>Check firewall settings and internet connection</div>
+                
+                <div><strong>Decryption failed</strong></div>
+                <div>Update encryption keys in config.php and re-encrypt passwords</div>
+                
+                <div><strong>No school settings found</strong></div>
+                <div>Add email configuration to school_settings table</div>
+                
+                <div><strong>Invalid email format</strong></div>
+                <div>Ensure email address includes @ symbol and valid domain</div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Avoid eval() and use safe JavaScript practices
+        
+        function checkConfiguration() {
+            const resultsDiv = document.getElementById('config-results');
+            resultsDiv.innerHTML = '<p>⏳ Checking configuration...</p>';
+            
+            // Use fetch instead of potentially unsafe methods
+            fetch('test_email_config.php', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                },
+                body: 'action=check_config'
+            })
+            .then(response => response.json())
+            .then(data => {
+                displayConfigResults(data);
+            })
+            .catch(error => {
+                resultsDiv.innerHTML = `
+                    <div class="error">
+                        <h4>❌ Configuration Check Failed</h4>
+                        <p>Error: ${error.message}</p>
+                        <p><strong>Alternative:</strong> Visit directly: <code>test_email_config.php?action=check</code></p>
+                    </div>
+                `;
+            });
+        }
+        
+        function sendTestEmail() {
+            const email = document.getElementById('test-email').value;
+            const subject = document.getElementById('test-subject').value;
+            const resultsDiv = document.getElementById('email-results');
+            
+            if (!email) {
+                resultsDiv.innerHTML = '<div class="error">Please enter a test email address</div>';
+                return;
+            }
+            
+            if (!validateEmail(email)) {
+                resultsDiv.innerHTML = '<div class="error">Please enter a valid email address (e.g., user@example.com)</div>';
+                return;
+            }
+            
+            resultsDiv.innerHTML = '<p>⏳ Sending test email...</p>';
+            
+            fetch('test_email_config.php', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                },
+                body: `action=send_test&email=${encodeURIComponent(email)}&subject=${encodeURIComponent(subject)}`
+            })
+            .then(response => response.json())
+            .then(data => {
+                displayEmailResults(data);
+            })
+            .catch(error => {
+                resultsDiv.innerHTML = `
+                    <div class="error">
+                        <h4>❌ Email Test Failed</h4>
+                        <p>Error: ${error.message}</p>
+                        <p><strong>Alternative:</strong> Visit: <code>test_email_config.php?action=send&email=${email}</code></p>
+                    </div>
+                `;
+            });
+        }
+        
+        function validateEmail(email) {
+            const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            return re.test(email);
+        }
+        
+        function displayConfigResults(data) {
+            const resultsDiv = document.getElementById('config-results');
+            let html = '';
+            
+            if (data.success) {
+                html += '<div class="success"><h4>✅ Configuration Valid</h4>';
+                if (data.warnings && data.warnings.length > 0) {
+                    html += '<h5>Warnings:</h5><ul>';
+                    data.warnings.forEach(warning => {
+                        html += `<li>${escapeHtml(warning)}</li>`;
+                    });
+                    html += '</ul>';
+                }
+                html += '</div>';
+            } else {
+                html += '<div class="error"><h4>❌ Configuration Issues</h4>';
+                if (data.errors && data.errors.length > 0) {
+                    html += '<h5>Errors:</h5><ul>';
+                    data.errors.forEach(error => {
+                        html += `<li>${escapeHtml(error)}</li>`;
+                    });
+                    html += '</ul>';
+                }
+                html += '</div>';
+            }
+            
+            if (data.debug_info) {
+                html += `<div class="debug-info">${escapeHtml(JSON.stringify(data.debug_info, null, 2))}</div>`;
+            }
+            
+            html += '<button onclick="checkConfiguration()">🔄 Recheck Configuration</button>';
+            resultsDiv.innerHTML = html;
+        }
+        
+        function displayEmailResults(data) {
+            const resultsDiv = document.getElementById('email-results');
+            let html = '';
+            
+            if (data.success) {
+                html += `<div class="success">
+                    <h4>✅ Email Sent Successfully!</h4>
+                    <p>${escapeHtml(data.message)}</p>
+                </div>`;
+            } else {
+                html += `<div class="error">
+                    <h4>❌ Email Failed to Send</h4>
+                    <p><strong>Error:</strong> ${escapeHtml(data.message)}</p>
+                </div>`;
+            }
+            
+            if (data.debug_info) {
+                html += `<div class="debug-info">${escapeHtml(JSON.stringify(data.debug_info, null, 2))}</div>`;
+            }
+            
+            resultsDiv.innerHTML = html;
+        }
+        
+        function escapeHtml(text) {
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        }
+        
+        // Set default test email if available
+        window.addEventListener('load', function() {
+            const emailInput = document.getElementById('test-email');
+            // You can set a default test email here
+            // emailInput.value = 'your-test@gmail.com';
+        });
+    </script>
+</body>
+</html>

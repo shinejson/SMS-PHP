@@ -1,0 +1,256 @@
+/* Master Marks Page Specific Styles */
+.master-marks-page {
+    padding: 20px;
+    background-color: #f8f9fa;
+    min-height: 100vh;
+    transition: background-color 0.3s ease;
+}
+
+body.dark-mode .master-marks-page {
+    background-color: #121212;
+}
+
+.page-header {
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    margin-bottom: 20px;
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+body.dark-mode .page-header {
+    background: #1e1e1e;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+    color: #e0e0e0;
+}
+
+.filter-section {
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    margin-bottom: 20px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+    align-items: end;
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+body.dark-mode .filter-section {
+    background: #1e1e1e;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+}
+
+.filter-group {
+    flex: 1;
+    min-width: 200px;
+}
+
+.filter-group label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: 600;
+    color: #495057;
+    transition: color 0.3s ease;
+}
+
+body.dark-mode .filter-group label {
+    color: #b0b0b0;
+}
+
+.filter-group select {
+    width: 100%;
+    padding: 8px 12px;
+    border: 1px solid #ced4da;
+    border-radius: 4px;
+    background-color: white;
+    transition: background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease;
+}
+
+body.dark-mode .filter-group select {
+    background-color: #2d2d2d;
+    border-color: #444;
+    color: #e0e0e0;
+}
+
+.btn-clear-filters {
+    background: #6c757d;
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 4px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    transition: background-color 0.3s ease;
+}
+
+.btn-clear-filters:hover {
+    background: #5a6268;
+}
+
+.weights-info {
+    background: #e9ecef;
+    padding: 10px 15px;
+    border-radius: 4px;
+    margin-top: 10px;
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+body.dark-mode .weights-info {
+    background: #2d2d2d;
+    color: #e0e0e0;
+}
+
+.weight-item {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.table-container {
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    margin-bottom: 20px;
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+body.dark-mode .table-container {
+    background: #1e1e1e;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+}
+
+/* Table specific dark mode styles */
+body.dark-mode table {
+    color: #e0e0e0;
+}
+
+body.dark-mode table thead th {
+    background-color: #2d2d2d;
+    border-color: #444;
+    color: #e0e0e0;
+}
+
+body.dark-mode table tbody td {
+    border-color: #444;
+    background-color: #1e1e1e;
+}
+
+body.dark-mode table tbody tr:hover td {
+    background-color: #2d2d2d;
+}
+
+.back-button {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    padding: 8px 16px;
+    background: #6c757d;
+    color: white;
+    text-decoration: none;
+    border-radius: 4px;
+    margin-bottom: 15px;
+    transition: background-color 0.3s ease;
+}
+
+.back-button:hover {
+    background: #5a6268;
+    color: white;
+}
+
+/* Student name link styling */
+.student-link {
+    color: #007bff;
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.2s ease;
+}
+
+.student-link:hover {
+    color: #0056b3;
+    text-decoration: underline;
+}
+
+body.dark-mode .student-link {
+    color: #4dabf7;
+}
+
+body.dark-mode .student-link:hover {
+    color: #74c0fc;
+}
+
+.student-link i {
+    margin-left: 5px;
+    font-size: 12px;
+}
+
+@media (max-width: 768px) {
+    .filter-section {
+        flex-direction: column;
+    }
+    
+    .filter-group {
+        width: 100%;
+    }
+}
+
+.badge {
+    padding: 4px 8px;
+    border-radius: 12px;
+    font-size: 11px;
+    font-weight: 600;
+    color: white;
+    text-transform: uppercase;
+}
+
+.badge-success { background-color: #28a745; }
+.badge-primary { background-color: #007bff; }
+.badge-info { background-color: #17a2b8; }
+.badge-warning { background-color: #ffc107; color: #212529; }
+.badge-danger { background-color: #dc3545; }
+.badge-secondary { background-color: #6c757d; }
+
+/* Special rank badges */
+.badge-gold { 
+    background-color: #FFD700; 
+    color: #000; 
+    font-weight: bold;
+}
+.badge-silver { 
+    background-color: #C0C0C0; 
+    color: #000; 
+    font-weight: bold;
+}
+.badge-bronze { 
+    background-color: #CD7F32; 
+    color: #000; 
+    font-weight: bold;
+}
+
+/* Additional dark mode utility classes */
+body.dark-mode {
+    color: #e0e0e0;
+}
+
+/* Form elements in dark mode */
+body.dark-mode input,
+body.dark-mode textarea {
+    background-color: #2d2d2d;
+    border-color: #444;
+    color: #e0e0e0;
+}
+
+body.dark-mode input:focus,
+body.dark-mode textarea:focus,
+body.dark-mode select:focus {
+    border-color: #4dabf7;
+    box-shadow: 0 0 0 0.2rem rgba(77, 171, 247, 0.25);
+}
