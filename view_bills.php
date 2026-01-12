@@ -1,13 +1,25 @@
 <?php
 require_once 'config.php';
 require_once 'session.php';
+require_once 'rbac.php';
 
+// For admin-only pages
+requirePermission('admin');
 // Fetch all billing records with prepared statements
 $bills = [];
-$sql = "SELECT b.*, t.term_name, c.class_name
+$sql = "SELECT b.id, 
+               b.payment_type, 
+               b.amount, 
+               b.due_date, 
+               b.description,
+               b.academic_year_id,
+               t.term_name, 
+               c.class_name,
+               ay.year_name AS academic_year
         FROM billing b
         LEFT JOIN terms t ON b.term_id = t.id
-        LEFT JOIN classes c ON b.class_id = c.id
+        LEFT JOIN classes c ON b.class_id = c.id  
+        LEFT JOIN academic_years ay ON b.academic_year_id = ay.id
         ORDER BY b.due_date DESC";
 
 $stmt = $conn->prepare($sql);
@@ -28,10 +40,12 @@ if ($result->num_rows > 0) {
 $dropdownData = [];
 $sql = "(SELECT 'term' AS type, id, term_name AS name FROM terms)
         UNION
-        (SELECT 'class' AS type, id, class_name AS name FROM classes ORDER BY name)
+        (SELECT 'class' AS type, id, class_name AS name FROM classes)
         UNION
-        (SELECT 'year' AS type, academic_year AS id, academic_year AS name FROM billing GROUP BY academic_year ORDER BY name DESC)";
-
+        (SELECT 'year' AS type, ay.id, ay.year_name AS name 
+         FROM academic_years ay 
+         WHERE ay.id IN (SELECT DISTINCT academic_year_id FROM billing WHERE academic_year_id IS NOT NULL))
+        ORDER BY type, name";
 $stmt = $conn->prepare($sql);
 $stmt->execute();
 $result = $stmt->get_result();
@@ -45,7 +59,9 @@ while ($row = $result->fetch_assoc()) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="mobile-web-app-capable" content="yes">
     <title>Billing Records - GEBSCO</title>
+    <?php include 'favicon.php'; ?>
     <link rel="stylesheet" href="css/dashboard.css">
     <link rel="stylesheet" href="css/db.css">
     <link rel="stylesheet" href="css/viewbills.css">
@@ -74,58 +90,138 @@ while ($row = $result->fetch_assoc()) {
                 </nav>
             </div>
             
-            <div class="card">
-                <div class="card-header">
-                    <h3>Billing Records</h3>
-                    <div class="header-actions">
-                        <button id="addBillBtn" class="btn btn-primary">
-                            <i class="fas fa-plus"></i> Add New Bill
-                        </button>
-                    </div>
-                </div>
-                
+<div class="card">
+    <div class="card-header">
+        <h3>Billing Records</h3>
+        <div class="header-actions">
+            <a href="bill-report.php" class="my-link">
+                <i class="fas fa-file-invoice"></i> View Report
+            </a>
+            <button id="addBillBtn" class="btn btn-primary">
+                <i class="fas fa-plus"></i> Add New Bill
+            </button>
+        </div>
+    </div>
+    
+    <!-- Filter Controls -->
+    <div class="filter-controls">
+  <div class="filter-group">
+    <label for="academicYearFilter">Academic Year:</label>
+    <select id="academicYearFilter" class="filter-select">
+        <option value="">All Academic Years</option>
+        <?php
+        $year_sql = "SELECT DISTINCT ay.id, ay.year_name, ay.is_current 
+                    FROM academic_years ay 
+                    JOIN billing b ON ay.id = b.academic_year_id 
+                    ORDER BY ay.year_name DESC";
+        $year_result = $conn->query($year_sql);
+        while ($year = $year_result->fetch_assoc()) {
+            $selected = $year['is_current'] ? 'selected' : '';
+            echo "<option value='{$year['id']}' $selected>{$year['year_name']}</option>";
+        }
+        ?>
+    </select>
+</div>
+
+        <div class="filter-group">
+            <label for="paymentTypeFilter">Payment Type:</label>
+            <select id="paymentTypeFilter" class="filter-select">
+                <option value="">All Payment Types</option>
+                <?php
+                $type_sql = "SELECT DISTINCT payment_type FROM billing ORDER BY payment_type";
+                $type_result = $conn->query($type_sql);
+                while ($type = $type_result->fetch_assoc()) {
+                    echo "<option value='{$type['payment_type']}'>{$type['payment_type']}</option>";
+                }
+                ?>
+            </select>
+        </div>
+
+        <div class="filter-group">
+            <label for="classFilter">Class:</label>
+            <select id="classFilter" class="filter-select">
+                <option value="">All Classes</option>
+                <?php
+                $class_sql = "SELECT DISTINCT c.id, c.class_name 
+                             FROM classes c 
+                             JOIN billing b ON c.id = b.class_id 
+                             ORDER BY c.class_name";
+                $class_result = $conn->query($class_sql);
+                while ($class = $class_result->fetch_assoc()) {
+                    echo "<option value='{$class['class_name']}'>{$class['class_name']}</option>";
+                }
+                ?>
+            </select>
+        </div>
+
+        <div class="filter-group">
+            <label for="termFilter">Term:</label>
+            <select id="termFilter" class="filter-select">
+                <option value="">All Terms</option>
+                <?php
+                $term_sql = "SELECT DISTINCT t.id, t.term_name 
+                            FROM terms t 
+                            JOIN billing b ON t.id = b.term_id 
+                            ORDER BY t.term_order";
+                $term_result = $conn->query($term_sql);
+                while ($term = $term_result->fetch_assoc()) {
+                    echo "<option value='{$term['term_name']}'>{$term['term_name']}</option>";
+                }
+                ?>
+            </select>
+        </div>
+        
+        <div class="filter-group">
+            <button id="clearFilters" class="btn-clear-filters">
+                <i class="fas fa-times"></i> Clear Filters
+            </button>
+        </div>
+    </div>
+</div>     
                 <div class="card-body">
                     <div class="table-responsive">
                     <div class="table-card">
-                        <table id="billingTable" class="display responsive nowrap" style="width:100%">
-                            <thead>
-                                <tr>
-                                    <th>Payment Type</th>
-                                    <th class="dt-right">Amount</th>
-                                    <th>Term</th>
-                                    <th>Academic Year</th>
-                                    <th>Due Date</th>
-                                    <th>Class</th>
-                                    <th>Description</th>
-                                    <th>Actions</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <?php foreach ($bills as $bill): ?>
-                                <tr>
-                                    <td><?= htmlspecialchars($bill['payment_type'], ENT_QUOTES, 'UTF-8') ?></td>
-                                    <td class="dt-right"><?= number_format($bill['amount'], 2) ?></td>
-                                    <td><?= htmlspecialchars($bill['term_name'], ENT_QUOTES, 'UTF-8') ?></td>
-                                    <td><?= htmlspecialchars($bill['academic_year'], ENT_QUOTES, 'UTF-8') ?></td>
-                                    <td><?= date('M j, Y', strtotime($bill['due_date'])) ?></td>
-                                    <td><?= htmlspecialchars($bill['class_name'] ?? 'N/A', ENT_QUOTES, 'UTF-8') ?></td>
-                                    <td><?= htmlspecialchars($bill['description'], ENT_QUOTES, 'UTF-8') ?></td>
-                                    <td>
-                                        <button class="btn-icon edit-payment" 
-                                                data-id="<?= $bill['id'] ?>"
-                                                title="Edit">
-                                            <i class="fas fa-edit"></i>
-                                        </button>
-                                        <button class="btn-icon delete-payment" 
-                                                data-id="<?= $bill['id'] ?>"
-                                                title="Delete">
-                                            <i class="fas fa-trash-alt"></i>
-                                        </button>
-                                    </td>
-                                </tr>
-                                <?php endforeach; ?>
-                            </tbody>
-                        </table>
+                     <table id="billingTable" class="display responsive nowrap" style="width:100%">
+    <thead>
+        <tr>
+            <th>Payment Type</th>
+            <th class="dt-right">Amount</th>
+            <th>Term</th>
+            <th>Academic Year</th>
+            <th>Due Date</th>
+            <th>Class</th>
+            <th>Description</th>
+            <th>Actions</th>
+            <th style="display: none;">Academic Year ID</th> <!-- Hidden column -->
+        </tr>
+    </thead>
+    <tbody>
+        <?php foreach ($bills as $bill): ?>
+        <tr>
+            <td><?= htmlspecialchars($bill['payment_type'] ?? '', ENT_QUOTES, 'UTF-8') ?></td>
+            <td class="dt-right"><?= number_format($bill['amount'] ?? 0, 2) ?></td>
+            <td><?= htmlspecialchars($bill['term_name'] ?? 'N/A', ENT_QUOTES, 'UTF-8') ?></td>
+            <td><?= htmlspecialchars($bill['academic_year'] ?? 'N/A', ENT_QUOTES, 'UTF-8') ?></td>
+            <td><?= $bill['due_date'] ? date('M j, Y', strtotime($bill['due_date'])) : 'N/A' ?></td>
+            <td><?= htmlspecialchars($bill['class_name'] ?? 'N/A', ENT_QUOTES, 'UTF-8') ?></td>
+            <td><?= htmlspecialchars($bill['description'] ?? '', ENT_QUOTES, 'UTF-8') ?></td>
+            <td>
+                <button class="btn-icon edit-payment" 
+                        data-id="<?= $bill['id'] ?>"
+                        title="Edit">
+                    <i class="fas fa-edit"></i>
+                </button>
+                <button class="btn-icon delete-payment" 
+                        data-id="<?= $bill['id'] ?>"
+                        title="Delete">
+                    <i class="fas fa-trash-alt"></i>
+                </button>
+            </td>
+            <td style="display: none;"><?= $bill['academic_year_id'] ?></td> <!-- Hidden data -->
+        </tr>
+        <?php endforeach; ?>
+    </tbody>
+</table>
                     </div>
                 </div>
             </div>
@@ -186,15 +282,13 @@ while ($row = $result->fetch_assoc()) {
                         <?php endforeach; ?>
                     </select>
                 </div>
-
-               <div class="form-group">
-    <label for="academic_year">Academic Year*</label>
-    <select id="academic_year" name="academic_year" required>
+<div class="form-group">
+    <label for="academic_year_id">Academic Year*</label>
+    <select id="academic_year_id" name="academic_year_id" required>
         <?php
         // Fetch academic years from DB
         $sql = "SELECT id, year_name, is_current FROM academic_years ORDER BY year_name DESC";
         $result = $conn->query($sql);
-
         if ($result && $result->num_rows > 0) {
             while ($row = $result->fetch_assoc()) {
                 // Mark current academic year as selected

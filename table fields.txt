@@ -1,0 +1,72 @@
+ table fields
+ academinc year 
+Full texts
+id
+year_name
+is_current
+created_at billing 
+Full texts
+id
+payment_type
+class_id
+amount
+term_id
+academic_year_id
+due_date
+description
+created_at
+updated_at 
+
+classes 
+id
+class_name
+class_teacher_id
+academic_year
+description
+created_at 
+
+payments 
+Full texts
+id
+receipt_no
+student_id
+payment_date
+payment_type
+term_id
+academic_year_id
+amount
+payment_method
+status
+description
+collected_by_user_id
+created_at 
+
+students 
+Full texts
+id
+student_id
+first_name
+last_name
+dob
+gender
+address
+parent_name
+parent_contact
+email
+class_id
+status
+created_at 
+
+terms 
+Full texts
+id
+term_name
+term_order
+created_at 
+
+tuition_fees 
+Full texts
+id
+billing_id
+sub_fee_name
+sub_fee_amount

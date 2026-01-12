@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Student Billing Form</title>
+    <?php include 'favicon.php'; ?>
     <style>
         body {
             font-family: Arial, sans-serif;

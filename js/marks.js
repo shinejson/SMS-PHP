@@ -686,31 +686,40 @@ convertMarkTypeForServer(markType) {
         }
     }
 
-    handleAddMarkClick(btn) {
-        const row = btn.closest('.form-group-row');
-        const marksFields = row.querySelector('.marks-fields');
-        let markCount = row.querySelectorAll('.mark-input').length;
-        
-        if (markCount < 10) {
-            markCount++;
-            const newMarkField = document.createElement('div');
-            newMarkField.className = 'form-group';
-            newMarkField.innerHTML = `
-                <label>Mark ${markCount} <button type="button" class="btn-remove-mark" data-mark="${markCount}">×</button></label>
-                <input type="number" name="mark${markCount}[]" min="0" max="100" step="0.01" class="mark-input" data-mark="${markCount}">
-            `;
-            marksFields.appendChild(newMarkField);
-            
-            // Add event listener for new mark input
-            const newInput = newMarkField.querySelector('.mark-input');
-            newInput.addEventListener('input', () => this.calculateTotal(row));
-            
-            // Recalculate total
-            this.calculateTotal(row);
-        } else {
-            this.showMessage('Maximum 10 marks allowed per subject.', 'alert-warning');
-        }
+  handleAddMarkClick(btn) {
+    const row = btn.closest('.form-group-row');
+    const marksFields = row.querySelector('.marks-fields');
+    let markCount = row.querySelectorAll('.mark-input').length;
+    
+    // Check current total before adding new field
+    const totalInput = row.querySelector('.total-marks');
+    const currentTotal = parseFloat(totalInput.value) || 0;
+    
+    if (currentTotal >= 100) {
+        this.showMessage('Maximum 100% already reached. Cannot add more marks.', 'alert-warning');
+        return;
     }
+    
+    if (markCount < 10) {
+        markCount++;
+        const newMarkField = document.createElement('div');
+        newMarkField.className = 'form-group';
+        newMarkField.innerHTML = `
+            <label>Mark ${markCount} <button type="button" class="btn-remove-mark" data-mark="${markCount}">×</button></label>
+            <input type="number" name="mark${markCount}[]" min="0" max="100" step="0.01" class="mark-input" data-mark="${markCount}">
+        `;
+        marksFields.appendChild(newMarkField);
+        
+        // Add event listener for new mark input
+        const newInput = newMarkField.querySelector('.mark-input');
+        newInput.addEventListener('input', () => this.calculateTotal(row));
+        
+        // Recalculate total
+        this.calculateTotal(row);
+    } else {
+        this.showMessage('Maximum 10 marks allowed per subject.', 'alert-warning');
+    }
+}
 
     handleMarkTypeChange(e) {
         if (e.target.value) {
@@ -1112,62 +1121,63 @@ handleEditMarkFormSubmit(e) {
         }
     }
 
-    addSubjectInput() {
-        const newSubjectRow = document.createElement('div');
-        newSubjectRow.classList.add('form-group-row');
-        newSubjectRow.innerHTML = `
-            <div class="form-group subject-group">
-                <label>Subject</label>
-                <select name="subject_id[]" class="subject-select" required>
-                    <option value="">Select Subject</option>
-                    ${subjectsData.map(subject => `<option value="${subject.subject_id}">${subject.subject_name}</option>`).join('')}
-                </select>
-            </div>
-            <div class="marks-container" style="display:none;">
-                <div class="marks-fields">
-                    <div class="form-group">
-                        <label>Mark 1</label>
-                        <input type="number" name="mark1[]" min="0" max="100" step="0.01" class="mark-input" data-mark="1">
-                    </div>
-                    <div class="form-group">
-                        <label>Mark 2</label>
-                        <input type="number" name="mark2[]" min="0" max="100" step="0.01" class="mark-input" data-mark="2">
-                    </div>
-                    <div class="form-group">
-                        <label>Mark 3</label>
-                        <input type="number" name="mark3[]" min="0" max="100" step="0.01" class="mark-input" data-mark="3">
-                    </div>
+addSubjectInput() {
+    const newSubjectRow = document.createElement('div');
+    newSubjectRow.classList.add('form-group-row');
+    newSubjectRow.innerHTML = `
+        <div class="form-group subject-group">
+            <label>Subject</label>
+            <select name="subject_id[]" class="subject-select" required>
+                <option value="">Select Subject</option>
+                ${subjectsData.map(subject => `<option value="${subject.subject_id}">${subject.subject_name}</option>`).join('')}
+            </select>
+        </div>
+        <div class="marks-container" style="display:none;">
+            <div class="marks-fields">
+                <div class="form-group">
+                    <label>Mark 1</label>
+                    <input type="number" name="mark1[]" min="0" max="100" step="0.01" class="mark-input" data-mark="1">
                 </div>
-                <div class="marks-controls">
-                    <button type="button" class="btn-add-mark" title="Add More Mark">
-                        <i class="fas fa-plus"></i> Add Mark
-                    </button>
-                    <button type="button" class="btn-calculate" title="Calculate Total">
-                        <i class="fas fa-calculator"></i> Calculate
-                    </button>
+                <div class="form-group">
+                    <label>Mark 2</label>
+                    <input type="number" name="mark2[]" min="0" max="100" step="0.01" class="mark-input" data-mark="2">
                 </div>
-                <div class="total-display">
-                    <label>Total Marks</label>
-                    <input type="number" name="total_marks[]" class="total-marks" readonly>
+                <div class="form-group">
+                    <label>Mark 3</label>
+                    <input type="number" name="mark3[]" min="0" max="100" step="0.01" class="mark-input" data-mark="3">
                 </div>
             </div>
-            <button type="button" class="btn-remove btn-icon" title="Remove Subject">
-                <i class="fas fa-times-circle"></i>
-            </button>
-        `;
-        
-        this.cachedElements.subjectFieldsContainer.appendChild(newSubjectRow);
+            <div class="marks-controls">
+                <button type="button" class="btn-add-mark" title="Add More Mark">
+                    <i class="fas fa-plus"></i> Add Mark
+                </button>
+                <button type="button" class="btn-calculate" title="Calculate Total">
+                    <i class="fas fa-calculator"></i> Calculate
+                </button>
+            </div>
+            <div class="total-display">
+                <label>Total Marks</label>
+                <input type="number" name="total_marks[]" class="total-marks" readonly>
+                <!-- Max reached message will be inserted here dynamically -->
+            </div>
+        </div>
+        <button type="button" class="btn-remove btn-icon" title="Remove Subject">
+            <i class="fas fa-times-circle"></i>
+        </button>
+    `;
+    
+    this.cachedElements.subjectFieldsContainer.appendChild(newSubjectRow);
 
-        // Add event listener to the new subject select
-        const newSubjectSelect = newSubjectRow.querySelector('.subject-select');
-        newSubjectSelect.addEventListener('change', (e) => {
-            const marksContainer = newSubjectRow.querySelector('.marks-container');
-            marksContainer.style.display = e.target.value ? 'block' : 'none';
-        });
+    // Add event listener to the new subject select
+    const newSubjectSelect = newSubjectRow.querySelector('.subject-select');
+    newSubjectSelect.addEventListener('change', (e) => {
+        const marksContainer = newSubjectRow.querySelector('.marks-container');
+        marksContainer.style.display = e.target.value ? 'block' : 'none';
+    });
 
-        // Setup mark calculations
-        this.setupMarkCalculation(newSubjectRow);
-    }
+    // Setup mark calculations
+    this.setupMarkCalculation(newSubjectRow);
+}
 
     setupMarkCalculation(row) {
         const markInputs = row.querySelectorAll('.mark-input');
@@ -1182,46 +1192,124 @@ handleEditMarkFormSubmit(e) {
         calculateBtn.addEventListener('click', () => this.calculateTotal(row));
     }
 
-    calculateTotal(row) {
-        const inputs = row.querySelectorAll('.mark-input');
-        const totalInput = row.querySelector('.total-marks');
-        let total = 0;
-        let hasValues = false;
+calculateTotal(row) {
+    const inputs = row.querySelectorAll('.mark-input');
+    const totalInput = row.querySelector('.total-marks');
+    const addMarkBtn = row.querySelector('.btn-add-mark');
+    let total = 0;
+    let hasValues = false;
 
-        inputs.forEach(input => {
-            const value = parseFloat(input.value) || 0;
-            if (value > 0) hasValues = true;
-            total += value;
-        });
+    inputs.forEach(input => {
+        const value = parseFloat(input.value) || 0;
+        if (value > 0) hasValues = true;
+        total += value;
+        
+        // Enable/disable input based on total
+        if (total >= 100 && input.value === '') {
+            input.disabled = true;
+            input.placeholder = 'Max reached';
+        } else {
+            input.disabled = false;
+            input.placeholder = '';
+        }
+    });
 
-        totalInput.value = hasValues ? total.toFixed(2) : '';
+    totalInput.value = hasValues ? total.toFixed(2) : '';
+
+    // Enable/disable the "Add Mark" button
+    if (addMarkBtn) {
+        if (total >= 100) {
+            addMarkBtn.disabled = true;
+            addMarkBtn.title = 'Maximum 100% reached';
+            addMarkBtn.classList.add('disabled');
+        } else {
+            addMarkBtn.disabled = false;
+            addMarkBtn.title = 'Add More Mark';
+            addMarkBtn.classList.remove('disabled');
+        }
     }
 
-    showAddMarkModal() {
-        this.showModal('addMarkModal');
+    // NEW: Validation for total > 100
+    if (total > 100) {
+        totalInput.classList.add('invalid');
+        this.showMessage('Total marks cannot exceed 100%', 'alert-danger');
         
-        // Clear form
-        if (this.cachedElements.marksForm) {
-            this.cachedElements.marksForm.reset();
-        }
+        // Disable all empty inputs when over 100%
+        inputs.forEach(input => {
+            if (input.value === '') {
+                input.disabled = true;
+                input.placeholder = 'Max exceeded';
+            }
+        });
+    } else {
+        totalInput.classList.remove('invalid');
         
-        this.cachedElements.subjectFieldsContainer.style.display = 'none';
-        this.cachedElements.addSubjectBtn.style.display = 'none';
-        this.cachedElements.subjectFieldsContainer.innerHTML = '';
-        
-        if (this.cachedElements.studentSelect) {
-            this.cachedElements.studentSelect.disabled = true;
-            this.cachedElements.studentSelect.innerHTML = '<option value="">First select a class</option>';
-        }
-        
-        // Auto-select current academic year
-        if (this.cachedElements.yearSelect) {
-            const currentYearOption = this.cachedElements.yearSelect.querySelector('option[data-is-current="1"]');
-            if (currentYearOption) {
-                currentYearOption.selected = true;
+        // Re-enable inputs if back under 100%
+        inputs.forEach(input => {
+            if (total < 100) {
+                input.disabled = false;
+                input.placeholder = '';
+            }
+        });
+    }
+    
+    // Show/hide max reached message
+    this.toggleMaxReachedMessage(row, total);
+}
+
+toggleMaxReachedMessage(row, total) {
+    let maxMessage = row.querySelector('.max-reached-message');
+    
+    if (total >= 100) {
+        if (!maxMessage) {
+            maxMessage = document.createElement('div');
+            maxMessage.className = 'max-reached-message';
+            maxMessage.style.color = '#28a745';
+            maxMessage.style.fontSize = '12px';
+            maxMessage.style.marginTop = '5px';
+            maxMessage.style.fontWeight = 'bold';
+            maxMessage.innerHTML = '<i class="fas fa-check-circle"></i> Maximum 100% reached';
+            
+            const totalDisplay = row.querySelector('.total-display');
+            if (totalDisplay) {
+                totalDisplay.appendChild(maxMessage);
             }
         }
+    } else {
+        if (maxMessage) {
+            maxMessage.remove();
+        }
     }
+}
+  showAddMarkModal() {
+    this.showModal('addMarkModal');
+    if (this.cachedElements.marksForm) {
+        this.cachedElements.marksForm.reset();
+    }
+    this.cachedElements.subjectFieldsContainer.style.display = 'none';
+    this.cachedElements.addSubjectBtn.style.display = 'none';
+    this.cachedElements.subjectFieldsContainer.innerHTML = '';
+
+    // NEW: Disable midterm fields if weight = 0
+    const midWeight = parseInt(document.getElementById('mid_weight')?.value || "0");
+    const midtermFields = document.querySelectorAll('.midterm-input'); // class for midterm mark fields
+    midtermFields.forEach(field => {
+        field.disabled = midWeight === 0;
+    });
+
+    if (this.cachedElements.studentSelect) {
+        this.cachedElements.studentSelect.disabled = true;
+        this.cachedElements.studentSelect.innerHTML = '<option value="">First select a class</option>';
+    }
+
+    if (this.cachedElements.yearSelect) {
+        const currentYearOption = this.cachedElements.yearSelect.querySelector('option[data-is-current="1"]');
+        if (currentYearOption) {
+            currentYearOption.selected = true;
+        }
+    }
+}
+
 
     showModal(modalId) {
         // Hide all modals first
@@ -1293,6 +1381,10 @@ showMessage(message, type) {
         messageElement.style.backgroundColor = '#fff3cd';
         messageElement.style.color = '#856404';
         messageElement.style.border = '1px solid #ffeaa7';
+    } else {
+        messageElement.style.backgroundColor = '#d1ecf1';
+        messageElement.style.color = '#0c5460';
+        messageElement.style.border = '1px solid #bee5eb';
     }
     
     messageContainer.appendChild(messageElement);
@@ -1361,25 +1453,53 @@ addMessageStyles() {
         
         .close-message:hover {
             color: #000;
+            opacity: 0.8;
+        }
+        
+        .invalid {
+            border-color: #dc3545 !important;
+        }
+        
+        .valid {
+            border-color: #28a745 !important;
+        }
+        
+        .error {
+            color: #dc3545 !important;
+            font-weight: bold;
+        }
+        
+        .ok {
+            color: #28a745 !important;
+            font-weight: bold;
+        }
+        
+        .disabled {
+            opacity: 0.6;
+            cursor: not-allowed !important;
         }
     `;
     
     document.head.appendChild(style);
 }
 
+// KEEP ONLY ONE removeAllMessages() method - remove the duplicate!
 removeAllMessages() {
     const messageContainer = document.getElementById('message-container');
     if (messageContainer) {
-        messageContainer.innerHTML = '';
+        // Add fade-out animation before removing
+        const messages = messageContainer.querySelectorAll('.message-alert');
+        messages.forEach(message => {
+            message.style.animation = 'slideOut 0.3s ease-in';
+        });
+        
+        // Remove after animation completes
+        setTimeout(() => {
+            messageContainer.innerHTML = '';
+        }, 300);
     }
 }
 
-removeAllMessages() {
-    const messageContainer = document.getElementById('message-container');
-    if (messageContainer) {
-        messageContainer.innerHTML = '';
-    }
-}
 
     initScoresDataTables() {
         const tables = {
@@ -2062,7 +2182,7 @@ calculateEditTotal() {
         // This is now handled by event delegation in handleDocumentClick
     }
 
-  validateWeights() {
+validateWeights() {
     const mid = parseInt(document.getElementById("mid_weight").value) || 0;
     const classW = parseInt(document.getElementById("class_weight").value) || 0;
     const exam = parseInt(document.getElementById("exam_weight").value) || 0;
@@ -2073,6 +2193,15 @@ calculateEditTotal() {
 
     if (totalDisplay) {
         totalDisplay.textContent = "Total: " + total + "%";
+        
+        // Update styling based on validation
+        if (total === 100) {
+            totalDisplay.classList.remove("error");
+            totalDisplay.classList.add("ok");
+        } else {
+            totalDisplay.classList.remove("ok");
+            totalDisplay.classList.add("error");
+        }
     }
 
     const inputs = [
@@ -2081,36 +2210,65 @@ calculateEditTotal() {
         document.getElementById("exam_weight")
     ];
 
-    if (total !== 100) {
-        inputs.forEach(el => { 
-            if (el) {
-                el.classList.add("invalid"); 
-                el.classList.remove("valid"); 
+    // Validate each input
+    inputs.forEach(input => {
+        if (input) {
+            const value = parseInt(input.value) || 0;
+            if (value < 0 || value > 100) {
+                input.classList.add("invalid");
+                input.classList.remove("valid");
+            } else {
+                input.classList.remove("invalid");
+                input.classList.add("valid");
             }
-        });
-        if (totalDisplay) {
-            totalDisplay.classList.add("error");
-            totalDisplay.classList.remove("ok");
         }
+    });
+
+    if (total !== 100) {
         if (saveBtn) {
             saveBtn.disabled = true;
             saveBtn.classList.add('disabled');
         }
-    } else {
-        inputs.forEach(el => { 
-            if (el) {
-                el.classList.add("valid"); 
-                el.classList.remove("invalid"); 
-            }
-        });
+        
+        // Show error message if total is not 100%
         if (totalDisplay) {
-            totalDisplay.classList.add("ok");
-            totalDisplay.classList.remove("error");
+            this.showMessage(`Total weight must equal 100%. Currently: ${total}%`, 'alert-danger');
         }
+    } else {
         if (saveBtn) {
             saveBtn.disabled = false;
             saveBtn.classList.remove('disabled');
         }
+        
+        // Remove any error messages when valid
+        this.removeAllMessages();
+    }
+    
+    // NEW: Update midterm option based on weight
+    this.updateMidtermOption(mid);
+}
+
+// NEW: Method to update midterm option
+updateMidtermOption(midWeight) {
+    const markTypeSelect = document.getElementById('mark_type');
+    if (!markTypeSelect) return;
+    
+    const midtermOption = markTypeSelect.querySelector('option[value="midterm"]');
+    if (!midtermOption) return;
+    
+    if (midWeight === 0) {
+        midtermOption.disabled = true;
+        midtermOption.style.display = 'none';
+        
+        // If midterm is currently selected, reset to empty
+        if (markTypeSelect.value === 'midterm') {
+            markTypeSelect.value = '';
+            // Trigger change event to update the form
+            markTypeSelect.dispatchEvent(new Event('change'));
+        }
+    } else {
+        midtermOption.disabled = false;
+        midtermOption.style.display = 'block';
     }
 }
 }

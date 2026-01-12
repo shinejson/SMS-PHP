@@ -142,37 +142,31 @@ while ($row = $result->fetch_assoc()) {
 
 // Calculate ranks within each group
 foreach ($groupedData as $groupKey => $group) {
-    // Sort by final_grade descending
+    error_log("Group Key: $groupKey, Count: " . count($group));
     usort($group, function($a, $b) {
         return $b['final_grade'] <=> $a['final_grade'];
     });
     
-    // Assign ranks
     $rank = 1;
     $prevScore = null;
     $sameRankCount = 0;
     
     foreach ($group as $index => $studentMark) {
         $currentScore = $studentMark['final_grade'];
-        
         if ($prevScore !== null && $currentScore == $prevScore) {
             $sameRankCount++;
         } else {
             $rank += $sameRankCount;
             $sameRankCount = 1;
         }
-        
-        // Add rank to the student data
         $group[$index]['rank'] = $rank;
         $prevScore = $currentScore;
+        error_log("Student: {$studentMark['student_name']}, Rank: $rank, Final Grade: $currentScore");
     }
-    
-    // Add the ranked group back to the main data
     foreach ($group as $rankedRow) {
         $masterMarksData[] = $rankedRow;
     }
 }
-
     echo json_encode($masterMarksData);
 
 } catch (Exception $e) {

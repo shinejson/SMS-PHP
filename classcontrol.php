@@ -216,4 +216,14 @@ if ($result && $result->num_rows > 0) {
         $teachers[] = $row;
     }
 }
+
+// Fetch academic years from academic_years table
+$academic_years = [];
+$sql = "SELECT * FROM academic_years ORDER BY year_name DESC";
+$result = $conn->query($sql);
+if ($result && $result->num_rows > 0) {
+    while ($row = $result->fetch_assoc()) {
+        $academic_years[] = $row;
+    }
+}
 ?>

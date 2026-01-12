@@ -12,6 +12,7 @@
     ],
     "require": {
         "phpmailer/phpmailer": "^6.10",
-        "setasign/fpdi-tcpdf": "^2.3"
+        "setasign/fpdi": "^2.6",
+        "tecnickcom/tcpdf": "^6.10"
     }
 }

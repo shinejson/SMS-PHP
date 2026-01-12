@@ -41,7 +41,22 @@ body.dark-mode .sidebar {
 body.dark-mode .sidebar-header {
     border-bottom-color: var(--dark-mode-border);
 }
+.activity-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: #e9ecef;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 15px;
+    flex-shrink: 0;
+}
 
+.activity-icon i {
+    color: #495057;
+    font-size: 16px;
+}
 body.dark-mode .sidebar-nav li a {
     color: rgba(255, 255, 255, 0.7);
 }
@@ -315,21 +330,10 @@ body.dark-mode .mobile-menu-btn:hover {
 .sidebar-nav .dropdown.open .dropdown-toggle .dropdown-arrow {
     transform: rotate(180deg);
 }
-
-.sidebar-nav .dropdown-menu {
-    max-height: 0;
-    overflow: hidden;
-    transition: max-height 0.3s ease-out, opacity 0.3s ease;
-    opacity: 0;
-    background-color: rgba(255, 255, 255, 0.05);
-    margin: 0;
-    padding: 0;
-    list-style: none;
-}
-
 .sidebar-nav .dropdown.open .dropdown-menu {
     max-height: 300px;
     opacity: 1;
+    display: block;
 }
 
 .sidebar-nav .dropdown-menu li {
@@ -338,13 +342,102 @@ body.dark-mode .mobile-menu-btn:hover {
 
 .sidebar-nav .dropdown-menu li a {
     display: block;
-    padding: 0.6rem 1.5rem 0.6rem 3rem;
     color: rgba(255, 255, 255, 0.7);
     text-decoration: none;
     font-size: 0.9rem;
     transition: all 0.2s ease;
     border-radius: 4px;
     margin: 2px 8px;
+    padding-left: 3.5rem; /* Indent sub-items */
+   
+}
+
+.sidebar.sidebar-collapsed .sidebar-nav .dropdown-menu {
+    width: 190px;           /* Reduced width for a cleaner look */
+    background: #2c3e50;    /* Match your primary color */
+    padding: 8px 0;
+    border-radius: 0 8px 8px 0;
+    box-shadow: 5px 0 15px rgba(0, 0, 0, 0.3);
+    border-left: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.sidebar.sidebar-collapsed .sidebar-nav .dropdown-menu span {
+    display: inline-block !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+    margin-left: 10px; /* Space between icon and text */
+    font-size: 0.85rem;
+}
+
+.sidebar.sidebar-collapsed .sidebar-nav .dropdown-menu li a {
+    padding: 10px 15px;
+    display: flex;
+    align-items: center;
+    white-space: nowrap;    /* Prevents text from wrapping to a new line */
+    transition: background 0.2s;
+}
+
+.sidebar.sidebar-collapsed .sidebar-nav .dropdown-menu li a i {
+    width: 20px;
+    text-align: center;
+    font-size: 1rem;
+}
+
+/* 1. The main active item */
+.sidebar-nav li.active > a {
+    background: var(--secondary-color); /* The blue color from your root */
+    color: #ffffff !important;           /* Force text to white */
+    border-radius: 8px;                 /* Matches your design */
+    margin: 0 10px;                     /* Adds slight padding around the active block */
+}
+
+/* 3. Dark Mode Support */
+body.dark-mode .sidebar-nav li.active > a {
+    background: #34495e;                /* Slightly lighter than primary in dark mode */
+    border-left: 4px solid var(--secondary-color); /* Optional: add an accent line */
+}
+
+/* 4. Active state in Collapsed Mode */
+.sidebar.sidebar-collapsed .sidebar-nav li.active > a {
+    margin: 5px;                        /* Tighter margin for small icons */
+    justify-content: center;
+}
+
+.sidebar.sidebar-collapsed .sidebar-nav .dropdown-menu li a:hover {
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.sidebar-nav .dropdown.open > .dropdown-menu {
+    display: block;
+}
+
+.sidebar-nav .dropdown-menu li a i {
+    width: 20px; /* Aligns icons vertically */
+    margin-right: 10px;
+    font-size: 0.9rem; /* Makes sub-icons slightly smaller */
+    opacity: 0.8;
+}
+
+.main-content, .main-wrapper {
+    margin-left: 250px; /* Standard sidebar width */
+    width: calc(100% - 250px);
+    transition: margin-left 0.3s ease, width 0.3s ease;
+}
+
+
+/* When the sidebar is collapsed (Desktop) */
+.main-content.sidebar-collapsed-desktop, 
+.main-wrapper.sidebar-collapsed-desktop {
+    margin-left: 80px; /* Match collapsed sidebar width */
+    width: calc(100% - 80px);
+}
+
+/* Mobile adjustments */
+@media (max-width: 768px) {
+    .main-content, .main-wrapper {
+        margin-left: 0 !important;
+        width: 100% !important;
+    }
 }
 
 .sidebar-nav .dropdown-menu li a:hover {
@@ -415,7 +508,7 @@ body.dark-mode .mobile-menu-btn:hover {
 
 /* Hide scrollbar for cleaner look */
 .sidebar::-webkit-scrollbar {
-    width: 4px;
+    width: 1px;
 }
 
 .sidebar::-webkit-scrollbar-track {
@@ -451,10 +544,11 @@ body.dark-mode .mobile-menu-btn:hover {
     align-items: center;
     justify-content: space-between;
     padding: 0 1.5rem;
-    position: sticky;
+    position:static;
     top: 0;
     z-index: 90;
     transition: background-color 0.4s ease, box-shadow 0.4s ease;
+    margin-right: 0px;
 }
 
 .search-bar {
@@ -582,13 +676,18 @@ body.dark-mode .user-menu:hover {
     width: 100%;
     height: 100%;
     background-color: rgba(0, 0, 0, 0.5);
-    z-index: 998;
+    z-index: 10000;
     opacity: 0;
     transition: opacity 0.3s ease;
     pointer-events: auto;
     backdrop-filter: blur(2px);
+
 }
 
+/* Ensure sidebar is above overlay */
+.sidebar {
+    z-index: 1000;
+}
 /* Top navigation dropdown styles - FIXED VERSION */
 .top-nav-dropdown {
     position: absolute;
@@ -1286,4 +1385,826 @@ body.dark-mode .btn-icon.delete-user:hover {
 body.dark-mode .btn-icon::after {
     background-color: #e9ecef;
     color: #333;
+}
+
+/* Chart Filter Styles */
+.filter-group {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.filter-select {
+    padding: 8px 12px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    background-color: white;
+    font-size: 14px;
+    min-width: 150px;
+}
+
+.filter-btn {
+    padding: 8px 16px;
+    background-color: #4e73df;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    transition: background-color 0.3s;
+}
+
+.filter-btn:hover {
+    background-color: #2e59d9;
+}
+
+.filter-btn.reset {
+    background-color: #6c757d;
+}
+
+.filter-btn.reset:hover {
+    background-color: #545b62;
+}
+
+.filter-btn:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+}
+
+.card-actions {
+    display: flex;
+    justify-content: flex-end;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+    .filter-group {
+        flex-direction: column;
+        align-items: stretch;
+    }
+    
+    .filter-select {
+        min-width: auto;
+        width: 100%;
+    }
+    
+    .filter-btn {
+        width: 100%;
+        justify-content: center;
+    }
+}
+/*
+ * Styles for the dashboard footer.
+ * This ensures the footer is consistently styled across the application.
+ */
+.dashboard-footer {
+    background-color: #f8f9fa; /* Light grey background */
+    color: #6c757d; /* Dark grey text color */
+    padding: 2rem 1rem;
+    text-align: center;
+    border-top: 1px solid #e9ecef; /* A subtle border on top */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.dashboard-footer p {
+    margin: 0;
+    font-size: 0.9rem;
+}
+
+.footer-links {
+    margin-top: 1rem;
+    display: flex;
+    gap: 1.5rem;
+}
+
+.footer-links a {
+    color: #007bff; /* A standard link color */
+    text-decoration: none;
+    font-size: 0.9rem;
+    transition: color 0.3s ease-in-out;
+}
+
+.footer-links a:hover {
+    color: #0056b3; /* Darker blue on hover */
+    text-decoration: underline;
+}
+
+/* Responsive styles for smaller screens */
+@media (max-width: 768px) {
+    .dashboard-footer {
+        padding: 1.5rem 0.5rem;
+    }
+
+    .footer-links {
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+}
+/* Dark Mode Toggle Styles */
+.dark-mode-toggle {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px;
+    border-radius: 8px;
+    transition: background-color 0.3s ease;
+}
+
+.dark-mode-toggle:hover {
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.dark-mode-toggle .fa-moon,
+.dark-mode-toggle .fa-sun {
+    color: #6c757d;
+    font-size: 16px;
+    transition: color 0.3s ease;
+}
+
+.dark-mode-toggle:hover .fa-moon,
+.dark-mode-toggle:hover .fa-sun {
+    color: #4e73df;
+}
+
+/* Switch Styles */
+.switch {
+    position: relative;
+    display: inline-block;
+    width: 50px;
+    height: 24px;
+}
+
+.switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    transition: .4s;
+}
+
+.slider:before {
+    position: absolute;
+    content: "";
+    height: 16px;
+    width: 16px;
+    left: 4px;
+    bottom: 4px;
+    background-color: white;
+    transition: .4s;
+}
+
+input:checked + .slider {
+    background-color: #4e73df;
+}
+
+input:checked + .slider:before {
+    transform: translateX(26px);
+}
+
+.slider.round {
+    border-radius: 24px;
+}
+
+.slider.round:before {
+    border-radius: 50%;
+}
+
+/* Dark mode styles for the toggle */
+.dark-mode .dark-mode-toggle .fa-sun {
+    color: #ffd54f;
+}
+
+.dark-mode .dark-mode-toggle:hover .fa-sun {
+    color: #ffeb3b;
+}
+
+.dark-mode .switch input:checked + .slider {
+    background-color: #63b3ed;
+}
+/* Fix for sidebar footer visibility */
+.sidebar {
+    z-index: 1000; /* Increased z-index */
+    display: flex;
+    flex-direction: column;
+}
+
+.sidebar-nav {
+    flex: 1;
+    overflow-y: auto;
+}
+
+.sidebar-footer {
+    position: relative; /* Changed from absolute */
+    margin-top: auto; /* Push to bottom */
+    background-color: var(--primary-color);
+    z-index: 1001;
+}
+
+/* Ensure main content doesn't overlap sidebar on mobile */
+@media (max-width: 768px) {
+    .main-content {
+        margin-left: 0;
+        transition: transform 0.3s ease;
+    }
+    
+    /* When sidebar is open on mobile, shift main content */
+    .sidebar:not(.sidebar-hidden) ~ .main-content {
+        transform: translateX(var(--sidebar-width));
+    }
+    
+    /* Mobile sidebar full height fix */
+    .sidebar {
+        position: fixed !important;
+        left: 0 !important;
+        top: 0;
+        bottom: 0;
+        width: 250px;
+        z-index: 10005 !important; /* Higher than the overlay (usually 10000) */
+        transition: transform 0.3s ease;
+        display: block !important;
+    }
+
+    /* Hidden state: Slide it off-screen */
+    .sidebar.sidebar-hidden {
+        transform: translateX(-100%);
+    }
+
+    /* Ensure content doesn't shift on mobile */
+    .main-content, .main-wrapper {
+        margin-left: 0 !important;
+        width: 100% !important;
+    }
+}
+
+/* Improved mobile menu button positioning */
+.mobile-menu-btn {
+    display: none; /* Hide by default */
+}
+
+@media (max-width: 768px) {
+    .mobile-menu-btn {
+        display: flex; /* Show on mobile */
+        z-index: 1002;
+    }
+    
+    /* Ensure topnav stays on top */
+    .top-nav {
+        z-index: 999;
+        position: sticky;
+        top: 0;
+    }
+}
+
+/* Fix for dark mode toggle and logout button spacing */
+.dark-mode-toggle {
+    margin: 0;
+    padding: 8px 12px;
+}
+
+.logout-btn {
+    padding: 8px 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Ensure sidebar footer content is properly spaced */
+.sidebar-footer {
+    padding: 1rem;
+    gap: 10px;
+}
+
+.user-profile {
+    min-width: 0; /* Allow text truncation */
+}
+
+.user-info {
+    min-width: 0;
+    overflow: hidden;
+}
+
+.user-info strong,
+.user-info small {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: block;
+}
+
+/* Improved responsive behavior */
+@media (max-width: 480px) {
+    .sidebar {
+        width: 280px; /* Slightly narrower on very small screens */
+    }
+    
+    .sidebar-footer {
+        flex-wrap: wrap;
+        justify-content: space-around;
+    }
+    
+    .user-profile {
+        flex: 0 0 100%; /* Full width on very small screens */
+        margin-bottom: 10px;
+        justify-content: center;
+        text-align: center;
+    }
+    
+    .dark-mode-toggle,
+    .logout-btn {
+        flex: 1;
+        min-width: 60px;
+    }
+}
+.sidebar-header {
+    display: flex;
+    align-items: center;
+    padding: 20px;
+    border-bottom: 1px solid #e3e6f0;
+}
+
+.sidebar-header img {
+    border-radius: 5px;
+    margin-right: 10px;
+}
+
+
+/*new code*/
+/* Enhanced Sidebar Collapse Styles */
+
+/* Enhanced Sidebar Collapse Styles */
+
+/* Desktop hamburger button */
+.desktop-menu-btn {
+    display: none;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 44px;
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    color: #2c3e50;
+    font-size: 20px;
+    border-radius: 6px;
+    transition: all 0.2s ease;
+    margin-right: 1rem;
+}
+
+.desktop-menu-btn:hover {
+    background-color: rgba(0, 0, 0, 0.08);
+    transform: scale(1.05);
+}
+
+.desktop-menu-btn:active {
+    transform: scale(0.95);
+}
+
+/* Show desktop hamburger on screens larger than 768px */
+@media (min-width: 769px) {
+    .desktop-menu-btn {
+        display: flex;
+    }
+    
+    /* Hide mobile hamburger on desktop */
+    .mobile-menu-btn {
+        display: none !important;
+    }
+}
+
+/* Collapsed sidebar state */
+.sidebar.sidebar-collapsed {
+    width: 80px;
+}
+
+.sidebar.sidebar-collapsed .sidebar-header h2,
+.sidebar.sidebar-collapsed .sidebar-nav li a span,
+.sidebar.sidebar-collapsed .badge,
+.sidebar.sidebar-collapsed .user-info {
+    display: none;
+}
+
+/* Hide dropdown arrow in collapsed mode */
+.sidebar.sidebar-collapsed .dropdown-toggle .dropdown-arrow {
+    display: none !important;
+}
+
+/* Ensure dropdown toggle icons are centered */
+.sidebar.sidebar-collapsed .dropdown-toggle {
+    justify-content: center;
+}
+
+.sidebar.sidebar-collapsed .dropdown-toggle i:first-child {
+    margin-right: 0;
+}
+
+.sidebar.sidebar-collapsed .sidebar-header {
+    justify-content: center;
+    padding: 1.5rem 0.5rem;
+}
+
+.sidebar.sidebar-collapsed .sidebar-nav li a {
+    justify-content: center;
+    padding: 0.85rem 0;
+    position: relative;
+}
+
+.sidebar.sidebar-collapsed .sidebar-nav li a i {
+    margin-right: 0;
+    font-size: 1.3rem;
+}
+
+/* Dropdown menu positioning for collapsed sidebar */
+.sidebar.sidebar-collapsed .dropdown-menu {
+  
+    left: 80px;
+    background-color: var(--primary-color);
+    min-width: 200px;
+    box-shadow: 2px 0 8px rgba(0, 0, 0, 0.15);
+    border-radius: 0 8px 8px 0;
+    z-index: 1003;
+
+    position: fixed !important;
+    top: auto; /* Will be set by JS */
+}
+
+.sidebar.sidebar-collapsed .dropdown.open .dropdown-menu {
+    max-height: none;
+    display: block;
+}
+
+.sidebar.sidebar-collapsed .dropdown-menu li a {
+    padding: 0.8rem 1.5rem;
+    justify-content: flex-start;
+}
+
+.sidebar.sidebar-collapsed .dropdown-menu li a span {
+    display: inline;
+}
+
+/* Adjust main content when sidebar is collapsed */
+.main-content.sidebar-collapsed-desktop {
+    margin-left: 80px;
+}
+
+/* Footer adjustments for collapsed sidebar */
+.sidebar.sidebar-collapsed .sidebar-footer {
+    flex-direction: column;
+    gap: 0.5rem;
+    padding: 0.75rem 0.5rem;
+}
+
+.sidebar.sidebar-collapsed .user-profile {
+    justify-content: center;
+}
+
+.sidebar.sidebar-collapsed .user-profile img {
+    width: 35px;
+    height: 35px;
+}
+
+.sidebar.sidebar-collapsed .dark-mode-toggle {
+    margin: 0;
+}
+
+.sidebar.sidebar-collapsed .logout-btn {
+    font-size: 1.2rem;
+}
+
+/* Smooth transitions */
+.sidebar,
+.sidebar .sidebar-header h2,
+.sidebar .sidebar-nav li a span,
+.sidebar .user-info,
+.main-content {
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Tooltip for collapsed sidebar items */
+.sidebar.sidebar-collapsed .sidebar-nav li a {
+    position: relative;
+}
+
+.sidebar.sidebar-collapsed .sidebar-nav li a::after {
+    content: attr(data-tooltip);
+    position: absolute;
+    left: 100%;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: #333;
+    color: white;
+    padding: 0.5rem 0.75rem;
+    border-radius: 4px;
+    font-size: 0.85rem;
+    white-space: nowrap;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+    margin-left: 10px;
+    z-index: 1002;
+    pointer-events: none;
+}
+
+.sidebar.sidebar-collapsed .sidebar-nav li a:hover::after {
+    opacity: 1;
+    visibility: visible;
+    
+}
+
+body.dark-mode .sidebar.sidebar-collapsed .sidebar-nav li a::after {
+    background-color: #e9ecef;
+    color: #333;
+}
+
+/* Mobile specific styles - keep original behavior */
+@media (max-width: 768px) {
+    .desktop-menu-btn {
+        display: none !important;
+    }
+    
+    .mobile-menu-btn {
+        display: flex !important;
+    }
+    
+    .sidebar.sidebar-collapsed {
+        width: var(--sidebar-width);
+    }
+    
+    .sidebar.sidebar-collapsed .sidebar-header h2,
+    .sidebar.sidebar-collapsed .sidebar-nav li a span,
+    .sidebar.sidebar-collapsed .user-info {
+        display: block;
+    }
+    
+    .main-content.sidebar-collapsed-desktop {
+        margin-left: 0;
+    }
+}
+
+/* Dark mode adjustments */
+body.dark-mode .desktop-menu-btn {
+    color: var(--dark-mode-text);
+}
+
+body.dark-mode .desktop-menu-btn:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+body.dark-mode .sidebar.sidebar-collapsed .dropdown-menu {
+    background-color: #333;
+}
+
+/* Additional fixes for dropdown in collapsed sidebar */
+
+/* Ensure dropdown menu items show their text in collapsed mode */
+.sidebar.sidebar-collapsed .dropdown-menu li a span {
+    display: inline !important;
+}
+
+/* Better dropdown menu styling for collapsed sidebar */
+.sidebar.sidebar-collapsed .dropdown-menu {
+    padding: 0.5rem 0;
+    margin: 0;
+}
+
+.sidebar.sidebar-collapsed .dropdown-menu li {
+    width: 100%;
+}
+
+.sidebar.sidebar-collapsed .dropdown-menu li a {
+    display: flex;
+    align-items: center;
+    padding: 0.8rem 1.5rem;
+    white-space: nowrap;
+    text-align: left;
+    width: 100%;
+}
+
+.sidebar.sidebar-collapsed .dropdown-menu li a:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+    padding-left: 1.8rem;
+}
+
+/* Ensure the dropdown icon is always the first child icon */
+.sidebar.sidebar-collapsed .dropdown-toggle i.fa-users,
+.sidebar.sidebar-collapsed .dropdown-toggle i.fa-graduation-cap,
+.sidebar.sidebar-collapsed .dropdown-toggle i.fa-money-bill-wave {
+    display: block;
+}
+
+/* Hide only the chevron arrow, not all icons */
+/* Hide text labels (spans) in collapsed mode */
+.sidebar.sidebar-collapsed .sidebar-nav li a span,
+.sidebar.sidebar-collapsed .dropdown-toggle span {
+    display: none !important;
+}
+
+/* Hide chevron arrow in collapsed mode */
+.sidebar.sidebar-collapsed .dropdown-toggle .fa-chevron-down {
+    display: none !important;
+}
+
+/* Prevent dropdown content from wrapping */
+.sidebar.sidebar-collapsed .dropdown-menu {
+    overflow: visible;
+}
+
+/* Add a subtle indicator that item has dropdown in collapsed mode */
+.sidebar.sidebar-collapsed .dropdown > .dropdown-toggle::before {
+    content: '';
+    position: absolute;
+    right: 8px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 4px;
+    height: 4px;
+    background-color: rgba(255, 255, 255, 0.5);
+    border-radius: 50%;
+}
+
+.sidebar.sidebar-collapsed .dropdown.open > .dropdown-toggle::before {
+    background-color: var(--secondary-color);
+}
+
+/* Smooth transitions for all elements */
+.sidebar .dropdown-menu,
+.sidebar .dropdown-toggle,
+.sidebar .dropdown-arrow,
+.sidebar-nav li a span {
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Fix for dark mode */
+body.dark-mode .sidebar.sidebar-collapsed .dropdown-menu {
+    background-color: #333;
+    border: 1px solid #444;
+}
+
+body.dark-mode .sidebar.sidebar-collapsed .dropdown-menu li a:hover {
+    background-color: rgba(255, 255, 255, 0.15);
+}
+
+/* Ensure proper stacking order */
+.sidebar.sidebar-collapsed .dropdown {
+    position: relative;
+    z-index: auto;
+}
+
+.sidebar.sidebar-collapsed .dropdown.open {
+    z-index: 1002;
+}
+
+.sidebar.sidebar-collapsed .dropdown-menu {
+    z-index: 1003;
+}
+
+
+
+/* Add to dashboard.css */
+
+/* Prevent horizontal scroll in collapsed mode */
+.sidebar.sidebar-collapsed ~ .main-content.sidebar-collapsed-desktop {
+    width: calc(100% - 80px) !important;
+    overflow-x: hidden !important;
+}
+
+/* Ensure content doesn't overflow */
+.main-content {
+    overflow-x: hidden;
+    width: calc(100% - 250px);
+}
+
+.main-content.sidebar-collapsed-desktop {
+    width: calc(100% - 80px);
+}
+
+/* Fix for any overflowing content in cards */
+.chart-card, 
+.stat-card, 
+.activity-card, 
+.quick-actions-card,
+.table-card {
+    max-width: 100%;
+    overflow: hidden;
+}
+
+/* Fix for responsive grids */
+.stats-grid,
+.charts-row,
+.content-row {
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr));
+}
+
+/* Fix for topnav search bar */
+.search-bar {
+    max-width: 300px;
+    width: auto;
+}
+
+@media (max-width: 1200px) {
+    .search-bar {
+        max-width: 250px;
+    }
+}
+
+@media (max-width: 992px) {
+    .search-bar {
+        max-width: 200px;
+    }
+}
+
+@media (max-width: 768px) {
+    .search-bar {
+        max-width: 180px;
+    }
+}
+
+
+
+.sidebar-nav .dropdown-menu {
+    position: relative;    /* Change from absolute to stay in flow */
+    top: 0;
+    left: 0;              /* Reset from 100% */
+    width: 100%;          /* Take full width of sidebar */
+    background: rgba(0, 0, 0, 0.15); /* Slightly darker for nesting */
+    box-shadow: none;     /* Remove the fly-out shadow */
+    border-radius: 0;
+    display: none;        /* Hidden by default */
+    padding: 5px 0;
+    overflow: hidden;
+    z-index: 1;
+}
+
+.sidebar-nav .dropdown.open .dropdown-menu {
+    display: block;
+}
+
+/* For collapsed sidebar */
+.sidebar.sidebar-collapsed .dropdown.open .dropdown-menu {
+    position: fixed;
+    left: 80px;
+    top: auto;
+    margin-top: -40px; /* Adjust based on your layout */
+}
+
+/* Ensure dropdown doesn't get cut off */
+.sidebar {
+    overflow: visible;
+}
+
+.sidebar-nav li {
+    position: relative;
+}
+
+
+
+
+
+/* Fix sidebar footer scrollbar issue in collapsed mode */
+.sidebar.sidebar-collapsed {
+    overflow: visible !important;
+}
+
+.sidebar.sidebar-collapsed .sidebar-nav {
+    overflow: visible !important;
+    max-height: calc(100vh - 150px) !important; /* Adjust based on your footer height */
+}
+
+.sidebar.sidebar-collapsed .sidebar-nav ul {
+    overflow: visible !important;
+}
+
+/* Remove scrollbar completely in collapsed mode */
+.sidebar.sidebar-collapsed::-webkit-scrollbar {
+    display: none !important;
+}
+
+.sidebar.sidebar-collapsed {
+    -ms-overflow-style: none !important;  /* IE and Edge */
+    scrollbar-width: none !important;     /* Firefox */
+}
+
+/* Ensure proper spacing for collapsed sidebar */
+.sidebar.sidebar-collapsed .sidebar-footer {
+    margin-top: auto;
+    width: 100%;
+    position: relative;
+    bottom: 0;
+    background-color: var(--primary-color);
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
 }

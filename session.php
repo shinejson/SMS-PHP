@@ -22,27 +22,46 @@ if (isset($_SESSION['last_activity']) && (time() - $_SESSION['last_activity'] > 
 $_SESSION['last_activity'] = time(); // Update activity timestamp
 
 // Set username for display
-$username = htmlspecialchars($_SESSION['username'] ?? 'User');
-
-// Security headers (optional but recommended)
-header("X-Frame-Options: DENY");
-header("X-Content-Type-Options: nosniff");
-
-if (session_status() === PHP_SESSION_NONE) {
+// session.php - Enhanced session management
+if (session_status() == PHP_SESSION_NONE) {
     session_start();
+}
+
+class SessionManager {
+    const TIMEOUT = 1800; // 30 minutes
     
-    // Regenerate session ID periodically for security
-    if (!isset($_SESSION['created'])) {
-        $_SESSION['created'] = time();
-    } else if (time() - $_SESSION['created'] > 1800) {
-        // Regenerate session ID every 30 minutes
-        session_regenerate_id(true);
-        $_SESSION['created'] = time();
+    public static function checkTimeout() {
+        if (isset($_SESSION['user_id'])) {
+            if (!isset($_SESSION['LAST_ACTIVITY'])) {
+                $_SESSION['LAST_ACTIVITY'] = time();
+            }
+            
+            if (time() - $_SESSION['LAST_ACTIVITY'] > self::TIMEOUT) {
+                self::destroy();
+                header('Location: login.php?reason=timeout');
+                exit();
+            }
+            
+            $_SESSION['LAST_ACTIVITY'] = time();
+        }
     }
     
-    // Generate CSRF token if not exists
-    if (empty($_SESSION['csrf_token'])) {
-        $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
+    public static function destroy() {
+        session_unset();
+        session_destroy();
+        session_write_close();
+        setcookie(session_name(), '', 0, '/');
+    }
+    
+    public static function isExpired() {
+        return isset($_SESSION['LAST_ACTIVITY']) && 
+               (time() - $_SESSION['LAST_ACTIVITY'] > self::TIMEOUT);
     }
 }
+
+// Check session timeout on every request
+SessionManager::checkTimeout();
+require_once 'functions/activity_logger.php';
+// After setting session
+logActivity($conn, "User Login", "IP: {$_SERVER['REMOTE_ADDR']}", "login", "fas fa-sign-in-alt");
 ?>

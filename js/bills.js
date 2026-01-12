@@ -8,60 +8,86 @@ document.addEventListener('DOMContentLoaded', function () {
     const billingMessage = document.getElementById('billingMessage');
     
     // --- Form-specific Elements ---
-    const billingIdInput = document.getElementById('billingId');
-    const paymentTypeSelect = document.getElementById('payment_type');
-    const termIdSelect = document.getElementById('term_id');
-    const academicYearInput = document.getElementById('academic_year');
-    const dueDateInput = document.getElementById('due_date');
-    const descriptionInput = document.getElementById('description');
-    const classIdSelect = document.getElementById('class_id');
-    const tuitionSection = document.getElementById('tuitionSection');
-    const tuitionSubFieldsContainer = document.getElementById('tuitionSubFields');
-    const simpleFieldGroup = document.getElementById('simpleFieldGroup');
-    const amountInput = document.getElementById('amount');
-    
-    // --- Initialize DataTable ---
-    let billingTable;
+const billingIdInput = document.getElementById('billingId');
+const paymentTypeSelect = document.getElementById('payment_type');
+const termIdSelect = document.getElementById('term_id');
+const dueDateInput = document.getElementById('due_date');
+const descriptionInput = document.getElementById('description');
+const classIdSelect = document.getElementById('class_id');
+const tuitionSection = document.getElementById('tuitionSection');
+const tuitionSubFieldsContainer = document.getElementById('tuitionSubFields');
+const simpleFieldGroup = document.getElementById('simpleFieldGroup');
+const amountInput = document.getElementById('amount');
 
-    function initializeDataTable() {
-        if ($.fn.dataTable.isDataTable('#billingTable')) {
-            $('#billingTable').DataTable().destroy();
-        }
-        
-        billingTable = $('#billingTable').DataTable({
-            responsive: true,
-            dom: '<"top"fB>rt<"bottom"lip><"clear">',
-            pageLength: 10,
-            lengthMenu: [[10, 25, 50, 100, -1], [10, 25, 50, 100, "All"]],
-            order: [[0, 'desc']], // Order by first column (usually ID) descending
-            buttons: [
-                { extend: 'copy', className: 'btn-dt-copy' },
-                { extend: 'csv', className: 'btn-dt-csv' },
-                { extend: 'excel', className: 'btn-dt-excel' },
-                { extend: 'pdf', className: 'btn-dt-pdf' },
-                {
-                    extend: 'print',
-                    className: 'btn-dt-print',
-                    text: '<i class="fas fa-print"></i> Print',
-                    title: 'Billing Records',
-                    customize: function (win) {
-                        $(win.document.body).find('table')
-                            .addClass('compact')
-                            .css('font-size', 'inherit');
-                    }
-                }
-            ],
-            columnDefs: [{ orderable: false, targets: [6] }], // Actions column not orderable
-            stateSave: true, // Save pagination state
-            drawCallback: function (settings) {
-                // Re-bind event handlers after each draw using event delegation
-                bindActionButtons();
-            }
-        });
-        
-        // Use event delegation for better performance and pagination handling
-        bindGlobalEventListeners();
+// Academic year input - get it when needed or use a function
+function getAcademicYearInput() {
+    return document.getElementById('academic_year_id');
+}
+// --- Initialize DataTable ---
+let billingTable;
+
+function initializeDataTable() {
+    // Destroy existing instance if it exists
+    if ($.fn.dataTable.isDataTable('#billingTable')) {
+        $('#billingTable').DataTable().destroy();
+        $('#billingTable').empty();
     }
+    
+    // Initialize DataTable
+    window.billingTable = $('#billingTable').DataTable({
+        responsive: true,
+        dom: '<"top"fB>rt<"bottom"lip><"clear">',
+        pageLength: 10,
+        lengthMenu: [[10, 25, 50, 100, -1], [10, 25, 50, 100, "All"]],
+        order: [[0, 'desc']],
+        buttons: [
+            { 
+                extend: 'copy', 
+                className: 'btn-dt-copy',
+                text: '<i class="fas fa-copy"></i> Copy'
+            },
+            { 
+                extend: 'csv', 
+                className: 'btn-dt-csv',
+                text: '<i class="fas fa-file-csv"></i> CSV'
+            },
+            { 
+                extend: 'excel', 
+                className: 'btn-dt-excel',
+                text: '<i class="fas fa-file-excel"></i> Excel'
+            },
+            { 
+                extend: 'pdf', 
+                className: 'btn-dt-pdf',
+                text: '<i class="fas fa-file-pdf"></i> PDF'
+            },
+            {
+                extend: 'print',
+                className: 'btn-dt-print',
+                text: '<i class="fas fa-print"></i> Print',
+                title: 'Billing Records',
+                customize: function (win) {
+                    $(win.document.body).find('table')
+                        .addClass('compact')
+                        .css('font-size', 'inherit');
+                }
+            }
+        ],
+        columnDefs: [{ orderable: false, targets: [7] }],
+        stateSave: true,
+        drawCallback: function (settings) {
+            bindActionButtons();
+        },
+        initComplete: function() {
+            // Setup filters after a short delay to ensure complete initialization
+            setTimeout(() => {
+                setupFilters();
+            }, 200);
+        }
+    });
+    
+    bindGlobalEventListeners();
+}
 
     // --- Improved event binding with delegation ---
     function bindActionButtons() {
@@ -80,13 +106,13 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     }
 
-    function bindGlobalEventListeners() {
-        // These don't need to be rebound as they're not affected by pagination
-        document.getElementById('addBillBtn').addEventListener('click', window.openAddBillingModal);
-        
-        paymentTypeSelect.addEventListener('change', function() {
-            togglePaymentFields(this.value);
-        });
+   function bindGlobalEventListeners() {
+    // Your existing code...
+    document.getElementById('addBillBtn').addEventListener('click', window.openAddBillingModal);
+    
+    paymentTypeSelect.addEventListener('change', function() {
+        togglePaymentFields(this.value);
+    });
 
         // Event delegation for dynamic tuition fee elements
         document.addEventListener('click', function(e) {
@@ -167,75 +193,85 @@ document.addEventListener('DOMContentLoaded', function () {
         }, 5000);
     }
 
-    function validateForm() {
-        const paymentType = paymentTypeSelect.value;
-        const classId = classIdSelect.value;
-        
-        if (!paymentType) {
-            showFormMessage('Please select a payment type', false);
-            return false;
-        }
-
-        if (!classId) {
-            showFormMessage('Please select a class', false);
-            return false;
-        }
-        
-        if (paymentType === 'Tuition') {
-            const subFields = tuitionSubFieldsContainer.querySelectorAll('.sub-field-group');
-            if (subFields.length === 0) {
-                showFormMessage('Please add at least one tuition sub-fee', false);
-                return false;
-            }
-            
-            const subFeeNames = new Set();
-            let isValid = true;
+// In the validateForm() function, remove any validation that might affect the description
+function validateForm() {
+    const paymentType = paymentTypeSelect.value;
+    const classId = classIdSelect.value;
+    const academicYearInput = getAcademicYearInput();
     
-            subFields.forEach(field => {
-                const nameInput = field.querySelector('input[type="text"]');
-                const amountInput = field.querySelector('input[type="number"]');
-                const name = nameInput.value.trim();
-                const amount = amountInput.value;
-                
-                if (!name || isNaN(amount) || parseFloat(amount) <= 0) {
-                    showFormMessage('Please fill all sub-fee fields with valid data.', false);
-                    isValid = false;
-                }
-    
-                if (subFeeNames.has(name) && name !== '') {
-                    showFormMessage(`Duplicate sub-fee name found: "${name}"`, false);
-                    isValid = false;
-                } else if (name !== '') {
-                    subFeeNames.add(name);
-                }
-            });
-            
-            if (!isValid) return false;
-        } else {
-            const amount = amountInput.value;
-            if (!amount || isNaN(amount) || parseFloat(amount) <= 0) {
-                showFormMessage('Please enter a valid amount greater than 0', false);
-                return false;
-            }
-        }
-        
-        if (!termIdSelect.value) {
-            showFormMessage('Please select a term', false);
-            return false;
-        }
-        
-        if (!academicYearInput.value) {
-            showFormMessage('Academic year is required', false);
-            return false;
-        }
-        
-        if (!dueDateInput.value) {
-            showFormMessage('Due date is required', false);
-            return false;
-        }
-        
-        return true;
+    if (!academicYearInput) {
+        showFormMessage('Academic year element not found', false);
+        return false;
     }
+    
+    if (!paymentType) {
+        showFormMessage('Please select a payment type', false);
+        return false;
+    }
+
+    if (!classId) {
+        showFormMessage('Please select a class', false);
+        return false;
+    }
+    
+    if (paymentType === 'Tuition') {
+        const subFields = tuitionSubFieldsContainer.querySelectorAll('.sub-field-group');
+        if (subFields.length === 0) {
+            showFormMessage('Please add at least one tuition sub-fee', false);
+            return false;
+        }
+        
+        const subFeeNames = new Set();
+        let isValid = true;
+
+        subFields.forEach(field => {
+            const nameInput = field.querySelector('input[type="text"]');
+            const amountInput = field.querySelector('input[type="number"]');
+            const name = nameInput.value.trim();
+            const amount = amountInput.value;
+            
+            if (!name || isNaN(amount) || parseFloat(amount) <= 0) {
+                showFormMessage('Please fill all sub-fee fields with valid data.', false);
+                isValid = false;
+            }
+
+            if (subFeeNames.has(name) && name !== '') {
+                showFormMessage(`Duplicate sub-fee name found: "${name}"`, false);
+                isValid = false;
+            } else if (name !== '') {
+                subFeeNames.add(name);
+            }
+        });
+        
+        if (!isValid) return false;
+    } else {
+        const amount = amountInput.value;
+        if (!amount || isNaN(amount) || parseFloat(amount) <= 0) {
+            showFormMessage('Please enter a valid amount greater than 0', false);
+            return false;
+        }
+    }
+    
+    if (!termIdSelect.value) {
+        showFormMessage('Please select a term', false);
+        return false;
+    }
+    
+    // Check academic year value
+    if (!academicYearInput.value) {
+        showFormMessage('Academic year is required', false);
+        return false;
+    }
+    
+    if (!dueDateInput.value) {
+        showFormMessage('Due date is required', false);
+        return false;
+    }
+    
+    // Description is optional, so no validation needed
+    
+    return true;
+}
 
     // --- Modal Control Functions ---
     window.openAddBillingModal = function() {
@@ -261,8 +297,6 @@ document.addEventListener('DOMContentLoaded', function () {
         deleteModal.style.display = 'none';
     };
 
-    // --- Edit Billing Record ---
-// --- Edit Billing Record ---
 window.editBilling = function(id) {
     fetch(`get_billing.php?id=${id}`)
         .then(response => {
@@ -274,13 +308,12 @@ window.editBilling = function(id) {
             return response.json();
         })
         .then(data => {
-            console.log('API Response:', data); // Debug log
+            console.log('API Response:', data);
             
             if (!data.success) {
                 throw new Error(data.error || 'Failed to load billing data');
             }
 
-            // Fix: Use data.data instead of data.billing based on your PHP response structure
             const billing = data.data;
             
             if (!billing) {
@@ -291,11 +324,17 @@ window.editBilling = function(id) {
             billingForm.reset();
             tuitionSubFieldsContainer.innerHTML = '';
 
-            // Populate form with safe property access
+            // Populate form with null checks
             billingIdInput.value = billing.id || '';
             paymentTypeSelect.value = billing.payment_type || '';
             termIdSelect.value = billing.term_id || '';
-            academicYearInput.value = billing.academic_year || '';
+            
+            // Set academic year value safely
+            const academicYearInput = getAcademicYearInput();
+            if (academicYearInput) {
+                academicYearInput.value = billing.academic_year_id || '';
+            }
+            
             dueDateInput.value = billing.due_date ? billing.due_date.split(' ')[0] : '';
             descriptionInput.value = billing.description || '';
             classIdSelect.value = billing.class_id || '';
@@ -310,7 +349,7 @@ window.editBilling = function(id) {
                     });
                 } else {
                     console.warn('Fee breakdown is empty or not an array:', breakdown);
-                    addTuitionSubField(); // Add an empty field as fallback
+                    addTuitionSubField();
                 }
             } else {
                 amountInput.value = billing.amount || '';
@@ -399,3 +438,104 @@ window.editBilling = function(id) {
     // Initial table load
     initializeDataTable();
 });
+// --- Filter Functionality ---
+function applyFilters() {
+    if (!window.billingTable || !$.fn.DataTable.isDataTable('#billingTable')) {
+        console.warn('DataTable not ready, retrying...');
+        setTimeout(applyFilters, 100);
+        return;
+    }
+
+    try {
+        const academicYearFilter = document.getElementById('academicYearFilter')?.value || '';
+        const paymentTypeFilter = document.getElementById('paymentTypeFilter')?.value || '';
+        const classFilter = document.getElementById('classFilter')?.value || '';
+        const termFilter = document.getElementById('termFilter')?.value || '';
+
+        // Reset all searches first
+        window.billingTable.columns().search('').draw();
+        
+        // Apply filters with exact matching
+        if (academicYearFilter) {
+            // Use exact matching for academic year ID (column 8 - hidden column)
+            window.billingTable.column(8).search('^' + academicYearFilter + '$', true, false);
+        }
+        
+        if (paymentTypeFilter) {
+            // Use exact matching for payment type
+            window.billingTable.column(0).search('^' + paymentTypeFilter + '$', true, false);
+        }
+        
+        if (classFilter) {
+            // Use exact matching for class name
+            window.billingTable.column(5).search('^' + classFilter + '$', true, false);
+        }
+        
+        if (termFilter) {
+            // Use exact matching for term name
+            window.billingTable.column(2).search('^' + termFilter + '$', true, false);
+        }
+        
+        // Draw the table with all filters applied
+        window.billingTable.draw();
+    } catch (error) {
+        console.error('Error applying filters:', error);
+    }
+}
+
+function clearAllFilters() {
+    const academicYearFilter = document.getElementById('academicYearFilter');
+    const paymentTypeFilter = document.getElementById('paymentTypeFilter');
+    const classFilter = document.getElementById('classFilter');
+    const termFilter = document.getElementById('termFilter');
+    
+    if (academicYearFilter) academicYearFilter.value = '';
+    if (paymentTypeFilter) paymentTypeFilter.value = '';
+    if (classFilter) classFilter.value = '';
+    if (termFilter) termFilter.value = '';
+    
+    // Clear all DataTable filters
+    if (window.billingTable) {
+        window.billingTable.columns().search('').draw();
+    }
+}
+
+function setupFilters() {
+    const academicYearFilter = document.getElementById('academicYearFilter');
+    const paymentTypeFilter = document.getElementById('paymentTypeFilter');
+    const classFilter = document.getElementById('classFilter');
+    const termFilter = document.getElementById('termFilter');
+    const clearFiltersBtn = document.getElementById('clearFilters');
+
+    // Remove any existing event listeners to prevent duplicates
+    if (academicYearFilter) {
+        academicYearFilter.removeEventListener('change', applyFilters);
+        academicYearFilter.addEventListener('change', applyFilters);
+    }
+
+    if (paymentTypeFilter) {
+        paymentTypeFilter.removeEventListener('change', applyFilters);
+        paymentTypeFilter.addEventListener('change', applyFilters);
+    }
+
+    if (classFilter) {
+        classFilter.removeEventListener('change', applyFilters);
+        classFilter.addEventListener('change', applyFilters);
+    }
+
+    if (termFilter) {
+        termFilter.removeEventListener('change', applyFilters);
+        termFilter.addEventListener('change', applyFilters);
+    }
+
+    if (clearFiltersBtn) {
+        clearFiltersBtn.removeEventListener('click', clearAllFilters);
+        clearFiltersBtn.addEventListener('click', clearAllFilters);
+    }
+    
+    // Apply initial filter if academic year is pre-selected
+    const initialAcademicYear = academicYearFilter?.value;
+    if (initialAcademicYear) {
+        applyFilters();
+    }
+}

@@ -20,16 +20,16 @@ function jsonResponse($success, $message, $extra = []) {
 }
 
 /**
- * Check if a billing record exists for the same payment type and class
+ * Check if a billing record exists for the same payment type, class, term, and academic year
  */
-function billingRecordExists(mysqli $conn, string $payment_type, int $class_id): bool {
-    $sql = "SELECT id FROM billing WHERE payment_type = ? AND class_id = ?";
+function billingRecordExists(mysqli $conn, string $payment_type, int $class_id, int $term_id, int $academic_year_id): bool {
+    $sql = "SELECT id FROM billing WHERE payment_type = ? AND class_id = ? AND term_id = ? AND academic_year_id = ?";
     $stmt = $conn->prepare($sql);
     if (!$stmt) {
         error_log("Prepare failed: " . $conn->error);
         return false;
     }
-    $stmt->bind_param("si", $payment_type, $class_id);
+    $stmt->bind_param("siii", $payment_type, $class_id, $term_id, $academic_year_id);
     $stmt->execute();
     $result = $stmt->get_result();
     return $result->num_rows > 0;
@@ -43,7 +43,7 @@ try {
     }
 
     // Required fields
-    $required = ['payment_type', 'term_id', 'academic_year', 'due_date', 'class_id'];
+    $required = ['payment_type', 'term_id', 'academic_year_id', 'due_date', 'class_id'];
     foreach ($required as $field) {
         if (empty($_POST[$field])) {
             jsonResponse(false, "Missing required field: $field");
@@ -54,26 +54,26 @@ try {
     $payment_type   = trim($_POST['payment_type']);
     $amount         = floatval($_POST['amount'] ?? 0);
     $term_id        = intval($_POST['term_id']);
-    $academic_year  = trim($_POST['academic_year']);
+    $academic_year_id = intval($_POST['academic_year_id']);
     $due_date       = trim($_POST['due_date']);
     $description    = trim($_POST['description'] ?? '');
     $class_id       = intval($_POST['class_id']);
 
-    // Prevent duplicates
-    if (billingRecordExists($conn, $payment_type, $class_id)) {
-        jsonResponse(false, "A billing record with this payment type and class already exists.");
+    // Prevent duplicates - now checking all relevant fields
+    if (billingRecordExists($conn, $payment_type, $class_id, $term_id, $academic_year_id)) {
+        jsonResponse(false, "A billing record with this payment type, class, term, and academic year already exists.");
     }
 
     // Insert into billing table
     $stmt = $conn->prepare("
-        INSERT INTO billing (payment_type, amount, term_id, academic_year, due_date, description, class_id)
+        INSERT INTO billing (payment_type, amount, term_id, academic_year_id, due_date, description, class_id)
         VALUES (?, ?, ?, ?, ?, ?, ?)
     ");
     if (!$stmt) {
         jsonResponse(false, "Database error: " . $conn->error);
     }
 
-    $stmt->bind_param("sdisssi", $payment_type, $amount, $term_id, $academic_year, $due_date, $description, $class_id);
+   $stmt->bind_param("sdiissi", $payment_type, $amount, $term_id, $academic_year_id, $due_date, $description, $class_id);
 
     if (!$stmt->execute()) {
         jsonResponse(false, "Failed to insert billing record: " . $stmt->error);
@@ -99,9 +99,12 @@ try {
             $subAmount = floatval($amounts[$i] ?? 0);
             if ($subName && $subAmount > 0) {
                 $tuitionStmt->bind_param("isd", $billing_id, $subName, $subAmount);
-                $tuitionStmt->execute();
+                if (!$tuitionStmt->execute()) {
+                    error_log("Failed to insert tuition detail: " . $tuitionStmt->error);
+                }
             }
         }
+        $tuitionStmt->close();
     }
 
     jsonResponse(true, "Billing record added successfully.", ['id' => $billing_id]);

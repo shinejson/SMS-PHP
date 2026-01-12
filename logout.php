@@ -1,13 +1,10 @@
 <?php
-session_start();
+require_once 'config.php';
+require_once 'session.php';
 
-// Unset all session variables
-$_SESSION = array();
+SessionManager::destroy();
 
-// Destroy the session
-session_destroy();
-
-// Redirect to login page
-header('Location: login.php');
-exit;
+$timeout = isset($_GET['timeout']) ? '?timeout=1' : '';
+header('Location: login.php' . $timeout);
+exit();
 ?>

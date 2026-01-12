@@ -1,0 +1,24 @@
+=== NEW REQUEST ===
+Time: 2025-10-02 02:18:26
+Action: get_students
+Processing action: get_students
+getStudents called - Class ID: 1, Student ID: 
+Final SQL: SELECT id, first_name, last_name, student_id 
+            FROM students 
+            WHERE status = 'active' AND class_id = ? ORDER BY first_name, last_name
+Params: ["1"]
+Found 3 students
+=== NEW REQUEST ===
+Time: 2025-10-02 02:18:26
+Action: get_students
+Processing action: get_students
+getStudents called - Class ID: 1, Student ID: 
+Final SQL: SELECT id, first_name, last_name, student_id 
+            FROM students 
+            WHERE status = 'active' AND class_id = ? ORDER BY first_name, last_name
+Params: ["1"]
+Found 3 students
+=== NEW REQUEST ===
+Time: 2025-10-02 02:18:34
+Action: mark_attendance
+Processing action: mark_attendance

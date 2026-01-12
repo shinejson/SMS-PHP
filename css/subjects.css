@@ -1,525 +1,3 @@
-/* General Styles for the Page */
-body {
-    font-family: Arial, sans-serif;
-    background: #f4f4f4;
-    margin: 0;
-    padding: 0;
-}
-
-.main-content {
-    margin-left: 250px; /* Account for sidebar width */
-    padding: 20px;
-    transition: margin-left 0.3s;
-}
-
-.main-content.collapsed {
-    margin-left: 80px; /* Account for collapsed sidebar */
-}
-
-.card {
-    background: #fff;
-    border-radius: 8px;
-    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-    padding: 20px;
-    margin-bottom: 20px;
-}
-
-.card-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 20px;
-    flex-wrap: wrap;
-    gap: 15px;
-}
-
-h2 {
-    margin: 0;
-    color: #333;
-    font-size: 1.8rem;
-}
-
-/* Button Styles */
-.btn-primary {
-    background-color: #4e73df;
-    color: white;
-    border: none;
-    padding: 10px 15px;
-    border-radius: 4px;
-    cursor: pointer;
-    font-size: 14px;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    transition: all 0.3s;
-    font-weight: 500;
-}
-
-.btn-primary:hover {
-    background-color: #2e59d9;
-    transform: translateY(-2px);
-    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-}
-
-.btn-icon {
-    background: none;
-    border: none;
-    cursor: pointer;
-    padding: 8px;
-    border-radius: 4px;
-    font-size: 16px;
-    transition: all 0.3s;
-    margin: 0 3px;
-}
-
-.edit-subject {
-    color: #4e73df;
-    background-color: rgba(78, 115, 223, 0.1);
-}
-
-.edit-subject:hover {
-    background-color: rgba(78, 115, 223, 0.2);
-    transform: scale(1.1);
-}
-
-.delete-subject {
-    color: #e74a3b;
-    background-color: rgba(231, 74, 59, 0.1);
-}
-
-.delete-subject:hover {
-    background-color: rgba(231, 74, 59, 0.2);
-    transform: scale(1.1);
-}
-
-/* Modal styles */
-.modal {
-    display: none;
-    position: fixed;
-    z-index: 1050;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    overflow: auto;
-    background-color: rgba(0, 0, 0, 0.5);
-    backdrop-filter: blur(5px);
-}
-
-.modal-content {
-    background-color: #fefefe;
-    margin: 5% auto;
-    padding: 25px;
-    border-radius: 8px;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
-    position: relative;
-    animation: fadeIn 0.3s;
-    width: 90%;
-    max-width: 500px;
-}
-
-@keyframes fadeIn {
-    from { opacity: 0; transform: translateY(-30px); }
-    to { opacity: 1; transform: translateY(0); }
-}
-
-.modal-content h3 {
-    margin-top: 0;
-    border-bottom: 2px solid #eee;
-    padding-bottom: 10px;
-}
-
-.close {
-    color: #aaa;
-    position: absolute;
-    top: 15px;
-    right: 20px;
-    font-size: 28px;
-    font-weight: bold;
-    cursor: pointer;
-    transition: color 0.3s;
-}
-
-.close:hover,
-.close:focus {
-    color: #4e73df;
-    text-decoration: none;
-}
-
-.form-group {
-    margin-bottom: 20px;
-}
-
-.form-group label {
-    display: block;
-    margin-bottom: 8px;
-    font-weight: 600;
-    color: #4e4e4e;
-}
-
-.form-group input,
-.form-group select,
-.form-group textarea {
-    width: 100%;
-    padding: 10px;
-    border: 1px solid #d1d3e2;
-    border-radius: 4px;
-    font-size: 14px;
-    transition: border-color 0.3s;
-}
-
-.form-group input:focus,
-.form-group select:focus,
-.form-group textarea:focus {
-    border-color: #4e73df;
-    outline: none;
-    box-shadow: 0 0 0 3px rgba(78, 115, 223, 0.1);
-}
-
-.form-group textarea {
-    min-height: 80px;
-    resize: vertical;
-}
-
-.form-actions {
-    display: flex;
-    justify-content: flex-end;
-    gap: 10px;
-    border-top: 1px solid #eee;
-    padding-top: 20px;
-    margin-top: 20px;
-}
-
-/* TABLE STYLES */
-.dataTables_wrapper {
-    margin-top: 20px;
-}
-
-table.dataTable {
-    width: 100% !important;
-    margin: 0 !important;
-    border-collapse: collapse !important;
-}
-
-table.dataTable thead th {
-    background-color: #f8f9fc;
-    padding: 12px 15px;
-    font-weight: 600;
-    color: #4e4e4e;
-    border-bottom: 2px solid #e3e6f0;
-}
-
-table.dataTable tbody td {
-    padding: 12px 15px;
-    border-bottom: 1px solid #e3e6f0;
-    vertical-align: middle;
-}
-
-table.dataTable tbody tr:hover {
-    background-color: #f6f9fc;
-}
-
-/* TABLE ACTIONS COLUMN */
-table.dataTable tbody td:last-child {
-    min-width: 120px;
-    white-space: nowrap;
-}
-
-.btn-danger {
-    background-color: #e74a3b;
-    color: white;
-    border: none;
-    padding: 10px 20px;
-    border-radius: 4px;
-    cursor: pointer;
-    transition: all 0.3s;
-}
-
-.btn-danger:hover {
-    background-color: #c82333;
-}
-
-/* Message Alerts */
-.alert {
-    padding: 1rem;
-    margin-bottom: 1.5rem;
-    border: 1px solid transparent;
-    border-radius: 0.5rem;
-    font-size: 1rem;
-    display: flex;
-    align-items: center;
-    gap: 0.75rem;
-    opacity: 1;
-    transition: opacity 0.5s ease-in-out;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-}
-
-.alert.fade-out {
-    opacity: 0;
-}
-
-.alert-success {
-    background-color: #d4edda;
-    border-color: #c3e6cb;
-    color: #155724;
-}
-
-.alert-danger {
-    background-color: #f8d7da;
-    border-color: #f5c6cb;
-    color: #721c24;
-}
-
-/* Enhanced Export Button Styles */
-.dt-buttons {
-    margin-bottom: 15px;
-    display: flex;
-    gap: 8px;
-    flex-wrap: wrap;
-}
-
-.dt-button {
-    display: flex !important;
-    align-items: center;
-    gap: 8px;
-    padding: 8px 12px !important;
-    border-radius: 4px !important;
-    font-weight: 500 !important;
-    transition: all 0.3s !important;
-}
-
-.buttons-excel {
-    background-color: #1d6f42 !important;
-    color: white !important;
-    border: none !important;
-}
-
-.buttons-excel:hover {
-    background-color: #165933 !important;
-    transform: translateY(-2px);
-}
-
-.buttons-pdf {
-    background-color: #e74a3b !important;
-    color: white !important;
-    border: none !important;
-}
-
-.buttons-pdf:hover {
-    background-color: #d52a1a !important;
-    transform: translateY(-2px);
-}
-
-.buttons-print {
-    background-color: #5a5c69 !important;
-    color: white !important;
-    border: none !important;
-}
-
-.buttons-print:hover {
-    background-color: #42444e !important;
-    transform: translateY(-2px);
-}
-
-.buttons-copy {
-    background-color: #36b9cc !important;
-    color: white !important;
-    border: none !important;
-}
-
-.buttons-copy:hover {
-    background-color: #2a96a6 !important;
-    transform: translateY(-2px);
-}
-
-.buttons-csv {
-    background-color: #4e73df !important;
-    color: white !important;
-    border: none !important;
-}
-
-.buttons-csv:hover {
-    background-color: #3a59c7 !important;
-    transform: translateY(-2px);
-}
-
-/* Modal-specific button styles */
-.btn-cancel {
-    background-color: #858796;
-    color: white;
-    border: none;
-    padding: 10px 20px;
-    border-radius: 4px;
-    cursor: pointer;
-    transition: all 0.3s;
-}
-
-.btn-cancel:hover {
-    background-color: #717384;
-}
-
-.btn-submit {
-    background-color: #4e73df;
-    color: white;
-    border: none;
-    padding: 10px 20px;
-    border-radius: 4px;
-    cursor: pointer;
-    transition: all 0.3s;
-}
-
-.btn-submit:hover {
-    background-color: #2e59d9;
-}
-
-/* Responsive adjustments */
-@media (max-width: 992px) {
-    .main-content {
-        margin-left: 0;
-        padding: 15px;
-    }
-    
-    .main-content.collapsed {
-        margin-left: 0;
-    }
-    
-    .card-header {
-        flex-direction: column;
-        align-items: flex-start;
-    }
-    
-    .dt-buttons {
-        flex-direction: column;
-        align-items: flex-start;
-    }
-}
-
-/* Dark Mode Adjustments */
-body.dark-mode .modal-content {
-    background-color: #2a3042;
-    color: #f8f9fa;
-}
-
-body.dark-mode .form-group label {
-    color: #d1d3e2;
-}
-
-body.dark-mode .form-group input,
-body.dark-mode .form-group select,
-body.dark-mode .form-group textarea {
-    background-color: #3a4256;
-    border-color: #4a5063;
-    color: #f8f9fa;
-}
-
-body.dark-mode .alert-success {
-    background-color: #155724;
-    border-color: #0c3d1a;
-    color: #d4edda;
-}
-
-body.dark-mode .alert-danger {
-    background-color: #721c24;
-    border-color: #4a1318;
-    color: #f8d7da;
-}
-
-/* DataTable Dark Mode */
-body.dark-mode .dataTables_wrapper .dataTables_length,
-body.dark-mode .dataTables_wrapper .dataTables_filter,
-body.dark-mode .dataTables_wrapper .dataTables_info,
-body.dark-mode .dataTables_wrapper .dataTables_processing,
-body.dark-mode .dataTables_wrapper .dataTables_paginate {
-    color: #f8f9fa;
-}
-
-body.dark-mode .dataTables_wrapper .dataTables_filter input {
-    background-color: #3a4256;
-    border-color: #4a5063;
-    color: #f8f9fa;
-}
-
-body.dark-mode table.dataTable thead th {
-    background-color: #3a4256;
-    color: #f8f9fa;
-    border-bottom-color: #4a5063;
-}
-
-body.dark-mode table.dataTable tbody td {
-    border-bottom-color: #4a5063;
-}
-
-body.dark-mode table.dataTable tbody tr {
-    background-color: #2a3042;
-    color: #f8f9fa;
-}
-
-body.dark-mode table.dataTable tbody tr:hover {
-    background-color: #3a4256;
-}
-
-/* General Styles for the Page */
-body {
-    font-family: Arial, sans-serif;
-    background: #f4f4f4;
-    margin: 0;
-    padding: 0;
-    transition: background-color 0.3s ease, color 0.3s ease;
-}
-
-body.dark-mode {
-    background: #1a1a1a;
-    color: #e0e0e0;
-}
-
-.main-content {
-    margin-left: 250px; /* Account for sidebar width */
-    padding: 20px;
-    transition: margin-left 0.3s, background-color 0.3s ease;
-}
-
-body.dark-mode .main-content {
-    background-color: #1a1a1a;
-}
-
-.main-content.collapsed {
-    margin-left: 80px; /* Account for collapsed sidebar */
-}
-
-.card {
-    background: #fff;
-    border-radius: 8px;
-    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-    padding: 20px;
-    margin-bottom: 20px;
-    transition: background-color 0.3s ease, box-shadow 0.3s ease;
-}
-
-body.dark-mode .card {
-    background: #2d2d2d;
-    box-shadow: 0 4px 6px rgba(0,0,0,0.3);
-}
-
-.card-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 20px;
-    flex-wrap: wrap;
-    gap: 15px;
-}
-
-h2 {
-    margin: 0;
-    color: #333;
-    font-size: 1.8rem;
-    transition: color 0.3s ease;
-}
-
-body.dark-mode h2 {
-    color: #e0e0e0;
-}
-
 /* Button Styles */
 .btn-primary {
     background-color: #4e73df;
@@ -675,44 +153,6 @@ body.dark-mode h2 {
     transition: border-color 0.3s ease;
 }
 
-/* TABLE STYLES */
-.dataTables_wrapper {
-    margin-top: 20px;
-}
-
-table.dataTable {
-    width: 100% !important;
-    margin: 0 !important;
-    border-collapse: collapse !important;
-    transition: all 0.3s ease;
-}
-
-table.dataTable thead th {
-    background-color: #f8f9fc;
-    padding: 12px 15px;
-    font-weight: 600;
-    color: #4e4e4e;
-    border-bottom: 2px solid #e3e6f0;
-    transition: all 0.3s ease;
-}
-
-table.dataTable tbody td {
-    padding: 12px 15px;
-    border-bottom: 1px solid #e3e6f0;
-    vertical-align: middle;
-    transition: all 0.3s ease;
-}
-
-table.dataTable tbody tr:hover {
-    background-color: #f6f9fc;
-}
-
-/* TABLE ACTIONS COLUMN */
-table.dataTable tbody td:last-child {
-    min-width: 120px;
-    white-space: nowrap;
-}
-
 .btn-danger {
     background-color: #e74a3b;
     color: white;
@@ -882,58 +322,486 @@ table.dataTable tbody td:last-child {
     }
 }
 
-/* ==================== */
-/* DARK MODE ENHANCEMENTS */
-/* ==================== */
+/* ========================================= */
+/* === SUBJECT MANAGEMENT SCOPED STYLES === */
+/* ========================================= */
 
-/* Dark Mode General Adjustments */
-body.dark-mode .modal-content {
-    background-color: #2a3042;
-    color: #f8f9fa;
+/* Scope all subject styles to prevent conflicts */
+.subject-page {
+    /* Subject-specific variables */
+    --subject-action-color: #4e73df;
+    --subject-card-bg: #fff;
+    --subject-border: #e3e6f0;
 }
 
-body.dark-mode .modal-content h3 {
-    border-bottom-color: #4a5063;
+/* Remove global body styles - let dashboard.css handle it */
+/* body styles removed to prevent conflicts */
+
+/* Remove global .main-content styles - let dashboard.css handle it */
+/* .main-content styles removed to prevent conflicts */
+
+/* ========================================= */
+/* === SCOPED CARD STYLES === */
+/* ========================================= */
+
+.subject-page .card {
+    background: var(--subject-card-bg);
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    padding: 20px;
+    margin-bottom: 20px;
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
 }
 
-body.dark-mode .form-group label {
+body.dark-mode .subject-page .card {
+    background: #2d2d2d;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+}
+
+.subject-page .card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+    gap: 15px;
+}
+
+/* FIXED: Changed from 'h' to 'h3' - this was causing black text in sidebar */
+.subject-page .card-header h3 {
+    margin: 0;
+    color: var(--primary-color);
+    font-size: 1.3rem;
+    transition: color 0.3s ease;
+}
+
+body.dark-mode .subject-page .card-header h3 {
+    color: var(--dark-mode-text);
+}
+
+/* ========================================= */
+/* === SCOPED BUTTON STYLES === */
+/* ========================================= */
+
+.subject-page .btn-primary {
+    background-color: var(--secondary-color); /* Use dashboard color */
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: all 0.3s;
+    font-weight: 500;
+}
+
+.subject-page .btn-primary:hover {
+    background-color: #2e59d9;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+.subject-page .btn-icon {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 8px;
+    border-radius: 4px;
+    font-size: 16px;
+    transition: all 0.3s;
+    margin: 0 3px;
+}
+
+.subject-page .edit-subject {
+    color: var(--secondary-color); /* Use dashboard color */
+    background-color: rgba(52, 152, 219, 0.1);
+}
+
+.subject-page .edit-subject:hover {
+    background-color: rgba(52, 152, 219, 0.2);
+    transform: scale(1.1);
+}
+
+.subject-page .delete-subject {
+    color: var(--accent-color); /* Use dashboard color */
+    background-color: rgba(231, 74, 59, 0.1);
+}
+
+.subject-page .delete-subject:hover {
+    background-color: rgba(231, 74, 59, 0.2);
+    transform: scale(1.1);
+}
+
+/* ========================================= */
+/* === SCOPED MODAL STYLES === */
+/* ========================================= */
+
+.subject-page .modal {
+    display: none;
+    position: fixed;
+    z-index: 1050;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(5px);
+}
+
+.subject-page .modal-content {
+    background-color: #fefefe;
+    margin: 5% auto;
+    padding: 25px;
+    border-radius: 8px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    position: relative;
+    animation: fadeIn 0.3s;
+    width: 90%;
+    max-width: 500px;
+    transition: background-color 0.3s ease, color 0.3s ease;
+    overflow-y: auto; /* Enable vertical scrolling */
+}
+
+@media (max-width: 768px) {
+    .subject-page .modal-content {
+        max-height: 80vh; /* Limit height to 80% of viewport height */
+        overflow-y: auto; /* Ensure scrolling on smaller screens */
+        padding: 15px; /* Slightly reduce padding for smaller screens */
+    }
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-30px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.subject-page .modal-content h2,
+.subject-page .modal-content h3 {
+    margin-top: 0;
+    border-bottom: 2px solid #eee;
+    padding-bottom: 10px;
+    transition: border-color 0.3s ease;
+    color: var(--primary-color);
+}
+
+body.dark-mode .subject-page .modal-content h2,
+body.dark-mode .subject-page .modal-content h3 {
+    color: var(--dark-mode-text);
+}
+
+.subject-page .close {
+    color: #aaa;
+    position: absolute;
+    top: 15px;
+    right: 20px;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: color 0.3s;
+}
+
+.subject-page .close:hover,
+.subject-page .close:focus {
+    color: var(--secondary-color); /* Use dashboard color */
+    text-decoration: none;
+}
+
+/* ========================================= */
+/* === SCOPED FORM STYLES === */
+/* ========================================= */
+
+.subject-page .form-group {
+    margin-bottom: 20px;
+}
+
+.subject-page .form-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 600;
+    color: #4e4e4e;
+    transition: color 0.3s ease;
+}
+
+body.dark-mode .subject-page .form-group label {
     color: #d1d3e2;
 }
 
-body.dark-mode .form-group input,
-body.dark-mode .form-group select,
-body.dark-mode .form-group textarea {
+.subject-page .form-group input,
+.subject-page .form-group select,
+.subject-page .form-group textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #d1d3e2;
+    border-radius: 4px;
+    font-size: 14px;
+    transition: border-color 0.3s, background-color 0.3s ease, color 0.3s ease;
+    box-sizing: border-box;
+}
+
+.subject-page .form-group input:focus,
+.subject-page .form-group select:focus,
+.subject-page .form-group textarea:focus {
+    border-color: var(--secondary-color); /* Use dashboard color */
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.1);
+}
+
+body.dark-mode .subject-page .form-group input,
+body.dark-mode .subject-page .form-group select,
+body.dark-mode .subject-page .form-group textarea {
     background-color: #3a4256;
     border-color: #4a5063;
     color: #f8f9fa;
 }
 
-body.dark-mode .form-actions {
+.subject-page .form-group textarea {
+    min-height: 80px;
+    resize: vertical;
+}
+
+.subject-page .form-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    border-top: 1px solid #eee;
+    padding-top: 20px;
+    margin-top: 20px;
+    transition: border-color 0.3s ease;
+}
+
+body.dark-mode .subject-page .form-actions {
     border-top-color: #4a5063;
 }
 
-body.dark-mode .alert-success {
+/* ========================================= */
+/* === SCOPED TABLE STYLES === */
+/* ========================================= */
+
+.subject-page .dataTables_wrapper {
+    margin-top: 20px;
+}
+
+.subject-page table.dataTable {
+    width: 100% !important;
+    margin: 0 !important;
+    border-collapse: collapse !important;
+    transition: all 0.3s ease;
+}
+
+.subject-page table.dataTable thead th {
+    background-color: #f8f9fc;
+    padding: 12px 15px;
+    font-weight: 600;
+    color: #4e4e4e;
+    border-bottom: 2px solid #e3e6f0;
+    transition: all 0.3s ease;
+}
+
+.subject-page table.dataTable tbody td {
+    padding: 12px 15px;
+    border-bottom: 1px solid #e3e6f0;
+    vertical-align: middle;
+    transition: all 0.3s ease;
+}
+
+.subject-page table.dataTable tbody tr:hover {
+    background-color: #f6f9fc;
+}
+
+.subject-page table.dataTable tbody td:last-child {
+    min-width: 120px;
+    white-space: nowrap;
+}
+
+/* ========================================= */
+/* === SCOPED BUTTON VARIANTS === */
+/* ========================================= */
+
+.subject-page .btn-danger {
+    background-color: var(--accent-color); /* Use dashboard color */
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.subject-page .btn-danger:hover {
+    background-color: #c82333;
+}
+
+.subject-page .btn-cancel {
+    background-color: #858796;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.subject-page .btn-cancel:hover {
+    background-color: #717384;
+}
+
+.subject-page .btn-submit {
+    background-color: var(--secondary-color); /* Use dashboard color */
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.subject-page .btn-submit:hover {
+    background-color: #2e59d9;
+}
+
+/* ========================================= */
+/* === SCOPED ALERT MESSAGES === */
+/* ========================================= */
+
+.subject-page .alert {
+    padding: 1rem;
+    margin-bottom: 1.5rem;
+    border: 1px solid transparent;
+    border-radius: 0.5rem;
+    font-size: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    opacity: 1;
+    transition: opacity 0.5s ease-in-out;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.subject-page .alert.fade-out {
+    opacity: 0;
+}
+
+.subject-page .alert-success {
+    background-color: #d4edda;
+    border-color: #c3e6cb;
+    color: #155724;
+}
+
+.subject-page .alert-danger {
+    background-color: #f8d7da;
+    border-color: #f5c6cb;
+    color: #721c24;
+}
+
+body.dark-mode .subject-page .alert-success {
     background-color: #155724;
     border-color: #0c3d1a;
     color: #d4edda;
 }
 
-body.dark-mode .alert-danger {
+body.dark-mode .subject-page .alert-danger {
     background-color: #721c24;
     border-color: #4a1318;
     color: #f8d7da;
 }
 
-/* DataTable Dark Mode - COMPREHENSIVE FIX */
-body.dark-mode .dataTables_wrapper .dataTables_length,
-body.dark-mode .dataTables_wrapper .dataTables_info,
-body.dark-mode .dataTables_wrapper .dataTables_processing,
-body.dark-mode .dataTables_wrapper .dataTables_paginate {
+/* ========================================= */
+/* === SCOPED EXPORT BUTTON STYLES === */
+/* ========================================= */
+
+.subject-page .dt-buttons {
+    margin-bottom: 15px;
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+.subject-page .dt-button {
+    display: flex !important;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 12px !important;
+    border-radius: 4px !important;
+    font-weight: 500 !important;
+    transition: all 0.3s !important;
+}
+
+.subject-page .buttons-excel {
+    background-color: #1d6f42 !important;
+    color: white !important;
+    border: none !important;
+}
+
+.subject-page .buttons-excel:hover {
+    background-color: #165933 !important;
+    transform: translateY(-2px);
+}
+
+.subject-page .buttons-pdf {
+    background-color: #e74a3b !important;
+    color: white !important;
+    border: none !important;
+}
+
+.subject-page .buttons-pdf:hover {
+    background-color: #d52a1a !important;
+    transform: translateY(-2px);
+}
+
+.subject-page .buttons-print {
+    background-color: #5a5c69 !important;
+    color: white !important;
+    border: none !important;
+}
+
+.subject-page .buttons-print:hover {
+    background-color: #42444e !important;
+    transform: translateY(-2px);
+}
+
+.subject-page .buttons-copy {
+    background-color: #36b9cc !important;
+    color: white !important;
+    border: none !important;
+}
+
+.subject-page .buttons-copy:hover {
+    background-color: #2a96a6 !important;
+    transform: translateY(-2px);
+}
+
+.subject-page .buttons-csv {
+    background-color: var(--secondary-color) !important; /* Use dashboard color */
+    color: white !important;
+    border: none !important;
+}
+
+.subject-page .buttons-csv:hover {
+    background-color: #3a59c7 !important;
+    transform: translateY(-2px);
+}
+
+/* ========================================= */
+/* === DARK MODE - DATATABLE === */
+/* ========================================= */
+
+body.dark-mode .subject-page .modal-content {
+    background-color: #2a3042;
+    color: #f8f9fa;
+}
+
+body.dark-mode .subject-page .dataTables_wrapper .dataTables_length,
+body.dark-mode .subject-page .dataTables_wrapper .dataTables_info,
+body.dark-mode .subject-page .dataTables_wrapper .dataTables_processing,
+body.dark-mode .subject-page .dataTables_wrapper .dataTables_paginate {
     color: #f8f9fa !important;
 }
 
-/* Search box fix - make sure text is visible */
-body.dark-mode .dataTables_wrapper .dataTables_filter input {
+body.dark-mode .subject-page .dataTables_wrapper .dataTables_filter input {
     background-color: #3a4256 !important;
     border-color: #4a5063 !important;
     color: #f8f9fa !important;
@@ -941,63 +809,46 @@ body.dark-mode .dataTables_wrapper .dataTables_filter input {
     border-radius: 4px;
 }
 
-body.dark-mode .dataTables_wrapper .dataTables_filter input:focus {
-    border-color: #4e73df !important;
-    outline: none;
-    box-shadow: 0 0 0 3px rgba(78, 115, 223, 0.1) !important;
-}
-
-body.dark-mode .dataTables_wrapper .dataTables_filter label {
+body.dark-mode .subject-page .dataTables_wrapper .dataTables_filter label {
     color: #f8f9fa !important;
 }
 
-/* Pagination buttons */
-body.dark-mode .dataTables_wrapper .dataTables_paginate .paginate_button {
+body.dark-mode .subject-page .dataTables_wrapper .dataTables_paginate .paginate_button {
     color: #f8f9fa !important;
     background-color: #3a4256 !important;
     border: 1px solid #4a5063 !important;
 }
 
-body.dark-mode .dataTables_wrapper .dataTables_paginate .paginate_button:hover {
-    background-color: #4e73df !important;
+body.dark-mode .subject-page .dataTables_wrapper .dataTables_paginate .paginate_button:hover {
+    background-color: var(--secondary-color) !important;
     color: white !important;
 }
 
-body.dark-mode .dataTables_wrapper .dataTables_paginate .paginate_button.current {
-    background-color: #4e73df !important;
+body.dark-mode .subject-page .dataTables_wrapper .dataTables_paginate .paginate_button.current {
+    background-color: var(--secondary-color) !important;
     color: white !important;
-    border: 1px solid #4e73df !important;
 }
 
-/* Table header and rows */
-body.dark-mode table.dataTable thead th {
+body.dark-mode .subject-page table.dataTable thead th {
     background-color: #3a4256 !important;
     color: #f8f9fa !important;
     border-bottom-color: #4a5063 !important;
 }
 
-body.dark-mode table.dataTable tbody td {
+body.dark-mode .subject-page table.dataTable tbody td {
     border-bottom-color: #4a5063 !important;
     color: #f8f9fa !important;
 }
 
-body.dark-mode table.dataTable tbody tr {
+body.dark-mode .subject-page table.dataTable tbody tr {
     background-color: #2a3042 !important;
 }
 
-body.dark-mode table.dataTable tbody tr:hover {
+body.dark-mode .subject-page table.dataTable tbody tr:hover {
     background-color: #3a4256 !important;
 }
 
-/* Sorting icons */
-body.dark-mode table.dataTable thead th.sorting:after,
-body.dark-mode table.dataTable thead th.sorting_asc:after,
-body.dark-mode table.dataTable thead th.sorting_desc:after {
-    color: #f8f9fa !important;
-}
-
-/* Select dropdown */
-body.dark-mode .dataTables_wrapper .dataTables_length select {
+body.dark-mode .subject-page .dataTables_wrapper .dataTables_length select {
     background-color: #3a4256 !important;
     border-color: #4a5063 !important;
     color: #f8f9fa !important;
@@ -1005,28 +856,22 @@ body.dark-mode .dataTables_wrapper .dataTables_length select {
     border-radius: 4px;
 }
 
-/* Table border and styling */
-body.dark-mode table.dataTable {
-    border: 1px solid #4a5063 !important;
-}
-
-body.dark-mode table.dataTable th,
-body.dark-mode table.dataTable td {
-    border-left: 1px solid #4a5063 !important;
-}
-
-body.dark-mode table.dataTable th:first-child,
-body.dark-mode table.dataTable td:first-child {
-    border-left: none !important;
-}
-
-/* Export buttons in dark mode */
-body.dark-mode .dt-button {
-    color: white !important;
-}
-
-/* Make sure the table info text is visible */
-body.dark-mode .dataTables_info {
+body.dark-mode .subject-page .dataTables_info {
     color: #d1d3e2 !important;
 }
 
+/* ========================================= */
+/* === RESPONSIVE DESIGN === */
+/* ========================================= */
+
+@media (max-width: 992px) {
+    .subject-page .card-header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    
+    .subject-page .dt-buttons {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+}

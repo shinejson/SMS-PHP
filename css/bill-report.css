@@ -1,0 +1,286 @@
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Times New Roman', serif;
+        }
+        
+        body {
+            background-color: #f5f5f5;
+            padding: 20px;
+            color: #000;
+        }
+        
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        
+        .report-header {
+            text-align: center;
+            margin-bottom: 20px;
+            border-bottom: 2px solid #000;
+            padding-bottom: 10px;
+        }
+        
+        .school-info {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 10px;
+        }
+        
+        .school-logo {
+            max-width: 80px;
+            max-height: 80px;
+            margin-right: 15px;
+        }
+        
+        .school-name {
+            font-size: 22px;
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+        
+        .school-address {
+            font-size: 16px;
+            margin: 5px 0;
+        }
+        
+        .report-title {
+            font-size: 18px;
+            font-weight: bold;
+            text-decoration: underline;
+            margin: 15px 0;
+        }
+        
+        .student-info {
+            margin-bottom: 20px;
+        }
+        
+        .info-row {
+            display: flex;
+            margin-bottom: 5px;
+        }
+        
+        .info-label {
+            font-weight: bold;
+            width: 120px;
+        }
+        
+        .term-year {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+            font-weight: bold;
+        }
+        
+        .bill-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+        
+        .bill-table th, .bill-table td {
+            border: 1px solid #000;
+            padding: 8px;
+            text-align: left;
+        }
+        
+        .bill-table th {
+            background-color: #f0f0f0;
+            text-align: center;
+        }
+        
+        .sub-item {
+            padding-left: 30px !important;
+            font-style: italic;
+        }
+        
+        .tuition-total {
+            font-weight: bold;
+            background-color: #f9f9f9;
+        }
+        
+        .amount-due {
+            text-align: right;
+            font-weight: bold;
+            margin-top: 15px;
+            font-size: 16px;
+        }
+        
+        .instructions {
+            margin-top: 30px;
+            font-size: 14px;
+            line-height: 1.5;
+        }
+        
+        .instructions ol {
+            padding-left: 20px;
+        }
+        
+        .instructions li {
+            margin-bottom: 10px;
+        }
+        
+        .action-buttons {
+            margin-top: 20px;
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+        }
+        
+        .btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: background-color 0.3s;
+        }
+        
+        .btn-print {
+            background-color: #4CAF50;
+            color: white;
+        }
+        
+        .btn-download {
+            background-color: #2196F3;
+            color: white;
+        }
+        
+        .btn-generate {
+            background-color: #FF9800;
+            color: white;
+        }
+        
+        .btn:hover {
+            opacity: 0.9;
+        }
+        
+        .form-group {
+            margin-bottom: 15px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        
+        input, select {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        
+        .input-form {
+            background-color: #f9f9f9;
+            padding: 15px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+        }
+        
+        .form-title {
+            margin-bottom: 15px;
+            color: #333;
+            border-bottom: 1px solid #ddd;
+            padding-bottom: 5px;
+        }
+        
+        .loading {
+            display: none;
+            text-align: center;
+            margin: 20px 0;
+        }
+        
+        .loading i {
+            margin-right: 10px;
+        }
+        
+        @media print {
+            body {
+                background-color: white;
+                padding: 0;
+            }
+            
+            .container {
+                box-shadow: none;
+                padding: 0;
+            }
+            
+            .action-buttons, .input-form {
+                display: none;
+            }
+        }
+
+        /* Enhanced styles for Select2 and filtering */
+        .select2-container {
+            width: 100% !important;
+        }
+        
+        .select2-container--default .select2-selection--single {
+            height: 45px;
+            padding: 8px 12px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            background-color: white;
+        }
+        
+        .select2-container--default .select2-selection--single .select2-selection__rendered {
+            line-height: 28px;
+            padding-left: 0;
+            color: #333;
+        }
+        
+        .select2-container--default .select2-selection--single .select2-selection__arrow {
+            height: 43px;
+        }
+        
+        .select2-dropdown {
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            z-index: 9999;
+        }
+        
+        .select2-results__option {
+            padding: 8px 12px;
+        }
+        
+        .select2-results__option--highlighted {
+            background-color: #007bff;
+            color: white;
+        }
+        
+        .filter-info {
+            background: #e3f2fd;
+            padding: 10px 15px;
+            border-radius: 4px;
+            margin-top: 10px;
+            border-left: 4px solid #2196f3;
+        }
+        
+        .filter-info small {
+            color: #1976d2;
+            font-style: italic;
+        }
+        
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+        }
+        
+        .student-option {
+            font-size: 14px;
+        }
+        
+        .student-class-info {
+            color: #666;
+            font-size: 12px;
+        }

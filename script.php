@@ -9,6 +9,7 @@
 <script src="js/data-tables.js"></script>
 <script src="js/darkmode.js"></script>
 <script src="js/dropdown.js"></script>
+<script src="js/pwa.js"></script>
 
 
 

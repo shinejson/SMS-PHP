@@ -2,6 +2,10 @@
 require_once 'config.php';
 require_once 'session.php';
 include 'control.php';
+require_once 'rbac.php';
+
+// For admin-only pages
+requirePermission('admin');
 // Check authentication
 ?>
 
@@ -10,7 +14,9 @@ include 'control.php';
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="mobile-web-app-capable" content="yes">
     <title>Teacher Management - GEBSCO</title>
+    <?php include 'favicon.php'; ?>
     <link rel="stylesheet" type="text/css" href="css/dashboard.css">
      <link rel="stylesheet" type="text/css" href="css/db.css">
     <link rel="stylesheet" type="text/css" href="css/teachers.css">
@@ -181,5 +187,6 @@ include 'control.php';
     window.teachersData = <?php echo json_encode($teachers); ?>;
   </script>
     <script src="js/dropdown.js"></script>
+     <script src="js/dashboard.js"></script>
 </body>
 </html>

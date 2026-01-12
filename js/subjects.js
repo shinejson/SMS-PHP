@@ -166,7 +166,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // Handle sidebar collapse
     const sidebarToggle = document.querySelector('.sidebar-toggle');
-    const mainContent = document.querySelector('.main-content');
+    const mainContent = document.querySelector('.subject-page .modal-content');
     
     if (sidebarToggle && mainContent) {
         sidebarToggle.addEventListener('click', () => {

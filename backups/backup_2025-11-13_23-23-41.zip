@@ -1,0 +1,1725 @@
+-- Database Backup Generated on 2025-11-13 23:23:41
+-- Backup System: PHP Fallback Method
+
+--
+-- Table structure for table `academic_years`
+--
+DROP TABLE IF EXISTS `academic_years`;
+CREATE TABLE `academic_years` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `year_name` varchar(20) NOT NULL,
+  `is_current` tinyint(1) DEFAULT 0,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `start_date` date DEFAULT NULL,
+  `end_date` date DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `year_name` (`year_name`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `academic_years`
+--
+INSERT INTO `academic_years` VALUES ('1', '2025/2026 Grace', '0', '2025-08-29 16:24:05', NULL, NULL),
+('2', '2026/2027 Peace', '1', '2025-10-16 10:28:33', NULL, NULL);
+
+--
+-- Table structure for table `account_transactions`
+--
+DROP TABLE IF EXISTS `account_transactions`;
+CREATE TABLE `account_transactions` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `account_id` int(11) NOT NULL,
+  `transaction_type` enum('deposit','withdrawal') NOT NULL,
+  `amount` decimal(10,2) NOT NULL,
+  `description` text NOT NULL,
+  `reference_number` varchar(100) DEFAULT NULL,
+  `created_by` int(11) NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  PRIMARY KEY (`id`),
+  KEY `account_id` (`account_id`),
+  KEY `created_by` (`created_by`),
+  CONSTRAINT `account_transactions_ibfk_1` FOREIGN KEY (`account_id`) REFERENCES `student_accounts` (`id`) ON DELETE CASCADE,
+  CONSTRAINT `account_transactions_ibfk_2` FOREIGN KEY (`created_by`) REFERENCES `users` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `account_transactions`
+--
+--
+-- Table structure for table `activities`
+--
+DROP TABLE IF EXISTS `activities`;
+CREATE TABLE `activities` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `title` varchar(100) NOT NULL,
+  `description` text DEFAULT NULL,
+  `type` enum('login','create','update','delete','view','export','system') NOT NULL DEFAULT 'system',
+  `icon` varchar(50) DEFAULT 'fas fa-circle',
+  `user_id` int(11) NOT NULL,
+  `related_id` int(11) DEFAULT NULL,
+  `ip_address` varchar(45) DEFAULT NULL,
+  `created_at` datetime NOT NULL DEFAULT current_timestamp(),
+  PRIMARY KEY (`id`),
+  KEY `idx_user` (`user_id`),
+  KEY `idx_type` (`type`),
+  KEY `idx_created` (`created_at`),
+  KEY `idx_related` (`related_id`),
+  CONSTRAINT `fk_activity_user` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=727 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `activities`
+--
+INSERT INTO `activities` VALUES ('1', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '1', NULL, NULL, '2025-11-03 17:47:36'),
+('2', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '1', NULL, NULL, '2025-11-03 17:47:38'),
+('3', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '1', NULL, NULL, '2025-11-03 17:47:38'),
+('4', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '1', NULL, NULL, '2025-11-03 17:47:38'),
+('5', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '1', NULL, NULL, '2025-11-03 17:47:38'),
+('6', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '1', NULL, NULL, '2025-11-03 17:50:14'),
+('7', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '6', NULL, NULL, '2025-11-03 17:50:29'),
+('8', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '6', NULL, NULL, '2025-11-03 17:50:30'),
+('9', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '6', NULL, NULL, '2025-11-03 17:50:30'),
+('10', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '6', NULL, NULL, '2025-11-03 17:50:33'),
+('11', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '6', NULL, NULL, '2025-11-03 17:50:33'),
+('12', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '6', NULL, NULL, '2025-11-03 17:50:33'),
+('13', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '6', NULL, NULL, '2025-11-03 17:50:40'),
+('14', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '6', NULL, NULL, '2025-11-03 17:50:57'),
+('15', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '6', NULL, NULL, '2025-11-03 17:50:57'),
+('16', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '6', NULL, NULL, '2025-11-03 17:50:57'),
+('17', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '1', NULL, NULL, '2025-11-03 17:51:04'),
+('18', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '6', NULL, NULL, '2025-11-03 17:52:13'),
+('19', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '6', NULL, NULL, '2025-11-03 17:52:13'),
+('20', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '6', NULL, NULL, '2025-11-03 17:52:13'),
+('21', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '6', NULL, NULL, '2025-11-03 17:52:17'),
+('22', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '6', NULL, NULL, '2025-11-03 17:52:17'),
+('23', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '6', NULL, NULL, '2025-11-03 17:52:17'),
+('24', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '6', NULL, NULL, '2025-11-03 17:52:21'),
+('25', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '6', NULL, NULL, '2025-11-03 17:53:44'),
+('26', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '6', NULL, NULL, '2025-11-03 17:53:44'),
+('27', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '6', NULL, NULL, '2025-11-03 17:53:44'),
+('28', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '6', NULL, NULL, '2025-11-03 17:53:48'),
+('29', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '6', NULL, NULL, '2025-11-03 17:53:48'),
+('30', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '6', NULL, NULL, '2025-11-03 17:53:48'),
+('31', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '6', NULL, NULL, '2025-11-03 17:53:48'),
+('32', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '6', NULL, NULL, '2025-11-03 17:53:53'),
+('33', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '1', NULL, NULL, '2025-11-03 17:54:02'),
+('34', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '6', NULL, NULL, '2025-11-03 17:55:23'),
+('35', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '6', NULL, NULL, '2025-11-03 17:55:23'),
+('36', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '6', NULL, NULL, '2025-11-03 17:55:23'),
+('37', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '6', NULL, NULL, '2025-11-03 17:55:24'),
+('38', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '6', NULL, NULL, '2025-11-03 18:00:12'),
+('39', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '6', NULL, NULL, '2025-11-03 18:00:12'),
+('40', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '6', NULL, NULL, '2025-11-03 18:00:12'),
+('41', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '6', NULL, NULL, '2025-11-03 18:00:14'),
+('42', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '6', NULL, NULL, '2025-11-03 18:05:53'),
+('43', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '6', NULL, NULL, '2025-11-03 18:05:53'),
+('44', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '6', NULL, NULL, '2025-11-03 18:05:54'),
+('45', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '6', NULL, NULL, '2025-11-03 18:06:07'),
+('46', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '6', NULL, NULL, '2025-11-03 18:07:29'),
+('47', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '6', NULL, NULL, '2025-11-03 18:07:57'),
+('48', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '6', NULL, NULL, '2025-11-03 18:08:21'),
+('49', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '6', NULL, NULL, '2025-11-03 18:08:21'),
+('50', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '6', NULL, NULL, '2025-11-03 18:08:21'),
+('51', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '6', NULL, NULL, '2025-11-03 18:08:30'),
+('52', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '6', NULL, NULL, '2025-11-03 18:08:30'),
+('53', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '6', NULL, NULL, '2025-11-03 18:08:30'),
+('54', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '6', NULL, NULL, '2025-11-03 18:09:47'),
+('55', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '6', NULL, NULL, '2025-11-03 18:09:47'),
+('56', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '6', NULL, NULL, '2025-11-03 18:09:48'),
+('57', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '6', NULL, NULL, '2025-11-03 18:09:49'),
+('58', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '6', NULL, NULL, '2025-11-03 18:09:49'),
+('59', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '6', NULL, NULL, '2025-11-03 18:09:49'),
+('60', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '6', NULL, NULL, '2025-11-03 18:09:50'),
+('61', 'Attendance Marked/Updated', 'Class ID: 16, Date: 2025-11-04, Processed: 1 (New: 0, Updated: 1)', 'create', 'fas fa-clipboard-check', '6', '16', NULL, '2025-11-03 18:09:50'),
+('62', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '6', NULL, NULL, '2025-11-03 18:09:53'),
+('63', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '6', NULL, NULL, '2025-11-03 18:09:53'),
+('64', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '6', NULL, NULL, '2025-11-03 18:09:54'),
+('65', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '1', NULL, NULL, '2025-11-03 18:09:58'),
+('66', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '1', NULL, NULL, '2025-11-03 18:19:40'),
+('67', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '6', NULL, NULL, '2025-11-04 09:32:31'),
+('68', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '6', NULL, NULL, '2025-11-04 09:32:31'),
+('69', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '6', NULL, NULL, '2025-11-04 09:32:31'),
+('70', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '6', NULL, NULL, '2025-11-04 09:34:15'),
+('71', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '6', NULL, NULL, '2025-11-04 09:34:16'),
+('72', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '6', NULL, NULL, '2025-11-04 09:34:16'),
+('73', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '6', NULL, NULL, '2025-11-04 09:34:23'),
+('74', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '1', NULL, NULL, '2025-11-04 09:34:43'),
+('75', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '1', NULL, NULL, '2025-11-04 09:34:44'),
+('76', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '1', NULL, NULL, '2025-11-04 09:34:44'),
+('77', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '1', NULL, NULL, '2025-11-04 09:36:57'),
+('78', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '1', NULL, NULL, '2025-11-04 09:36:58'),
+('79', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '1', NULL, NULL, '2025-11-04 09:36:58'),
+('80', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '1', NULL, NULL, '2025-11-04 09:37:24'),
+('81', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '1', NULL, NULL, '2025-11-04 09:37:24'),
+('82', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '1', NULL, NULL, '2025-11-04 09:37:25'),
+('83', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '1', NULL, NULL, '2025-11-04 09:37:27'),
+('84', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '1', NULL, NULL, '2025-11-04 09:46:13'),
+('85', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '1', NULL, NULL, '2025-11-04 09:46:14'),
+('86', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '1', NULL, NULL, '2025-11-04 09:46:14'),
+('87', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '1', NULL, NULL, '2025-11-04 09:46:17'),
+('88', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '1', NULL, NULL, '2025-11-04 09:46:17'),
+('89', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '1', NULL, NULL, '2025-11-04 09:46:17'),
+('90', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '1', NULL, NULL, '2025-11-04 09:46:19'),
+('91', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '1', NULL, NULL, '2025-11-04 09:46:53'),
+('92', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '1', NULL, NULL, '2025-11-04 09:46:57'),
+('93', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '1', NULL, NULL, '2025-11-04 09:46:59'),
+('94', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '1', NULL, NULL, '2025-11-04 09:46:59'),
+('95', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '1', NULL, NULL, '2025-11-04 09:46:59'),
+('96', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '1', NULL, NULL, '2025-11-04 09:47:02'),
+('97', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '6', NULL, NULL, '2025-11-04 09:47:26'),
+('98', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '6', NULL, NULL, '2025-11-04 09:47:26'),
+('99', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '6', NULL, NULL, '2025-11-04 09:47:26'),
+('100', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '6', NULL, NULL, '2025-11-04 09:47:29'),
+('101', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '6', NULL, NULL, '2025-11-04 09:47:29'),
+('102', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '6', NULL, NULL, '2025-11-04 09:47:29'),
+('103', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '6', NULL, NULL, '2025-11-04 10:01:42'),
+('104', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '6', NULL, NULL, '2025-11-04 10:01:42'),
+('105', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '6', NULL, NULL, '2025-11-04 10:01:42'),
+('106', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '6', NULL, NULL, '2025-11-04 10:02:53'),
+('107', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '6', NULL, NULL, '2025-11-04 10:02:53'),
+('108', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '6', NULL, NULL, '2025-11-04 10:02:53'),
+('109', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '6', NULL, NULL, '2025-11-04 10:02:56'),
+('110', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '6', NULL, NULL, '2025-11-04 10:02:56'),
+('111', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '6', NULL, NULL, '2025-11-04 10:02:56'),
+('112', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '6', NULL, NULL, '2025-11-04 10:04:58'),
+('113', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '6', NULL, NULL, '2025-11-04 10:07:17'),
+('114', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '6', NULL, NULL, '2025-11-04 10:07:19'),
+('115', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '6', NULL, NULL, '2025-11-04 10:11:55'),
+('116', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '6', NULL, NULL, '2025-11-04 10:18:09'),
+('117', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '6', NULL, NULL, '2025-11-04 10:18:45'),
+('118', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '6', NULL, NULL, '2025-11-04 10:19:12'),
+('119', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '6', NULL, NULL, '2025-11-04 10:21:33'),
+('120', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '6', NULL, NULL, '2025-11-04 10:34:55'),
+('121', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '6', NULL, NULL, '2025-11-04 10:34:55'),
+('122', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '6', NULL, NULL, '2025-11-04 10:34:55'),
+('123', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '1', NULL, NULL, '2025-11-04 10:40:32'),
+('124', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '1', NULL, NULL, '2025-11-04 10:40:32'),
+('125', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '1', NULL, NULL, '2025-11-04 10:40:32'),
+('126', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '1', NULL, NULL, '2025-11-04 10:40:34'),
+('127', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '1', NULL, NULL, '2025-11-04 10:41:33'),
+('128', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '1', NULL, NULL, '2025-11-04 10:41:55'),
+('129', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '1', NULL, NULL, '2025-11-04 10:42:33'),
+('130', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '6', NULL, NULL, '2025-11-04 10:42:53'),
+('131', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '6', NULL, NULL, '2025-11-04 10:42:53'),
+('132', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '6', NULL, NULL, '2025-11-04 10:42:53'),
+('133', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '6', NULL, NULL, '2025-11-04 10:43:05'),
+('134', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '6', NULL, NULL, '2025-11-04 10:43:05'),
+('135', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '6', NULL, NULL, '2025-11-04 10:43:05'),
+('136', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '6', NULL, NULL, '2025-11-04 10:43:28'),
+('137', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '6', NULL, NULL, '2025-11-04 10:43:29'),
+('138', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '6', NULL, NULL, '2025-11-04 10:43:29'),
+('139', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '1', NULL, NULL, '2025-11-04 10:44:39'),
+('140', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '1', NULL, NULL, '2025-11-04 10:45:47'),
+('141', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '1', NULL, NULL, '2025-11-04 10:45:47'),
+('142', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '1', NULL, NULL, '2025-11-04 10:45:47'),
+('143', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '1', NULL, NULL, '2025-11-04 10:45:52'),
+('144', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '6', NULL, NULL, '2025-11-04 10:47:22'),
+('145', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '6', NULL, NULL, '2025-11-04 10:47:23'),
+('146', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '6', NULL, NULL, '2025-11-04 10:47:23'),
+('147', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '6', NULL, NULL, '2025-11-04 10:47:25'),
+('148', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '6', NULL, NULL, '2025-11-04 10:47:26'),
+('149', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '6', NULL, NULL, '2025-11-04 10:47:26'),
+('150', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '6', NULL, NULL, '2025-11-04 10:54:25'),
+('151', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '6', NULL, NULL, '2025-11-04 10:55:32'),
+('152', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '6', NULL, NULL, '2025-11-04 10:55:32'),
+('153', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '6', NULL, NULL, '2025-11-04 10:55:32'),
+('154', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '1', NULL, NULL, '2025-11-04 10:55:42'),
+('155', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '1', NULL, NULL, '2025-11-04 10:55:44'),
+('156', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '1', NULL, NULL, '2025-11-04 10:56:48'),
+('157', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '6', NULL, NULL, '2025-11-04 10:57:55'),
+('158', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '6', NULL, NULL, '2025-11-04 10:57:56'),
+('159', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '6', NULL, NULL, '2025-11-04 10:57:56'),
+('160', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '1', NULL, NULL, '2025-11-04 10:58:07'),
+('161', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '1', NULL, NULL, '2025-11-04 10:58:09'),
+('162', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '1', NULL, NULL, '2025-11-04 10:58:11'),
+('163', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '1', NULL, NULL, '2025-11-04 10:58:20'),
+('164', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '1', NULL, NULL, '2025-11-04 10:58:55'),
+('165', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '1', NULL, NULL, '2025-11-04 10:59:32'),
+('166', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '1', NULL, NULL, '2025-11-04 11:00:00'),
+('167', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '1', NULL, NULL, '2025-11-04 11:00:19'),
+('168', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '1', NULL, NULL, '2025-11-04 11:00:20'),
+('169', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '1', NULL, NULL, '2025-11-04 11:00:20'),
+('170', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '6', NULL, NULL, '2025-11-04 11:15:39'),
+('171', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '6', NULL, NULL, '2025-11-04 11:15:39'),
+('172', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '6', NULL, NULL, '2025-11-04 11:15:40'),
+('173', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '6', NULL, NULL, '2025-11-04 11:15:43'),
+('174', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '6', NULL, NULL, '2025-11-04 11:15:43'),
+('175', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '6', NULL, NULL, '2025-11-04 11:15:43'),
+('176', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '6', NULL, NULL, '2025-11-04 11:21:37'),
+('177', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '6', NULL, NULL, '2025-11-04 11:21:37'),
+('178', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '6', NULL, NULL, '2025-11-04 11:21:37'),
+('179', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '6', NULL, NULL, '2025-11-04 11:22:46'),
+('180', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '6', NULL, NULL, '2025-11-04 11:22:46'),
+('181', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '6', NULL, NULL, '2025-11-04 11:22:46'),
+('182', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '6', NULL, NULL, '2025-11-04 11:23:52'),
+('183', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '6', NULL, NULL, '2025-11-04 11:23:52'),
+('184', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '6', NULL, NULL, '2025-11-04 11:23:52'),
+('185', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '6', NULL, NULL, '2025-11-04 11:30:44'),
+('186', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '6', NULL, NULL, '2025-11-04 11:32:35'),
+('187', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '6', NULL, NULL, '2025-11-04 11:32:37'),
+('188', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '6', NULL, NULL, '2025-11-04 11:36:17'),
+('189', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '6', NULL, NULL, '2025-11-04 11:37:43'),
+('190', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '6', NULL, NULL, '2025-11-04 11:38:45'),
+('191', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '6', NULL, NULL, '2025-11-04 11:40:15'),
+('192', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '6', NULL, NULL, '2025-11-04 11:41:08'),
+('193', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '6', NULL, NULL, '2025-11-04 11:41:58'),
+('194', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '6', NULL, NULL, '2025-11-04 11:49:30'),
+('195', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '6', NULL, NULL, '2025-11-04 11:49:30'),
+('196', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '6', NULL, NULL, '2025-11-04 11:49:30'),
+('197', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '6', NULL, NULL, '2025-11-04 11:50:15'),
+('198', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '6', NULL, NULL, '2025-11-04 11:50:16'),
+('199', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '6', NULL, NULL, '2025-11-04 11:50:16'),
+('200', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '6', NULL, NULL, '2025-11-04 11:51:20'),
+('201', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '6', NULL, NULL, '2025-11-04 11:54:58'),
+('202', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '6', NULL, NULL, '2025-11-04 11:54:59'),
+('203', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '6', NULL, NULL, '2025-11-04 11:55:00'),
+('204', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '6', NULL, NULL, '2025-11-04 12:10:25'),
+('205', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '6', NULL, NULL, '2025-11-04 12:10:25'),
+('206', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '6', NULL, NULL, '2025-11-04 12:10:25'),
+('207', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '6', NULL, NULL, '2025-11-04 12:11:30'),
+('208', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '6', NULL, NULL, '2025-11-04 12:11:30'),
+('209', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '6', NULL, NULL, '2025-11-04 12:11:30'),
+('210', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '6', NULL, NULL, '2025-11-04 12:11:47'),
+('211', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '6', NULL, NULL, '2025-11-04 12:11:47'),
+('212', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '6', NULL, NULL, '2025-11-04 12:11:47'),
+('213', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '6', NULL, NULL, '2025-11-04 12:17:30'),
+('214', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '6', NULL, NULL, '2025-11-04 12:17:30'),
+('215', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '6', NULL, NULL, '2025-11-04 12:17:30'),
+('216', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '6', NULL, NULL, '2025-11-04 12:19:13'),
+('217', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '6', NULL, NULL, '2025-11-04 12:19:13'),
+('218', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '6', NULL, NULL, '2025-11-04 12:19:13'),
+('219', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '6', NULL, NULL, '2025-11-04 12:19:16'),
+('220', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '6', NULL, NULL, '2025-11-04 12:19:16'),
+('221', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '6', NULL, NULL, '2025-11-04 12:19:17'),
+('222', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '6', NULL, NULL, '2025-11-04 12:39:28'),
+('223', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '6', NULL, NULL, '2025-11-04 12:39:29'),
+('224', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '6', NULL, NULL, '2025-11-04 12:39:29'),
+('225', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '6', NULL, NULL, '2025-11-04 12:39:29'),
+('226', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '6', NULL, NULL, '2025-11-04 12:39:30'),
+('227', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '6', NULL, NULL, '2025-11-04 12:39:30'),
+('228', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '6', NULL, NULL, '2025-11-04 12:39:32'),
+('229', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '6', NULL, NULL, '2025-11-04 12:39:32'),
+('230', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '6', NULL, NULL, '2025-11-04 12:39:32'),
+('231', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '6', NULL, NULL, '2025-11-04 12:39:33'),
+('232', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '6', NULL, NULL, '2025-11-04 12:39:33'),
+('233', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '6', NULL, NULL, '2025-11-04 12:39:33'),
+('234', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '6', NULL, NULL, '2025-11-04 12:39:37'),
+('235', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '6', NULL, NULL, '2025-11-04 12:39:37'),
+('236', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '6', NULL, NULL, '2025-11-04 12:39:38'),
+('237', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '6', NULL, NULL, '2025-11-04 12:39:38'),
+('238', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '6', NULL, NULL, '2025-11-04 12:39:39'),
+('239', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '6', NULL, NULL, '2025-11-04 12:39:39'),
+('240', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '6', NULL, NULL, '2025-11-04 12:42:29'),
+('241', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '6', NULL, NULL, '2025-11-04 12:42:29'),
+('242', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '6', NULL, NULL, '2025-11-04 12:42:29'),
+('243', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '6', NULL, NULL, '2025-11-04 12:44:42'),
+('244', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '6', NULL, NULL, '2025-11-04 12:44:42'),
+('245', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '6', NULL, NULL, '2025-11-04 12:44:42'),
+('246', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '6', NULL, NULL, '2025-11-04 12:44:46'),
+('247', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '6', NULL, NULL, '2025-11-04 12:44:46'),
+('248', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '6', NULL, NULL, '2025-11-04 12:44:46'),
+('249', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '6', NULL, NULL, '2025-11-04 12:45:04'),
+('250', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '6', NULL, NULL, '2025-11-04 12:45:04'),
+('251', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '6', NULL, NULL, '2025-11-04 12:45:04'),
+('252', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '6', NULL, NULL, '2025-11-04 12:46:26'),
+('253', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '6', NULL, NULL, '2025-11-04 12:46:26'),
+('254', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '6', NULL, NULL, '2025-11-04 12:46:26'),
+('255', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '6', NULL, NULL, '2025-11-04 12:48:00'),
+('256', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '6', NULL, NULL, '2025-11-04 12:48:00'),
+('257', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '6', NULL, NULL, '2025-11-04 12:48:00'),
+('258', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '6', NULL, NULL, '2025-11-04 12:48:36'),
+('259', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '6', NULL, NULL, '2025-11-04 12:48:37'),
+('260', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '6', NULL, NULL, '2025-11-04 12:48:37'),
+('261', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '6', NULL, NULL, '2025-11-04 12:48:38'),
+('262', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '6', NULL, NULL, '2025-11-04 12:48:38'),
+('263', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '6', NULL, NULL, '2025-11-04 12:48:38'),
+('264', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '6', NULL, NULL, '2025-11-04 13:04:29'),
+('265', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '6', NULL, NULL, '2025-11-04 13:04:37'),
+('266', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '1', NULL, NULL, '2025-11-04 13:04:41'),
+('267', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '1', NULL, NULL, '2025-11-04 13:04:41'),
+('268', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '1', NULL, NULL, '2025-11-04 13:04:41'),
+('269', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '1', NULL, NULL, '2025-11-04 13:04:48'),
+('270', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '1', NULL, NULL, '2025-11-04 13:07:15'),
+('271', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '1', NULL, NULL, '2025-11-04 13:07:16'),
+('272', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '1', NULL, NULL, '2025-11-04 13:07:16'),
+('273', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '1', NULL, NULL, '2025-11-04 13:07:20'),
+('274', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '1', NULL, NULL, '2025-11-04 13:08:00'),
+('275', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '1', NULL, NULL, '2025-11-04 13:33:19'),
+('276', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '1', NULL, NULL, '2025-11-04 13:33:22'),
+('277', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '1', NULL, NULL, '2025-11-04 13:33:22'),
+('278', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '1', NULL, NULL, '2025-11-04 13:33:22'),
+('279', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '1', NULL, NULL, '2025-11-04 13:33:24'),
+('280', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '1', NULL, NULL, '2025-11-04 13:33:24'),
+('281', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '1', NULL, NULL, '2025-11-04 13:33:24'),
+('282', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '1', NULL, NULL, '2025-11-04 13:33:31'),
+('283', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '1', NULL, NULL, '2025-11-04 13:36:05'),
+('284', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '1', NULL, NULL, '2025-11-04 13:45:15'),
+('285', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '1', NULL, NULL, '2025-11-04 13:45:59'),
+('286', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '1', NULL, NULL, '2025-11-04 13:47:02'),
+('287', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '1', NULL, NULL, '2025-11-04 13:49:40'),
+('288', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '1', NULL, NULL, '2025-11-04 13:50:16'),
+('289', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '1', NULL, NULL, '2025-11-04 13:50:46'),
+('290', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '1', NULL, NULL, '2025-11-04 13:51:00'),
+('291', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '1', NULL, NULL, '2025-11-04 13:54:56'),
+('292', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '1', NULL, NULL, '2025-11-04 13:55:07'),
+('293', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '1', NULL, NULL, '2025-11-04 13:56:34'),
+('294', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '1', NULL, NULL, '2025-11-04 13:58:21'),
+('295', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '1', NULL, NULL, '2025-11-04 13:58:42'),
+('296', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '1', NULL, NULL, '2025-11-04 13:58:44'),
+('297', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '1', NULL, NULL, '2025-11-04 13:59:50'),
+('298', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '1', NULL, NULL, '2025-11-04 14:01:02'),
+('299', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '1', NULL, NULL, '2025-11-04 14:02:02'),
+('300', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '1', NULL, NULL, '2025-11-04 14:02:49'),
+('301', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '1', NULL, NULL, '2025-11-04 14:03:21'),
+('302', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '1', NULL, NULL, '2025-11-04 14:04:05'),
+('303', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '1', NULL, NULL, '2025-11-04 14:04:15'),
+('304', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '1', NULL, NULL, '2025-11-04 14:05:53'),
+('305', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '1', NULL, NULL, '2025-11-04 14:06:02'),
+('306', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '1', NULL, NULL, '2025-11-04 14:12:02'),
+('307', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '1', NULL, NULL, '2025-11-04 14:12:14'),
+('308', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '1', NULL, NULL, '2025-11-04 14:18:56'),
+('309', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '1', NULL, NULL, '2025-11-04 14:20:09'),
+('310', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '1', NULL, NULL, '2025-11-04 14:20:10'),
+('311', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '1', NULL, NULL, '2025-11-04 14:20:27'),
+('312', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '1', NULL, NULL, '2025-11-04 14:20:27'),
+('313', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '1', NULL, NULL, '2025-11-04 14:20:28'),
+('314', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '1', NULL, NULL, '2025-11-04 14:20:33'),
+('315', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '1', NULL, NULL, '2025-11-04 14:23:07'),
+('316', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '1', NULL, NULL, '2025-11-04 14:23:57'),
+('317', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '1', NULL, NULL, '2025-11-04 14:24:13'),
+('318', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '1', NULL, NULL, '2025-11-04 14:30:31'),
+('319', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '1', NULL, NULL, '2025-11-04 14:30:40'),
+('320', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '1', NULL, NULL, '2025-11-04 14:32:38'),
+('321', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '1', NULL, NULL, '2025-11-04 14:33:06'),
+('322', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '1', NULL, NULL, '2025-11-04 14:33:18'),
+('323', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '1', NULL, NULL, '2025-11-04 15:27:21'),
+('324', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '1', NULL, NULL, '2025-11-04 15:27:21'),
+('325', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '1', NULL, NULL, '2025-11-04 15:27:21'),
+('326', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '1', NULL, NULL, '2025-11-04 15:27:37'),
+('327', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '1', NULL, '::1', '2025-11-04 15:46:51'),
+('328', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '1', NULL, '::1', '2025-11-04 15:47:21'),
+('329', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '1', NULL, '::1', '2025-11-04 15:50:27'),
+('330', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '1', NULL, '::1', '2025-11-04 15:59:33'),
+('331', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '1', NULL, '::1', '2025-11-04 16:00:03'),
+('332', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '1', NULL, '::1', '2025-11-04 16:00:17'),
+('333', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '1', NULL, '::1', '2025-11-04 16:00:17'),
+('334', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '1', NULL, '::1', '2025-11-04 16:00:17'),
+('335', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '1', NULL, '::1', '2025-11-04 16:00:20'),
+('336', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '1', NULL, '::1', '2025-11-04 16:07:02'),
+('337', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '1', NULL, '::1', '2025-11-04 16:07:03'),
+('338', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '1', NULL, '::1', '2025-11-04 16:07:03'),
+('339', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '1', NULL, '::1', '2025-11-04 16:08:47'),
+('340', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '1', NULL, '::1', '2025-11-04 16:08:48'),
+('341', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '1', NULL, '::1', '2025-11-04 16:08:48'),
+('342', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '1', NULL, '::1', '2025-11-04 16:08:58'),
+('343', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '1', NULL, '::1', '2025-11-04 16:09:13'),
+('344', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '1', NULL, '::1', '2025-11-04 16:20:32'),
+('345', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '1', NULL, '::1', '2025-11-04 16:20:45'),
+('346', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '1', NULL, '::1', '2025-11-04 16:22:50'),
+('347', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '1', NULL, '::1', '2025-11-04 16:23:02'),
+('348', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '1', NULL, '::1', '2025-11-04 16:25:01'),
+('349', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '1', NULL, '::1', '2025-11-04 16:25:09'),
+('350', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '1', NULL, '::1', '2025-11-04 16:26:16'),
+('351', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '1', NULL, '::1', '2025-11-04 16:26:44'),
+('352', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '1', NULL, '::1', '2025-11-04 16:28:56'),
+('353', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '1', NULL, '::1', '2025-11-04 16:29:06'),
+('354', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '1', NULL, '::1', '2025-11-04 16:29:12'),
+('355', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '1', NULL, '::1', '2025-11-04 16:29:54'),
+('356', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '1', NULL, '::1', '2025-11-04 16:30:07'),
+('357', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '1', NULL, '::1', '2025-11-04 16:30:07'),
+('358', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '1', NULL, '::1', '2025-11-04 16:30:07'),
+('359', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '1', NULL, '::1', '2025-11-04 16:30:10'),
+('360', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '1', NULL, '::1', '2025-11-04 16:30:10'),
+('361', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '1', NULL, '::1', '2025-11-04 16:30:10'),
+('362', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '1', NULL, '::1', '2025-11-04 16:30:12'),
+('363', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '1', NULL, '::1', '2025-11-04 16:30:53'),
+('364', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '1', NULL, '::1', '2025-11-04 16:36:31'),
+('365', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '1', NULL, '::1', '2025-11-04 16:36:38'),
+('366', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '1', NULL, '::1', '2025-11-04 16:37:31'),
+('367', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '1', NULL, '::1', '2025-11-04 16:38:23'),
+('368', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '1', NULL, '::1', '2025-11-04 16:38:23'),
+('369', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '1', NULL, '::1', '2025-11-04 16:38:23'),
+('370', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '1', NULL, '::1', '2025-11-04 16:38:25'),
+('371', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '1', NULL, '::1', '2025-11-04 16:39:02'),
+('372', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '1', NULL, '::1', '2025-11-04 16:39:02'),
+('373', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '1', NULL, '::1', '2025-11-04 16:39:36'),
+('374', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '1', NULL, '::1', '2025-11-04 16:40:30'),
+('375', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '1', NULL, '::1', '2025-11-04 16:41:57'),
+('376', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '1', NULL, '::1', '2025-11-04 16:42:12'),
+('377', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '1', NULL, '::1', '2025-11-04 16:42:36'),
+('378', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '1', NULL, '::1', '2025-11-04 16:46:26'),
+('379', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '1', NULL, '::1', '2025-11-04 16:46:35'),
+('380', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '1', NULL, '::1', '2025-11-04 16:46:57'),
+('381', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '1', NULL, '::1', '2025-11-04 17:02:17'),
+('382', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '1', NULL, '::1', '2025-11-04 17:02:17'),
+('383', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '1', NULL, '::1', '2025-11-04 17:02:18'),
+('384', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '1', NULL, '::1', '2025-11-04 17:04:15'),
+('385', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '6', NULL, '::1', '2025-11-04 17:04:26'),
+('386', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '6', NULL, '::1', '2025-11-04 17:04:27'),
+('387', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '6', NULL, '::1', '2025-11-04 17:04:27'),
+('388', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '6', NULL, '::1', '2025-11-04 17:04:47'),
+('389', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '6', NULL, '::1', '2025-11-04 17:04:47'),
+('390', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '6', NULL, '::1', '2025-11-04 17:04:47'),
+('391', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '6', NULL, '::1', '2025-11-04 17:10:24'),
+('392', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '6', NULL, '::1', '2025-11-04 17:10:24'),
+('393', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '6', NULL, '::1', '2025-11-04 17:10:24'),
+('394', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '1', NULL, '::1', '2025-11-04 17:33:52'),
+('395', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '1', NULL, '::1', '2025-11-04 17:33:53'),
+('396', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '1', NULL, '::1', '2025-11-04 17:33:53'),
+('397', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '1', NULL, '::1', '2025-11-04 17:33:55'),
+('398', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '1', NULL, '::1', '2025-11-04 17:34:01'),
+('399', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '1', NULL, '::1', '2025-11-04 17:35:13'),
+('400', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '1', NULL, '::1', '2025-11-04 17:35:14'),
+('401', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '1', NULL, '::1', '2025-11-04 17:35:14'),
+('402', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '1', NULL, '::1', '2025-11-04 17:37:07'),
+('403', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '1', NULL, '::1', '2025-11-04 17:37:08'),
+('404', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '1', NULL, '::1', '2025-11-04 17:37:15'),
+('405', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '1', NULL, '::1', '2025-11-04 17:37:21'),
+('406', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '1', NULL, '::1', '2025-11-04 17:37:22'),
+('407', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '1', NULL, '::1', '2025-11-04 17:37:22'),
+('408', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '1', NULL, '::1', '2025-11-04 17:37:27'),
+('409', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '1', NULL, '::1', '2025-11-04 17:37:29'),
+('410', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '1', NULL, '::1', '2025-11-04 17:37:30'),
+('411', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '1', NULL, '::1', '2025-11-04 17:37:31'),
+('412', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '1', NULL, '::1', '2025-11-04 17:37:35'),
+('413', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '1', NULL, '::1', '2025-11-04 17:37:56'),
+('414', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '1', NULL, '::1', '2025-11-04 17:38:01'),
+('415', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '1', NULL, '::1', '2025-11-04 17:38:38'),
+('416', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '1', NULL, '::1', '2025-11-04 17:38:38'),
+('417', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '1', NULL, '::1', '2025-11-04 17:38:38'),
+('418', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '1', NULL, '::1', '2025-11-04 17:40:01'),
+('419', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '1', NULL, '::1', '2025-11-04 17:40:01'),
+('420', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '1', NULL, '::1', '2025-11-04 17:40:01'),
+('421', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '1', NULL, '::1', '2025-11-04 17:40:19'),
+('422', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '1', NULL, '::1', '2025-11-04 17:40:20'),
+('423', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '1', NULL, '::1', '2025-11-04 17:40:20'),
+('424', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '1', NULL, '::1', '2025-11-04 17:47:33'),
+('425', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '1', NULL, '::1', '2025-11-04 17:47:33'),
+('426', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '1', NULL, '::1', '2025-11-04 17:47:33'),
+('427', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '1', NULL, '::1', '2025-11-04 17:57:33'),
+('428', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '1', NULL, '::1', '2025-11-04 17:57:33'),
+('429', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '1', NULL, '::1', '2025-11-04 17:57:33'),
+('430', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '1', NULL, '::1', '2025-11-05 07:19:32'),
+('431', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '1', NULL, '::1', '2025-11-05 07:19:32'),
+('432', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '1', NULL, '::1', '2025-11-05 07:19:32'),
+('433', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '1', NULL, '::1', '2025-11-05 09:16:59'),
+('434', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '1', NULL, '::1', '2025-11-05 09:17:01'),
+('435', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '1', NULL, '::1', '2025-11-05 09:17:01'),
+('436', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '1', NULL, '::1', '2025-11-05 09:18:12'),
+('437', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '1', NULL, '::1', '2025-11-05 09:18:13'),
+('438', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '1', NULL, '::1', '2025-11-05 09:18:13'),
+('439', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '1', NULL, '::1', '2025-11-05 09:23:56'),
+('440', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '1', NULL, '::1', '2025-11-05 09:23:56'),
+('441', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '1', NULL, '::1', '2025-11-05 09:23:56'),
+('442', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '1', NULL, '::1', '2025-11-05 09:24:47'),
+('443', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '1', NULL, '::1', '2025-11-05 09:24:48'),
+('444', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '1', NULL, '::1', '2025-11-05 09:24:48'),
+('445', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '1', NULL, '::1', '2025-11-05 09:25:58'),
+('446', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '1', NULL, '::1', '2025-11-05 09:26:33'),
+('447', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '1', NULL, '::1', '2025-11-05 09:27:19'),
+('448', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '1', NULL, '::1', '2025-11-05 09:30:15'),
+('449', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '1', NULL, '::1', '2025-11-05 09:30:28'),
+('450', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '1', NULL, '::1', '2025-11-05 09:32:41'),
+('451', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '1', NULL, '::1', '2025-11-05 09:36:11'),
+('452', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '1', NULL, '::1', '2025-11-05 09:36:13'),
+('453', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '1', NULL, '::1', '2025-11-05 09:36:15'),
+('454', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '1', NULL, '::1', '2025-11-05 09:56:12'),
+('455', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '1', NULL, '::1', '2025-11-05 10:17:52'),
+('456', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '1', NULL, '::1', '2025-11-05 10:19:03'),
+('457', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '6', NULL, '::1', '2025-11-05 10:19:39'),
+('458', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '6', NULL, '::1', '2025-11-05 10:19:40'),
+('459', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '6', NULL, '::1', '2025-11-05 10:19:40'),
+('460', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '6', NULL, '::1', '2025-11-05 10:19:44'),
+('461', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '1', NULL, '::1', '2025-11-05 10:20:12'),
+('462', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '1', NULL, '::1', '2025-11-05 10:20:15'),
+('463', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '1', NULL, '::1', '2025-11-05 10:20:16'),
+('464', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '1', NULL, '::1', '2025-11-05 10:20:18'),
+('465', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '1', NULL, '::1', '2025-11-05 10:20:24'),
+('466', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '1', NULL, '::1', '2025-11-05 10:20:24'),
+('467', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '1', NULL, '::1', '2025-11-05 10:20:24'),
+('468', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '1', NULL, '::1', '2025-11-05 10:20:27'),
+('469', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '6', NULL, '::1', '2025-11-05 10:20:37'),
+('470', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '6', NULL, '::1', '2025-11-05 10:20:37'),
+('471', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '6', NULL, '::1', '2025-11-05 10:20:37'),
+('472', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '6', NULL, '::1', '2025-11-05 10:20:45'),
+('473', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '6', NULL, '::1', '2025-11-05 10:25:42'),
+('474', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '6', NULL, '::1', '2025-11-05 10:25:44'),
+('475', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '6', NULL, '::1', '2025-11-05 10:25:45'),
+('476', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '6', NULL, '::1', '2025-11-05 10:25:46'),
+('477', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '6', NULL, '::1', '2025-11-05 10:25:48'),
+('478', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '6', NULL, '::1', '2025-11-05 10:25:53'),
+('479', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '6', NULL, '::1', '2025-11-05 10:25:53'),
+('480', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '6', NULL, '::1', '2025-11-05 10:25:53'),
+('481', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '6', NULL, '::1', '2025-11-05 10:25:56'),
+('482', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '6', NULL, '::1', '2025-11-05 10:25:56'),
+('483', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '6', NULL, '::1', '2025-11-05 10:25:56'),
+('484', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '6', NULL, '::1', '2025-11-05 10:25:58'),
+('485', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '6', NULL, '::1', '2025-11-05 10:33:35'),
+('486', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '6', NULL, '::1', '2025-11-05 10:33:38'),
+('487', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '6', NULL, '::1', '2025-11-05 10:33:40'),
+('488', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '6', NULL, '::1', '2025-11-05 10:35:47'),
+('489', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '6', NULL, '::1', '2025-11-05 10:35:49'),
+('490', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '6', NULL, '::1', '2025-11-05 10:37:26'),
+('491', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '6', NULL, '::1', '2025-11-05 10:38:43'),
+('492', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '6', NULL, '::1', '2025-11-05 10:52:32'),
+('493', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '6', NULL, '::1', '2025-11-05 11:00:16'),
+('494', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '6', NULL, '::1', '2025-11-05 11:00:27'),
+('495', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '6', NULL, '::1', '2025-11-05 11:03:18'),
+('496', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '6', NULL, '::1', '2025-11-05 11:06:59'),
+('497', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '6', NULL, '::1', '2025-11-05 11:07:35'),
+('498', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '6', NULL, '::1', '2025-11-05 11:09:01'),
+('499', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '6', NULL, '::1', '2025-11-05 11:11:07'),
+('500', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '6', NULL, '::1', '2025-11-05 11:11:08'),
+('501', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '6', NULL, '::1', '2025-11-05 11:12:16'),
+('502', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '6', NULL, '::1', '2025-11-05 11:13:27'),
+('503', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '1', NULL, '::1', '2025-11-05 11:32:29'),
+('504', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '1', NULL, '::1', '2025-11-05 11:32:31'),
+('505', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '1', NULL, '::1', '2025-11-05 11:32:31'),
+('506', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '1', NULL, '::1', '2025-11-05 11:32:35'),
+('507', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '1', NULL, '::1', '2025-11-05 11:32:36'),
+('508', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '1', NULL, '::1', '2025-11-05 11:32:38'),
+('509', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '1', NULL, '::1', '2025-11-05 11:32:46'),
+('510', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '6', NULL, '::1', '2025-11-05 11:33:57'),
+('511', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '6', NULL, '::1', '2025-11-05 11:47:20'),
+('512', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '6', NULL, '::1', '2025-11-05 11:47:54'),
+('513', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '6', NULL, '::1', '2025-11-05 11:48:05'),
+('514', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '6', NULL, '::1', '2025-11-05 11:48:13'),
+('515', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '1', NULL, '::1', '2025-11-05 11:50:43'),
+('516', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '1', NULL, '::1', '2025-11-05 11:51:11'),
+('517', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '6', NULL, '::1', '2025-11-05 11:59:11'),
+('518', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '6', NULL, '::1', '2025-11-05 12:00:01'),
+('519', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '6', NULL, '::1', '2025-11-05 12:00:22'),
+('520', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '6', NULL, '::1', '2025-11-05 12:04:11'),
+('521', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '6', NULL, '::1', '2025-11-05 12:04:11'),
+('522', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '6', NULL, '::1', '2025-11-05 12:06:49'),
+('523', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '1', NULL, '::1', '2025-11-05 12:06:54'),
+('524', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '6', NULL, '::1', '2025-11-05 12:07:20'),
+('525', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '6', NULL, '::1', '2025-11-05 12:07:20'),
+('526', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '6', NULL, '::1', '2025-11-05 12:11:42'),
+('527', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '6', NULL, '::1', '2025-11-05 12:11:44'),
+('528', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '6', NULL, '::1', '2025-11-05 12:12:33'),
+('529', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '6', NULL, '::1', '2025-11-05 12:12:33'),
+('530', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '6', NULL, '::1', '2025-11-05 12:12:39'),
+('531', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '6', NULL, '::1', '2025-11-05 12:50:42'),
+('532', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '6', NULL, '::1', '2025-11-05 12:50:43'),
+('533', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '6', NULL, '::1', '2025-11-05 12:50:43'),
+('534', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '6', NULL, '::1', '2025-11-05 12:50:45'),
+('535', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '6', NULL, '::1', '2025-11-05 12:57:38'),
+('536', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '6', NULL, '::1', '2025-11-05 12:58:05'),
+('537', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '6', NULL, '::1', '2025-11-05 12:59:28'),
+('538', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '6', NULL, '::1', '2025-11-05 12:59:29'),
+('539', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '6', NULL, '::1', '2025-11-05 12:59:51'),
+('540', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '6', NULL, '::1', '2025-11-05 12:59:51'),
+('541', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '6', NULL, '::1', '2025-11-05 13:00:25'),
+('542', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '1', NULL, '::1', '2025-11-05 13:00:53'),
+('543', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '1', NULL, '::1', '2025-11-05 13:00:54'),
+('544', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '1', NULL, '::1', '2025-11-05 13:00:54'),
+('545', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '1', NULL, '::1', '2025-11-05 13:00:58'),
+('546', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '1', NULL, '::1', '2025-11-05 13:01:19'),
+('547', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '1', NULL, '::1', '2025-11-05 13:03:24'),
+('548', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '6', NULL, '::1', '2025-11-05 13:10:26'),
+('549', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '6', NULL, '::1', '2025-11-05 13:10:35'),
+('550', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '6', NULL, '::1', '2025-11-05 13:11:01'),
+('551', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '6', NULL, '::1', '2025-11-05 13:11:01'),
+('552', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '6', NULL, '::1', '2025-11-05 13:11:24'),
+('553', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '6', NULL, '::1', '2025-11-05 13:21:02'),
+('554', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '6', NULL, '::1', '2025-11-05 13:30:37'),
+('555', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '1', NULL, '::1', '2025-11-05 13:31:00'),
+('556', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '6', NULL, '::1', '2025-11-05 13:31:36'),
+('557', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '6', NULL, '::1', '2025-11-05 13:40:43'),
+('558', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '6', NULL, '::1', '2025-11-05 13:40:43'),
+('559', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '1', NULL, '::1', '2025-11-05 13:57:16'),
+('560', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '1', NULL, '::1', '2025-11-05 13:57:16'),
+('561', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '6', NULL, '::1', '2025-11-05 16:03:39'),
+('562', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '6', NULL, '::1', '2025-11-05 16:03:41'),
+('563', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '6', NULL, '::1', '2025-11-05 16:03:41'),
+('564', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '6', NULL, '::1', '2025-11-05 16:03:43'),
+('565', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '6', NULL, '::1', '2025-11-05 16:29:44'),
+('566', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '6', NULL, '::1', '2025-11-05 16:30:15'),
+('567', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '6', NULL, '::1', '2025-11-05 16:30:34'),
+('568', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '6', NULL, '::1', '2025-11-05 16:30:41'),
+('569', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '1', NULL, '::1', '2025-11-05 16:32:23'),
+('570', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '1', NULL, '::1', '2025-11-05 16:32:26'),
+('571', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '1', NULL, '::1', '2025-11-05 16:32:26'),
+('572', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '1', NULL, '::1', '2025-11-05 16:32:30'),
+('573', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '6', NULL, '::1', '2025-11-05 16:58:00'),
+('574', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '6', NULL, '::1', '2025-11-05 16:58:06'),
+('575', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '6', NULL, '::1', '2025-11-05 16:59:18'),
+('576', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '6', NULL, '::1', '2025-11-05 16:59:23'),
+('577', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '6', NULL, '::1', '2025-11-05 16:59:30'),
+('578', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '6', NULL, '::1', '2025-11-05 16:59:32'),
+('579', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '6', NULL, '::1', '2025-11-05 17:04:38'),
+('580', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '6', NULL, '::1', '2025-11-05 17:04:44'),
+('581', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '6', NULL, '::1', '2025-11-05 17:05:06'),
+('582', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '6', NULL, '::1', '2025-11-05 17:08:50'),
+('583', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '6', NULL, '::1', '2025-11-05 17:08:53'),
+('584', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '6', NULL, '::1', '2025-11-05 17:08:59'),
+('585', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '6', NULL, '::1', '2025-11-05 17:09:20'),
+('586', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '6', NULL, '::1', '2025-11-05 17:09:22'),
+('587', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '6', NULL, '::1', '2025-11-05 17:09:26'),
+('588', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '6', NULL, '::1', '2025-11-05 17:10:45'),
+('589', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '6', NULL, '::1', '2025-11-05 17:10:49'),
+('590', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '1', NULL, '::1', '2025-11-05 17:17:41'),
+('591', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '1', NULL, '::1', '2025-11-05 17:17:41'),
+('592', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '1', NULL, '::1', '2025-11-05 17:17:41'),
+('593', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '1', NULL, '::1', '2025-11-05 17:17:44'),
+('594', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '6', NULL, '::1', '2025-11-05 17:18:57'),
+('595', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '1', NULL, '::1', '2025-11-05 17:19:20'),
+('596', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '1', NULL, '::1', '2025-11-05 17:19:43'),
+('597', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '1', NULL, '::1', '2025-11-05 17:20:35'),
+('598', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '1', NULL, '::1', '2025-11-05 17:21:31'),
+('599', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '1', NULL, '::1', '2025-11-05 17:21:34'),
+('600', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '1', NULL, '::1', '2025-11-05 17:21:39'),
+('601', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '1', NULL, '::1', '2025-11-05 17:22:13'),
+('602', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '1', NULL, '::1', '2025-11-05 17:23:55'),
+('603', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '1', NULL, '::1', '2025-11-05 17:23:57'),
+('604', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '1', NULL, '::1', '2025-11-05 17:24:53'),
+('605', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '6', NULL, '::1', '2025-11-05 17:40:48'),
+('606', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '1', NULL, '::1', '2025-11-05 17:44:13'),
+('607', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '1', NULL, '::1', '2025-11-05 17:44:24'),
+('608', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '1', NULL, '::1', '2025-11-05 17:44:33'),
+('609', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '6', NULL, '::1', '2025-11-05 17:45:46'),
+('610', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '6', NULL, '::1', '2025-11-05 17:45:58'),
+('611', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '6', NULL, '::1', '2025-11-05 17:45:58'),
+('612', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '6', NULL, '::1', '2025-11-05 17:46:05'),
+('613', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '6', NULL, '::1', '2025-11-05 17:46:10'),
+('614', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '6', NULL, '::1', '2025-11-05 17:46:30'),
+('615', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '1', NULL, '::1', '2025-11-05 17:46:35'),
+('616', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '1', NULL, '::1', '2025-11-05 17:46:36'),
+('617', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '1', NULL, '::1', '2025-11-05 17:46:36'),
+('618', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '1', NULL, '::1', '2025-11-05 17:47:07'),
+('619', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '1', NULL, '::1', '2025-11-05 17:47:07'),
+('620', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '1', NULL, '::1', '2025-11-05 17:47:07'),
+('621', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '1', NULL, '::1', '2025-11-05 17:47:10'),
+('622', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '1', NULL, '::1', '2025-11-05 17:48:06'),
+('623', 'Student Account Created', 'Account: ACC20251106000001, Student ID: 1, Balance: 0', 'create', 'fas fa-piggy-bank', '1', NULL, '::1', '2025-11-05 17:48:06'),
+('624', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '1', NULL, '::1', '2025-11-05 17:48:06'),
+('625', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '1', NULL, '::1', '2025-11-05 17:48:28'),
+('626', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '1', NULL, '::1', '2025-11-05 17:48:28'),
+('627', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '1', NULL, '::1', '2025-11-05 17:48:45'),
+('628', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '1', NULL, '::1', '2025-11-05 17:48:49'),
+('629', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '1', NULL, '::1', '2025-11-05 17:48:54'),
+('630', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '1', NULL, '::1', '2025-11-05 17:50:24'),
+('631', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '1', NULL, '::1', '2025-11-05 18:03:51'),
+('632', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '1', NULL, '::1', '2025-11-05 18:03:54'),
+('633', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '1', NULL, '::1', '2025-11-05 18:03:57'),
+('634', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '1', NULL, '::1', '2025-11-05 18:04:00'),
+('635', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '1', NULL, '::1', '2025-11-06 09:41:44'),
+('636', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '1', NULL, '::1', '2025-11-06 09:41:45'),
+('637', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '1', NULL, '::1', '2025-11-06 09:41:46'),
+('638', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '1', NULL, '::1', '2025-11-06 09:42:27'),
+('639', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '1', NULL, '::1', '2025-11-06 09:42:58'),
+('640', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '1', NULL, '::1', '2025-11-06 09:43:03'),
+('641', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '1', NULL, '::1', '2025-11-06 09:43:34'),
+('642', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '1', NULL, '::1', '2025-11-06 09:44:05'),
+('643', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '1', NULL, '::1', '2025-11-06 09:44:17'),
+('644', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '1', NULL, '::1', '2025-11-06 09:44:45'),
+('645', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '1', NULL, '::1', '2025-11-06 09:44:48'),
+('646', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '1', NULL, '::1', '2025-11-06 09:44:50'),
+('647', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '1', NULL, '::1', '2025-11-06 09:45:04'),
+('648', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '1', NULL, '::1', '2025-11-06 09:45:29'),
+('649', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '1', NULL, '::1', '2025-11-06 09:45:50'),
+('650', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '1', NULL, '::1', '2025-11-06 09:46:15'),
+('651', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '1', NULL, '::1', '2025-11-06 09:46:26'),
+('652', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '1', NULL, '::1', '2025-11-06 10:22:20'),
+('653', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '1', NULL, '::1', '2025-11-06 10:22:21'),
+('654', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '1', NULL, '::1', '2025-11-06 10:22:21'),
+('655', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '1', NULL, '::1', '2025-11-06 10:22:23'),
+('656', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '1', NULL, '::1', '2025-11-06 11:38:12'),
+('657', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '1', NULL, '::1', '2025-11-06 11:38:12'),
+('658', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '1', NULL, '::1', '2025-11-06 11:38:12'),
+('659', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '1', NULL, '::1', '2025-11-06 11:38:19'),
+('660', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '1', NULL, '::1', '2025-11-06 11:38:19'),
+('661', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '1', NULL, '::1', '2025-11-06 11:38:48'),
+('662', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '1', NULL, '::1', '2025-11-06 11:39:21'),
+('663', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '1', NULL, '::1', '2025-11-06 11:39:21'),
+('664', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '1', NULL, '::1', '2025-11-06 11:40:12'),
+('665', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '1', NULL, '::1', '2025-11-06 11:40:13'),
+('666', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '1', NULL, '::1', '2025-11-06 11:40:13'),
+('667', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '1', NULL, '::1', '2025-11-06 11:43:14'),
+('668', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '1', NULL, '::1', '2025-11-06 11:43:14'),
+('669', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '1', NULL, '::1', '2025-11-06 11:43:15'),
+('670', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '1', NULL, '::1', '2025-11-06 11:43:55'),
+('671', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '1', NULL, '::1', '2025-11-06 11:44:33'),
+('672', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '1', NULL, '::1', '2025-11-07 11:07:54'),
+('673', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '1', NULL, '::1', '2025-11-07 11:07:57'),
+('674', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '1', NULL, '::1', '2025-11-07 11:07:58'),
+('675', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '1', NULL, '::1', '2025-11-07 11:08:05'),
+('676', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '1', NULL, '::1', '2025-11-07 11:08:24'),
+('677', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '1', NULL, '::1', '2025-11-07 11:10:50'),
+('678', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '1', NULL, '::1', '2025-11-07 11:11:20'),
+('679', 'Database Backup Created (PHP Method)', 'Backup file: backup_2025-11-07_20-11-20.zip (0.12 MB)', 'create', 'fas fa-database', '1', NULL, '::1', '2025-11-07 11:11:21'),
+('680', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '1', NULL, '::1', '2025-11-07 11:12:35'),
+('681', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '1', NULL, '::1', '2025-11-07 11:12:37'),
+('682', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '1', NULL, '::1', '2025-11-07 11:12:37'),
+('683', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '1', NULL, '::1', '2025-11-07 17:47:49'),
+('684', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '1', NULL, '::1', '2025-11-07 17:47:51'),
+('685', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '1', NULL, '::1', '2025-11-07 17:47:51'),
+('686', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '1', NULL, '::1', '2025-11-07 17:47:55'),
+('687', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '1', NULL, '::1', '2025-11-07 17:48:22'),
+('689', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '1', NULL, '::1', '2025-11-07 17:53:49'),
+('690', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '1', NULL, '::1', '2025-11-07 17:54:01'),
+('691', 'Backup File Deleted', 'File: backup_2025-11-07_20-11-20.sql', 'delete', 'fas fa-trash', '1', NULL, '::1', '2025-11-07 17:54:01'),
+('692', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '1', NULL, '::1', '2025-11-13 07:52:56'),
+('693', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '1', NULL, '::1', '2025-11-13 07:52:58'),
+('694', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '1', NULL, '::1', '2025-11-13 07:52:59'),
+('695', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '1', NULL, '::1', '2025-11-13 07:53:02'),
+('696', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '1', NULL, '::1', '2025-11-13 07:53:15'),
+('697', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '1', NULL, '::1', '2025-11-13 07:53:34'),
+('698', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '1', NULL, '::1', '2025-11-13 08:02:28'),
+('699', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '1', NULL, '::1', '2025-11-13 08:02:39'),
+('700', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '1', NULL, '::1', '2025-11-13 08:05:35'),
+('701', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '1', NULL, '::1', '2025-11-13 08:05:42'),
+('702', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '1', NULL, '::1', '2025-11-13 08:06:35'),
+('703', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '1', NULL, '::1', '2025-11-13 08:06:43'),
+('704', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '1', NULL, '::1', '2025-11-13 08:09:11'),
+('705', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '1', NULL, '::1', '2025-11-13 08:19:02'),
+('706', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '1', NULL, '::1', '2025-11-13 08:21:47'),
+('707', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '1', NULL, '::1', '2025-11-13 08:21:53'),
+('708', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '1', NULL, '::1', '2025-11-13 08:25:24'),
+('709', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '1', NULL, '::1', '2025-11-13 08:28:06'),
+('710', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '1', NULL, '::1', '2025-11-13 14:02:34'),
+('711', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '1', NULL, '::1', '2025-11-13 14:03:28'),
+('712', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '1', NULL, '::1', '2025-11-13 14:03:28'),
+('713', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '1', NULL, '::1', '2025-11-13 14:03:35'),
+('714', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '1', NULL, '::1', '2025-11-13 14:03:52'),
+('716', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '1', NULL, '::1', '2025-11-13 14:14:45'),
+('718', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '1', NULL, '::1', '2025-11-13 14:14:57'),
+('719', 'Database Backup Created (PHP Method)', 'Backup file: backup_2025-11-13_23-14-57.zip (0.12 MB)', 'create', 'fas fa-database', '1', '5', '::1', '2025-11-13 14:14:57'),
+('720', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '1', NULL, '::1', '2025-11-13 14:15:12'),
+('721', 'Database Backup Created (PHP Method)', 'Backup file: backup_2025-11-13_23-15-12.zip (0.12 MB)', 'create', 'fas fa-database', '1', '6', '::1', '2025-11-13 14:15:12'),
+('722', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '1', NULL, '::1', '2025-11-13 14:23:17'),
+('723', 'Database Backup Created (PHP Method)', 'Backup file: backup_2025-11-13_23-23-17.zip (0.12 MB)', 'create', 'fas fa-database', '1', '7', '::1', '2025-11-13 14:23:18'),
+('724', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '1', NULL, '::1', '2025-11-13 14:23:35'),
+('725', 'Database Backup Created (PHP Method)', 'Backup file: backup_2025-11-13_23-23-35.zip (0.12 MB)', 'create', 'fas fa-database', '1', '8', '::1', '2025-11-13 14:23:35'),
+('726', 'User Login', 'IP: ::1', 'login', 'fas fa-sign-in-alt', '1', NULL, '::1', '2025-11-13 14:23:41');
+
+--
+-- Table structure for table `activity_log`
+--
+DROP TABLE IF EXISTS `activity_log`;
+CREATE TABLE `activity_log` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `user_id` int(11) NOT NULL,
+  `action` varchar(100) NOT NULL,
+  `details` text DEFAULT NULL,
+  `ip_address` varchar(45) DEFAULT NULL,
+  `user_agent` text DEFAULT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  PRIMARY KEY (`id`),
+  KEY `user_id` (`user_id`),
+  KEY `idx_action` (`action`),
+  KEY `idx_created_at` (`created_at`),
+  CONSTRAINT `activity_log_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `activity_log`
+--
+INSERT INTO `activity_log` VALUES ('1', '1', 'CREATE_INVOICE', 'Created invoice: INV-2025-6598', '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36', '2025-09-29 16:04:19'),
+('2', '1', 'UPDATE_INVOICE_STATUS', 'Updated invoice ID 1 to paid', '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36', '2025-09-29 16:05:10'),
+('3', '1', 'UPDATE_INVOICE_STATUS', 'Updated invoice ID 1 to unpaid', '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36', '2025-09-29 18:03:35'),
+('4', '1', 'DELETE_INVOICE', 'Deleted invoice: INV-2025-6598', '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36', '2025-09-29 18:03:40'),
+('5', '1', 'UPDATE_INVOICE_STATUS', 'Updated invoice ID 1 to unpaid', '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36', '2025-09-29 18:03:41'),
+('6', '1', 'UPDATE_INVOICE_STATUS', 'Updated invoice ID 1 to unpaid', '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36', '2025-09-29 18:03:55'),
+('7', '1', 'UPDATE_INVOICE_STATUS', 'Updated invoice ID 1 to unpaid', '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36', '2025-09-29 18:05:11'),
+('8', '1', 'UPDATE_INVOICE_STATUS', 'Updated invoice ID 1 to unpaid', '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36', '2025-09-29 18:09:08'),
+('9', '1', 'DELETE_INVOICE', 'Deleted invoice: INV-2025-6598', '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36', '2025-09-29 18:09:38'),
+('10', '1', 'CREATE_INVOICE', 'Created invoice: INV-2025-6142', '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0', '2025-09-29 18:37:57'),
+('11', '1', 'CREATE_INVOICE', 'Created invoice: INV-2025-1692', '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0', '2025-09-29 18:38:55'),
+('12', '1', 'UPDATE_INVOICE_STATUS', 'Updated invoice ID 2 to paid', '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0', '2025-09-29 18:40:22'),
+('13', '1', 'UPDATE_INVOICE_STATUS', 'Updated invoice ID 2 to paid', '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0', '2025-09-29 18:44:20'),
+('14', '1', 'UPDATE_INVOICE_STATUS', 'Updated invoice ID 2 to paid', '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0', '2025-09-29 18:47:05'),
+('15', '1', 'EXPORT_INVOICES', 'Exported invoices in  format', '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36', '2025-09-30 08:38:16'),
+('16', '1', 'EXPORT_INVOICES', 'Exported invoices in  format', '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36', '2025-09-30 08:38:21'),
+('17', '1', 'EXPORT_INVOICES', 'Exported invoices in  format', '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36', '2025-09-30 09:37:24'),
+('18', '1', 'EXPORT_INVOICES', 'Exported invoices in CSV format', '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0', '2025-09-30 09:46:59');
+
+--
+-- Table structure for table `assignment_submissions`
+--
+DROP TABLE IF EXISTS `assignment_submissions`;
+CREATE TABLE `assignment_submissions` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `assignment_id` int(11) NOT NULL,
+  `student_id` int(11) NOT NULL,
+  `submitted_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `submitted_file_path` varchar(255) DEFAULT NULL,
+  `marks_obtained` decimal(5,2) DEFAULT NULL,
+  `feedback` text DEFAULT NULL,
+  `status` enum('pending','submitted','graded','late') NOT NULL DEFAULT 'pending',
+  `submitted_content` text DEFAULT NULL,
+  `teacher_id` int(11) DEFAULT NULL,
+  `graded_at` timestamp NULL DEFAULT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  PRIMARY KEY (`id`),
+  KEY `idx_assignment_student` (`assignment_id`,`student_id`),
+  KEY `fk_submission_student` (`student_id`),
+  KEY `fk_submission_teacher` (`teacher_id`),
+  CONSTRAINT `fk_submission_assignment` FOREIGN KEY (`assignment_id`) REFERENCES `assignments` (`id`) ON DELETE CASCADE,
+  CONSTRAINT `fk_submission_student` FOREIGN KEY (`student_id`) REFERENCES `students` (`id`) ON DELETE CASCADE,
+  CONSTRAINT `fk_submission_teacher` FOREIGN KEY (`teacher_id`) REFERENCES `teachers` (`id`) ON DELETE SET NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `assignment_submissions`
+--
+--
+-- Table structure for table `assignments`
+--
+DROP TABLE IF EXISTS `assignments`;
+CREATE TABLE `assignments` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `title` varchar(255) NOT NULL,
+  `description` text DEFAULT NULL,
+  `class_id` int(11) NOT NULL,
+  `teacher_id` int(11) NOT NULL,
+  `subject` varchar(100) DEFAULT NULL,
+  `academic_year` varchar(20) NOT NULL,
+  `term_id` int(11) NOT NULL,
+  `assignment_date` date NOT NULL,
+  `due_date` date NOT NULL,
+  `max_marks` decimal(5,2) DEFAULT 100.00,
+  `assignment_type` enum('homework','classwork','project','quiz','exam') DEFAULT 'homework',
+  `status` enum('active','completed','cancelled') DEFAULT 'active',
+  `instructions` text DEFAULT NULL,
+  `attachment_path` varchar(500) DEFAULT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  PRIMARY KEY (`id`),
+  KEY `idx_class_id` (`class_id`),
+  KEY `idx_teacher_id` (`teacher_id`),
+  KEY `idx_due_date` (`due_date`),
+  KEY `idx_assignment_date` (`assignment_date`),
+  KEY `idx_status_due_date` (`status`,`due_date`),
+  KEY `idx_class_subject` (`class_id`,`subject`),
+  KEY `fk_assignment_term` (`term_id`),
+  CONSTRAINT `fk_assignment_class` FOREIGN KEY (`class_id`) REFERENCES `classes` (`id`) ON UPDATE CASCADE,
+  CONSTRAINT `fk_assignment_teacher` FOREIGN KEY (`teacher_id`) REFERENCES `teachers` (`id`) ON UPDATE CASCADE,
+  CONSTRAINT `fk_assignment_term` FOREIGN KEY (`term_id`) REFERENCES `terms` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `assignments`
+--
+INSERT INTO `assignments` VALUES ('7', 'sdzxdxz', '', '16', '1', 'English Language', '2025/2026 Grace', '1', '2025-11-05', '2025-11-08', '100.00', 'homework', 'active', '', NULL, '2025-11-05 13:40:43', '2025-11-05 13:40:43'),
+('8', 'nvgjfj', '', '16', '1', 'English Language', '2026/2027 Peace', '1', '2025-11-05', '2025-11-08', '100.00', 'homework', 'active', '', NULL, '2025-11-05 13:57:16', '2025-11-05 13:57:16');
+
+--
+-- Table structure for table `attendance`
+--
+DROP TABLE IF EXISTS `attendance`;
+CREATE TABLE `attendance` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `student_id` int(11) NOT NULL,
+  `class_id` int(11) NOT NULL,
+  `term_id` int(11) DEFAULT NULL,
+  `academic_year_id` int(11) DEFAULT NULL,
+  `teacher_id` int(11) DEFAULT NULL,
+  `attendance_date` date NOT NULL,
+  `status` enum('present','absent','late','excused') NOT NULL DEFAULT 'present',
+  `time_in` time DEFAULT NULL,
+  `time_out` time DEFAULT NULL,
+  `remarks` text DEFAULT NULL,
+  `marked_by` int(11) DEFAULT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `unique_student_date` (`student_id`,`attendance_date`),
+  KEY `idx_class_id` (`class_id`),
+  KEY `idx_teacher_id` (`teacher_id`),
+  KEY `idx_attendance_date` (`attendance_date`),
+  KEY `idx_status` (`status`),
+  KEY `fk_attendance_marker` (`marked_by`),
+  KEY `idx_class_date` (`class_id`,`attendance_date`),
+  KEY `idx_student_date_range` (`student_id`,`attendance_date`),
+  KEY `fk_attendance_academic_year` (`academic_year_id`),
+  KEY `fk_attendance_term` (`term_id`),
+  CONSTRAINT `fk_attendance_academic_year` FOREIGN KEY (`academic_year_id`) REFERENCES `academic_years` (`id`) ON UPDATE CASCADE,
+  CONSTRAINT `fk_attendance_class` FOREIGN KEY (`class_id`) REFERENCES `classes` (`id`) ON UPDATE CASCADE,
+  CONSTRAINT `fk_attendance_marked_by` FOREIGN KEY (`marked_by`) REFERENCES `users` (`id`) ON DELETE SET NULL ON UPDATE CASCADE,
+  CONSTRAINT `fk_attendance_student` FOREIGN KEY (`student_id`) REFERENCES `students` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `fk_attendance_term` FOREIGN KEY (`term_id`) REFERENCES `terms` (`id`) ON UPDATE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=64 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `attendance`
+--
+INSERT INTO `attendance` VALUES ('28', '9', '1', '1', '1', '6', '2025-10-02', 'present', '08:00:00', '15:17:51', 'ghh dgdh hfhf hfg ', '1', '2025-10-02 15:20:40', '2025-10-31 12:45:13'),
+('30', '1', '1', '1', '1', '6', '2025-10-03', 'present', '08:26:53', NULL, '', '1', '2025-10-03 08:26:53', '2025-10-31 12:45:13'),
+('31', '2', '1', '1', '1', '6', '2025-10-03', 'present', '08:26:53', NULL, '', '1', '2025-10-03 08:26:53', '2025-10-31 12:45:13'),
+('33', '9', '16', '1', '1', '6', '2025-10-03', 'present', '10:17:07', NULL, '', '1', '2025-10-03 10:17:07', '2025-10-31 12:45:13'),
+('34', '6', '16', '1', '1', '6', '2025-10-03', 'absent', NULL, NULL, '', '1', '2025-10-03 10:17:07', '2025-10-31 12:45:13'),
+('35', '3', '1', '1', '1', '6', '2025-10-03', 'late', '10:18:57', NULL, '', '1', '2025-10-03 10:18:57', '2025-10-31 12:45:13'),
+('36', '9', '16', '1', '1', '6', '2025-10-18', 'late', '16:54:17', NULL, '', '1', '2025-10-17 16:54:17', '2025-10-31 12:45:13'),
+('37', '6', '16', '1', '1', '6', '2025-10-18', 'absent', NULL, NULL, '', '1', '2025-10-17 16:54:17', '2025-10-31 12:45:13'),
+('38', '1', '1', '1', '1', '6', '2025-10-18', 'absent', NULL, NULL, '', '1', '2025-10-17 17:46:58', '2025-10-31 12:45:13'),
+('39', '12', '1', '1', '1', '6', '2025-10-18', 'present', '17:46:58', NULL, '', '1', '2025-10-17 17:46:58', '2025-10-31 12:45:13'),
+('40', '2', '1', '1', '1', '6', '2025-10-18', 'present', '17:46:58', NULL, '', '1', '2025-10-17 17:46:58', '2025-10-31 12:45:13'),
+('42', '9', '16', '1', '1', '6', '2025-10-20', 'absent', NULL, NULL, '', '1', '2025-10-20 07:28:09', '2025-10-31 12:45:13'),
+('43', '6', '16', '1', '1', '6', '2025-10-20', 'present', '07:28:09', NULL, '', '1', '2025-10-20 07:28:09', '2025-10-31 12:45:13'),
+('44', '9', '16', '1', '1', '6', '2025-10-29', 'present', '10:53:51', NULL, '', '1', '2025-10-29 10:53:51', '2025-10-31 12:45:13'),
+('45', '6', '16', '1', '1', '6', '2025-10-29', 'present', '10:53:51', NULL, '', '1', '2025-10-29 10:53:51', '2025-10-31 12:45:13'),
+('46', '9', '16', '1', '1', '6', '2025-10-30', 'present', '17:49:05', NULL, '', '1', '2025-10-29 17:49:05', '2025-10-31 12:45:13'),
+('47', '6', '16', '1', '1', '6', '2025-10-30', 'present', '17:49:05', NULL, '', '1', '2025-10-29 17:49:05', '2025-10-31 12:45:13'),
+('49', '1', '1', '1', '1', '6', '2025-10-30', 'present', '13:48:35', NULL, '', '1', '2025-10-30 13:48:35', '2025-10-31 12:45:13'),
+('50', '12', '1', '1', '1', '6', '2025-10-30', 'present', '13:48:35', NULL, '', '1', '2025-10-30 13:48:35', '2025-10-31 12:45:13'),
+('51', '3', '1', '1', '1', '6', '2025-10-30', 'present', '13:48:35', NULL, '', '1', '2025-10-30 13:48:35', '2025-10-31 12:45:13'),
+('60', '9', '16', '1', '1', '7', '2025-10-31', 'late', '12:58:14', NULL, '', '7', '2025-10-31 12:58:14', '2025-10-31 13:31:05'),
+('61', '6', '16', '1', '1', '7', '2025-10-31', 'present', '12:58:14', NULL, '', '7', '2025-10-31 12:58:14', '2025-10-31 12:58:14'),
+('62', '9', '16', '1', '1', '6', '2025-11-04', 'present', '17:52:21', NULL, '', '6', '2025-11-03 17:52:21', '2025-11-03 18:09:50'),
+('63', '6', '16', '1', '1', '6', '2025-11-04', 'present', '17:52:21', NULL, '', '6', '2025-11-03 17:52:21', '2025-11-03 17:53:53');
+
+--
+-- Table structure for table `attendance_summary`
+--
+DROP TABLE IF EXISTS `attendance_summary`;
+CREATE TABLE `attendance_summary` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `student_id` int(11) NOT NULL,
+  `class_id` int(11) NOT NULL,
+  `month` varchar(2) NOT NULL,
+  `year` varchar(4) NOT NULL,
+  `total_days` int(11) DEFAULT 0,
+  `present_days` int(11) DEFAULT 0,
+  `absent_days` int(11) DEFAULT 0,
+  `late_days` int(11) DEFAULT 0,
+  `excused_days` int(11) DEFAULT 0,
+  `attendance_percentage` decimal(5,2) DEFAULT 0.00,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `unique_student_month_year` (`student_id`,`class_id`,`month`,`year`),
+  KEY `class_id` (`class_id`),
+  CONSTRAINT `attendance_summary_ibfk_1` FOREIGN KEY (`student_id`) REFERENCES `students` (`id`),
+  CONSTRAINT `attendance_summary_ibfk_2` FOREIGN KEY (`class_id`) REFERENCES `classes` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `attendance_summary`
+--
+--
+-- Table structure for table `backup_logs`
+--
+DROP TABLE IF EXISTS `backup_logs`;
+CREATE TABLE `backup_logs` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `filename` varchar(255) NOT NULL,
+  `file_path` varchar(500) NOT NULL,
+  `file_size` decimal(10,2) NOT NULL,
+  `backup_type` enum('manual','auto','manual_php') NOT NULL,
+  `created_by` int(11) NOT NULL,
+  `deleted_at` datetime DEFAULT NULL,
+  `deleted_by` int(11) DEFAULT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  PRIMARY KEY (`id`),
+  KEY `created_by` (`created_by`),
+  KEY `deleted_by` (`deleted_by`),
+  CONSTRAINT `backup_logs_ibfk_1` FOREIGN KEY (`created_by`) REFERENCES `users` (`id`),
+  CONSTRAINT `backup_logs_ibfk_2` FOREIGN KEY (`deleted_by`) REFERENCES `users` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `backup_logs`
+--
+INSERT INTO `backup_logs` VALUES ('1', 'backup_2025-11-07_20-11-20.zip', 'backups/backup_2025-11-07_20-11-20.zip', '0.12', 'manual_php', '1', NULL, NULL, '2025-11-07 11:11:21'),
+('2', 'backup_2025-11-08_02-48-22.zip', 'backups/backup_2025-11-08_02-48-22.zip', '0.12', 'manual_php', '1', NULL, NULL, '2025-11-07 17:48:23'),
+('3', 'backup_2025-11-13_23-03-52.zip', 'backups/backup_2025-11-13_23-03-52.zip', '0.12', 'manual_php', '1', NULL, NULL, '2025-11-13 14:03:53'),
+('4', 'backup_2025-11-13_23-14-45.zip', 'backups/backup_2025-11-13_23-14-45.zip', '0.12', 'manual_php', '1', NULL, NULL, '2025-11-13 14:14:45'),
+('5', 'backup_2025-11-13_23-14-57.zip', 'backups/backup_2025-11-13_23-14-57.zip', '0.12', 'manual_php', '1', NULL, NULL, '2025-11-13 14:14:57'),
+('6', 'backup_2025-11-13_23-15-12.zip', 'backups/backup_2025-11-13_23-15-12.zip', '0.12', 'manual_php', '1', NULL, NULL, '2025-11-13 14:15:12'),
+('7', 'backup_2025-11-13_23-23-17.zip', 'backups/backup_2025-11-13_23-23-17.zip', '0.12', 'manual_php', '1', NULL, NULL, '2025-11-13 14:23:18'),
+('8', 'backup_2025-11-13_23-23-35.zip', 'backups/backup_2025-11-13_23-23-35.zip', '0.12', 'manual_php', '1', NULL, NULL, '2025-11-13 14:23:35');
+
+--
+-- Table structure for table `billing`
+--
+DROP TABLE IF EXISTS `billing`;
+CREATE TABLE `billing` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `payment_type` varchar(50) DEFAULT NULL,
+  `class_id` int(11) DEFAULT NULL,
+  `amount` decimal(10,2) DEFAULT NULL,
+  `term_id` int(11) DEFAULT NULL,
+  `academic_year_id` int(11) DEFAULT NULL,
+  `due_date` date DEFAULT NULL,
+  `description` text DEFAULT NULL,
+  `created_at` datetime DEFAULT NULL,
+  `updated_at` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `fk_billing_class` (`class_id`),
+  KEY `fk_billing_academic_year` (`academic_year_id`),
+  CONSTRAINT `fk_billing_academic_year` FOREIGN KEY (`academic_year_id`) REFERENCES `academic_years` (`id`) ON UPDATE CASCADE,
+  CONSTRAINT `fk_billing_class` FOREIGN KEY (`class_id`) REFERENCES `classes` (`id`) ON UPDATE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=102 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `billing`
+--
+INSERT INTO `billing` VALUES ('99', 'Tuition', '1', '135.00', '1', '1', '2025-12-31', '', NULL, NULL),
+('100', 'PTA', '1', '70.00', '1', '1', '2025-09-27', '', NULL, NULL),
+('101', 'Extra Class', '1', '90.00', '1', '1', '2025-09-30', 'yryryr yr', NULL, '2025-09-19 16:56:43');
+
+--
+-- Table structure for table `class_score_marks`
+--
+DROP TABLE IF EXISTS `class_score_marks`;
+CREATE TABLE `class_score_marks` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `student_id` int(11) NOT NULL,
+  `class_id` int(11) NOT NULL,
+  `subject_id` int(11) NOT NULL,
+  `term_id` int(11) DEFAULT NULL,
+  `mark1` decimal(5,2) DEFAULT NULL,
+  `mark2` decimal(5,2) DEFAULT NULL,
+  `mark3` decimal(5,2) DEFAULT NULL,
+  `mark4` decimal(5,2) DEFAULT NULL,
+  `mark5` decimal(5,2) DEFAULT NULL,
+  `mark6` decimal(5,2) DEFAULT NULL,
+  `mark7` decimal(5,2) DEFAULT NULL,
+  `mark8` decimal(5,2) DEFAULT NULL,
+  `mark9` decimal(5,2) DEFAULT NULL,
+  `mark10` decimal(5,2) DEFAULT NULL,
+  `total_marks` decimal(5,2) DEFAULT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `academic_year_id` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `class_id` (`class_id`),
+  KEY `subject_id` (`subject_id`),
+  KEY `student_id` (`student_id`),
+  KEY `term_id` (`term_id`),
+  KEY `academic_year_id` (`academic_year_id`),
+  CONSTRAINT `class_score_marks_ibfk_1` FOREIGN KEY (`class_id`) REFERENCES `classes` (`id`),
+  CONSTRAINT `class_score_marks_ibfk_2` FOREIGN KEY (`subject_id`) REFERENCES `subjects` (`id`),
+  CONSTRAINT `class_score_marks_ibfk_3` FOREIGN KEY (`student_id`) REFERENCES `students` (`id`),
+  CONSTRAINT `class_score_marks_ibfk_4` FOREIGN KEY (`term_id`) REFERENCES `terms` (`id`),
+  CONSTRAINT `class_score_marks_ibfk_5` FOREIGN KEY (`academic_year_id`) REFERENCES `academic_years` (`id`),
+  CONSTRAINT `fk_exam_score_marks_term` FOREIGN KEY (`term_id`) REFERENCES `terms` (`id`) ON UPDATE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `class_score_marks`
+--
+INSERT INTO `class_score_marks` VALUES ('5', '6', '16', '1', '1', '20.00', '13.00', '12.00', '25.00', NULL, NULL, NULL, NULL, NULL, NULL, '70.00', '2025-09-03 12:41:02', '2025-09-04 10:16:12', '1'),
+('6', '1', '1', '1', '1', '23.00', '23.00', '22.00', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '68.00', '2025-09-03 12:47:15', '2025-09-03 14:55:55', '1');
+
+--
+-- Table structure for table `classes`
+--
+DROP TABLE IF EXISTS `classes`;
+CREATE TABLE `classes` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `class_name` varchar(50) NOT NULL,
+  `class_teacher_id` int(11) DEFAULT NULL,
+  `academic_year` varchar(20) NOT NULL,
+  `description` text DEFAULT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `classes`
+--
+INSERT INTO `classes` VALUES ('1', 'class 9', '1', '2026-2027', 'tttttt ttttt ttttt ttttttt', '2025-08-05 08:29:42'),
+('2', 'Class 2', '0', '2023-2024', '', '2025-08-11 11:30:55'),
+('3', 'Class 3', '1', '2023-2024', '', '2025-08-15 09:07:08'),
+('7', 'KG1', '1', '2024-2025', '', '2025-08-15 11:50:32'),
+('8', 'KG2', NULL, '2025-2026', '', '2025-08-15 11:55:34'),
+('9', 'KG1', '1', '2023-2024', 'ttytt ttt tt', '2025-08-15 11:56:32'),
+('12', 'KG1', NULL, '2025-2026', '', '2025-08-15 12:20:37'),
+('16', 'Class 1', '1', '2025-2026', '', '2025-08-15 16:48:13'),
+('19', 'JSS 3', '3', '2025/2026 Grace', '', '2025-10-15 09:34:20');
+
+--
+-- Table structure for table `events`
+--
+DROP TABLE IF EXISTS `events`;
+CREATE TABLE `events` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `event_title` varchar(255) NOT NULL,
+  `event_type` enum('Academic','Sports','Cultural','Holiday','Meeting','Examination','Other') NOT NULL,
+  `event_date` date NOT NULL,
+  `start_time` time NOT NULL,
+  `end_time` time DEFAULT NULL,
+  `location` varchar(255) DEFAULT NULL,
+  `academic_year_id` int(11) NOT NULL,
+  `academic_year` varchar(20) DEFAULT NULL,
+  `term_id` int(11) NOT NULL,
+  `term_name` varchar(50) DEFAULT NULL,
+  `description` text DEFAULT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  PRIMARY KEY (`id`),
+  KEY `academic_year_id` (`academic_year_id`),
+  KEY `term_id` (`term_id`),
+  CONSTRAINT `events_ibfk_1` FOREIGN KEY (`academic_year_id`) REFERENCES `academic_years` (`id`),
+  CONSTRAINT `events_ibfk_2` FOREIGN KEY (`term_id`) REFERENCES `terms` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `events`
+--
+INSERT INTO `events` VALUES ('1', 'Football Match', 'Sports', '2025-09-27', '23:32:00', '13:34:00', 'School Park', '1', NULL, '1', NULL, 'thwhw whh  he e', '2025-09-19 19:29:17', '2025-09-19 19:29:17'),
+('2', 'PTA Meeting', 'Meeting', '2025-09-30', '10:00:00', '12:00:00', 'Church Building', '1', NULL, '1', NULL, 'This is a notice that all the teachers are to be available for the meeting before 10am', '2025-09-26 22:54:44', '2025-09-26 22:54:44');
+
+--
+-- Table structure for table `exam_score_marks`
+--
+DROP TABLE IF EXISTS `exam_score_marks`;
+CREATE TABLE `exam_score_marks` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `student_id` int(11) NOT NULL,
+  `class_id` int(11) NOT NULL,
+  `subject_id` int(11) NOT NULL,
+  `term_id` int(11) DEFAULT NULL,
+  `mark1` decimal(5,2) DEFAULT NULL,
+  `mark2` decimal(5,2) DEFAULT NULL,
+  `mark3` decimal(5,2) DEFAULT NULL,
+  `mark4` decimal(5,2) DEFAULT NULL,
+  `mark5` decimal(5,2) DEFAULT NULL,
+  `mark6` decimal(5,2) DEFAULT NULL,
+  `mark7` decimal(5,2) DEFAULT NULL,
+  `mark8` decimal(5,2) DEFAULT NULL,
+  `mark9` decimal(5,2) DEFAULT NULL,
+  `mark10` decimal(5,2) DEFAULT NULL,
+  `total_marks` decimal(5,2) DEFAULT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `academic_year_id` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `class_id` (`class_id`),
+  KEY `subject_id` (`subject_id`),
+  KEY `student_id` (`student_id`),
+  KEY `term_id` (`term_id`),
+  KEY `academic_year_id` (`academic_year_id`),
+  CONSTRAINT `exam_score_marks_ibfk_1` FOREIGN KEY (`class_id`) REFERENCES `classes` (`id`),
+  CONSTRAINT `exam_score_marks_ibfk_2` FOREIGN KEY (`subject_id`) REFERENCES `subjects` (`id`),
+  CONSTRAINT `exam_score_marks_ibfk_3` FOREIGN KEY (`student_id`) REFERENCES `students` (`id`),
+  CONSTRAINT `exam_score_marks_ibfk_4` FOREIGN KEY (`term_id`) REFERENCES `terms` (`id`),
+  CONSTRAINT `exam_score_marks_ibfk_5` FOREIGN KEY (`academic_year_id`) REFERENCES `academic_years` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `exam_score_marks`
+--
+INSERT INTO `exam_score_marks` VALUES ('5', '6', '16', '1', '1', '88.00', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '88.00', '2025-09-03 12:42:06', '2025-09-03 14:56:16', '1'),
+('6', '1', '1', '1', '1', '90.00', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '90.00', '2025-09-03 12:47:40', '2025-09-04 10:17:04', '1');
+
+--
+-- Table structure for table `invoices`
+--
+DROP TABLE IF EXISTS `invoices`;
+CREATE TABLE `invoices` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `invoice_number` varchar(50) NOT NULL,
+  `student_id` int(11) NOT NULL,
+  `academic_year_id` int(11) NOT NULL,
+  `term_id` int(11) NOT NULL,
+  `invoice_type` enum('tuition','transport','meals','books','uniform','other') NOT NULL,
+  `amount` decimal(10,2) NOT NULL,
+  `due_date` date NOT NULL,
+  `description` text DEFAULT NULL,
+  `status` enum('paid','unpaid','overdue','cancelled','deleted') DEFAULT 'unpaid',
+  `payment_date` date DEFAULT NULL,
+  `created_by` int(11) NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `invoice_number` (`invoice_number`),
+  KEY `academic_year_id` (`academic_year_id`),
+  KEY `term_id` (`term_id`),
+  KEY `created_by` (`created_by`),
+  KEY `idx_invoice_number` (`invoice_number`),
+  KEY `idx_student_id` (`student_id`),
+  KEY `idx_status` (`status`),
+  KEY `idx_due_date` (`due_date`),
+  KEY `idx_created_at` (`created_at`),
+  CONSTRAINT `invoices_ibfk_1` FOREIGN KEY (`student_id`) REFERENCES `students` (`id`) ON DELETE CASCADE,
+  CONSTRAINT `invoices_ibfk_2` FOREIGN KEY (`academic_year_id`) REFERENCES `academic_years` (`id`),
+  CONSTRAINT `invoices_ibfk_3` FOREIGN KEY (`term_id`) REFERENCES `terms` (`id`),
+  CONSTRAINT `invoices_ibfk_4` FOREIGN KEY (`created_by`) REFERENCES `users` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `invoices`
+--
+INSERT INTO `invoices` VALUES ('1', 'INV-2025-6598', '1', '1', '1', 'tuition', '34.00', '2025-10-11', 'wtw were', 'deleted', NULL, '1', '2025-09-29 16:04:19', '2025-09-29 18:09:38'),
+('2', 'INV-2025-6142', '1', '1', '1', 'tuition', '34.00', '2025-10-11', '', 'paid', '2025-09-30', '1', '2025-09-29 18:37:57', '2025-09-29 18:47:05'),
+('3', 'INV-2025-1692', '9', '1', '1', 'transport', '56.00', '2025-10-11', '45', 'unpaid', NULL, '1', '2025-09-29 18:38:55', '2025-09-29 18:38:55');
+
+--
+-- Table structure for table `marks`
+--
+DROP TABLE IF EXISTS `marks`;
+CREATE TABLE `marks` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `student_id` int(11) NOT NULL,
+  `subject_id` int(11) NOT NULL,
+  `term` enum('First','Second','Third','Final') NOT NULL,
+  `marks` decimal(5,2) NOT NULL,
+  `grade` varchar(2) DEFAULT NULL,
+  `remarks` text DEFAULT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  PRIMARY KEY (`id`),
+  KEY `student_id` (`student_id`),
+  KEY `subject_id` (`subject_id`),
+  CONSTRAINT `marks_ibfk_1` FOREIGN KEY (`student_id`) REFERENCES `students` (`id`),
+  CONSTRAINT `marks_ibfk_2` FOREIGN KEY (`subject_id`) REFERENCES `subjects` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `marks`
+--
+--
+-- Table structure for table `marks_weights`
+--
+DROP TABLE IF EXISTS `marks_weights`;
+CREATE TABLE `marks_weights` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `mid_weight` int(11) DEFAULT 10,
+  `class_weight` int(11) DEFAULT 20,
+  `exam_weight` int(11) DEFAULT 70,
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `marks_weights`
+--
+INSERT INTO `marks_weights` VALUES ('1', '10', '30', '60', '2025-09-19 15:15:17');
+
+--
+-- Table structure for table `messages`
+--
+DROP TABLE IF EXISTS `messages`;
+CREATE TABLE `messages` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `recipient_type` enum('all_teachers','all_parents','specific_class','specific_teacher','specific_parent') NOT NULL,
+  `message_type` enum('event_reminder','meeting_invitation','exam_schedule','fee_reminder','general_announcement') NOT NULL,
+  `subject` varchar(255) NOT NULL,
+  `content` text NOT NULL,
+  `event_id` int(11) DEFAULT NULL,
+  `specific_class_id` int(11) DEFAULT NULL,
+  `specific_teacher_id` int(11) DEFAULT NULL,
+  `specific_student_id` int(11) DEFAULT NULL,
+  `send_email` tinyint(1) DEFAULT 0,
+  `send_sms` tinyint(1) DEFAULT 0,
+  `status` enum('Draft','Pending','Processing','Sent','Failed') DEFAULT 'Draft',
+  `created_by` int(11) NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `sent_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `event_id` (`event_id`),
+  KEY `specific_class_id` (`specific_class_id`),
+  KEY `specific_teacher_id` (`specific_teacher_id`),
+  KEY `specific_student_id` (`specific_student_id`),
+  CONSTRAINT `messages_ibfk_1` FOREIGN KEY (`event_id`) REFERENCES `events` (`id`),
+  CONSTRAINT `messages_ibfk_2` FOREIGN KEY (`specific_class_id`) REFERENCES `classes` (`id`),
+  CONSTRAINT `messages_ibfk_3` FOREIGN KEY (`specific_teacher_id`) REFERENCES `teachers` (`id`),
+  CONSTRAINT `messages_ibfk_4` FOREIGN KEY (`specific_student_id`) REFERENCES `students` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `messages`
+--
+INSERT INTO `messages` VALUES ('1', 'all_teachers', 'meeting_invitation', 'Reminder: Football Match', 'ryty yry yryryry ', '1', NULL, NULL, NULL, '1', '0', 'Processing', '1', '2025-09-19 20:17:04', '2025-09-19 20:17:04', NULL),
+('2', 'all_teachers', 'meeting_invitation', 'Reminder: Football Match', 'ryty yry yryryry ', '1', NULL, NULL, NULL, '1', '0', 'Processing', '1', '2025-09-19 20:18:52', '2025-09-19 20:18:52', NULL),
+('3', 'specific_parent', 'meeting_invitation', 'Reminder: Football Match', 'tetrt', '1', NULL, NULL, '1', '1', '0', 'Pending', '1', '2025-09-19 20:25:17', '2025-09-19 20:25:17', NULL),
+('4', 'all_parents', 'event_reminder', 'Reminder: Football Match', 'This is a reminder of the upcoming PTA meeting that is schedule on the 4th of October', '1', NULL, NULL, NULL, '1', '0', 'Processing', '1', '2025-09-23 09:18:18', '2025-09-23 09:18:18', NULL),
+('5', 'all_parents', 'event_reminder', 'Reminder: Football Match', 'This is a reminder of the upcoming PTA meeting that is schedule on the 4th of October', '1', NULL, NULL, NULL, '1', '0', 'Processing', '1', '2025-09-23 09:35:30', '2025-09-23 09:35:30', NULL),
+('6', 'all_parents', 'event_reminder', 'Reminder: Football Match', 'reetrty', '1', NULL, NULL, NULL, '1', '0', 'Processing', '1', '2025-09-23 09:36:01', '2025-09-23 09:36:01', NULL),
+('7', 'all_parents', 'event_reminder', 'Reminder: Football Match', 'uyuy ut trt', '1', NULL, NULL, NULL, '1', '0', 'Processing', '1', '2025-09-23 11:02:34', '2025-09-23 11:02:34', NULL),
+('8', 'all_parents', 'meeting_invitation', 'Reminder: Football Match', 'yruyr', '1', NULL, NULL, NULL, '1', '0', 'Processing', '1', '2025-09-23 11:47:22', '2025-09-23 11:47:22', NULL),
+('9', 'all_parents', 'event_reminder', 'Reminder: Football Match', 'yuff hffg f', '1', NULL, NULL, NULL, '1', '0', 'Processing', '1', '2025-09-23 12:27:03', '2025-09-23 12:27:03', NULL),
+('10', 'all_teachers', 'event_reminder', 'Reminder: Football Match', 'uydff uyrftfu u ', '1', NULL, NULL, NULL, '1', '0', 'Processing', '1', '2025-09-23 12:32:07', '2025-09-23 12:32:07', NULL),
+('11', 'all_teachers', 'event_reminder', 'Reminder: Football Match', 'yuy yryr', '1', NULL, NULL, NULL, '1', '0', 'Processing', '1', '2025-09-24 11:44:56', '2025-09-24 11:44:57', NULL),
+('12', 'specific_class', 'fee_reminder', 'Reminder: Football Match', 'gd', NULL, '1', NULL, NULL, '1', '1', 'Processing', '1', '2025-09-24 11:46:46', '2025-09-24 11:46:46', NULL),
+('13', 'specific_class', 'fee_reminder', 'Reminder: Football Match', 'gd', NULL, '1', NULL, NULL, '0', '0', 'Processing', '1', '2025-09-24 11:56:27', '2025-09-24 11:56:27', NULL);
+
+--
+-- Table structure for table `midterm_marks`
+--
+DROP TABLE IF EXISTS `midterm_marks`;
+CREATE TABLE `midterm_marks` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `student_id` int(11) NOT NULL,
+  `class_id` int(11) NOT NULL,
+  `subject_id` int(11) NOT NULL,
+  `term_id` int(11) DEFAULT NULL,
+  `mark1` decimal(5,2) DEFAULT NULL,
+  `mark2` decimal(5,2) DEFAULT NULL,
+  `mark3` decimal(5,2) DEFAULT NULL,
+  `mark4` decimal(5,2) DEFAULT NULL,
+  `mark5` decimal(5,2) DEFAULT NULL,
+  `mark6` decimal(5,2) DEFAULT NULL,
+  `mark7` decimal(5,2) DEFAULT NULL,
+  `mark8` decimal(5,2) DEFAULT NULL,
+  `mark9` decimal(5,2) DEFAULT NULL,
+  `mark10` decimal(5,2) DEFAULT NULL,
+  `total_marks` decimal(5,2) DEFAULT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `academic_year_id` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `class_id` (`class_id`),
+  KEY `subject_id` (`subject_id`),
+  KEY `student_id` (`student_id`),
+  KEY `term_id` (`term_id`),
+  KEY `academic_year_id` (`academic_year_id`),
+  CONSTRAINT `midterm_marks_ibfk_1` FOREIGN KEY (`class_id`) REFERENCES `classes` (`id`),
+  CONSTRAINT `midterm_marks_ibfk_2` FOREIGN KEY (`subject_id`) REFERENCES `subjects` (`id`),
+  CONSTRAINT `midterm_marks_ibfk_3` FOREIGN KEY (`student_id`) REFERENCES `students` (`id`),
+  CONSTRAINT `midterm_marks_ibfk_4` FOREIGN KEY (`term_id`) REFERENCES `terms` (`id`),
+  CONSTRAINT `midterm_marks_ibfk_5` FOREIGN KEY (`academic_year_id`) REFERENCES `academic_years` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `midterm_marks`
+--
+INSERT INTO `midterm_marks` VALUES ('9', '6', '16', '1', '1', '25.00', '25.00', '23.00', '20.00', NULL, NULL, NULL, NULL, NULL, NULL, '93.00', '2025-09-04 09:46:43', '2025-09-04 10:24:48', '1');
+
+--
+-- Table structure for table `payment_methods`
+--
+DROP TABLE IF EXISTS `payment_methods`;
+CREATE TABLE `payment_methods` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(50) NOT NULL,
+  `description` text DEFAULT NULL,
+  `is_active` tinyint(1) DEFAULT 1,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `payment_methods`
+--
+INSERT INTO `payment_methods` VALUES ('1', 'cash', 'Cash payment', '1', '2025-09-27 17:54:04'),
+('2', 'bank_transfer', 'Bank transfer', '1', '2025-09-27 17:54:04'),
+('3', 'mobile_money', 'Mobile money', '1', '2025-09-27 17:54:04'),
+('4', 'cheque', 'Cheque payment', '1', '2025-09-27 17:54:04'),
+('5', 'online', 'Online payment', '1', '2025-09-27 17:54:04'),
+('6', 'other', 'Other payment method', '1', '2025-09-27 17:54:04');
+
+--
+-- Table structure for table `payments`
+--
+DROP TABLE IF EXISTS `payments`;
+CREATE TABLE `payments` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `invoice_id` int(11) DEFAULT NULL,
+  `receipt_no` varchar(20) NOT NULL,
+  `student_id` int(11) NOT NULL,
+  `payment_date` date NOT NULL,
+  `received_by` int(11) NOT NULL,
+  `payment_type` varchar(50) DEFAULT NULL,
+  `term_id` int(11) DEFAULT NULL,
+  `academic_year_id` int(11) DEFAULT NULL,
+  `amount` decimal(10,2) NOT NULL,
+  `payment_method` enum('Cash','Cheque','Bank Transfer','Mobile Money') NOT NULL,
+  `payment_method_id` int(11) NOT NULL,
+  `transaction_id` varchar(100) DEFAULT NULL,
+  `status` enum('Paid','Part','Pending') DEFAULT 'Paid',
+  `description` text DEFAULT NULL,
+  `notes` text DEFAULT NULL,
+  `collected_by_user_id` int(11) DEFAULT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `receipt_no` (`receipt_no`),
+  KEY `student_id` (`student_id`),
+  KEY `term_id` (`term_id`),
+  KEY `fk_payments_academic_year` (`academic_year_id`),
+  KEY `idx_invoice_id` (`invoice_id`),
+  KEY `idx_payment_date` (`payment_date`),
+  KEY `idx_payment_method_id` (`payment_method_id`),
+  KEY `idx_received_by` (`received_by`),
+  CONSTRAINT `fk_payments_academic_year` FOREIGN KEY (`academic_year_id`) REFERENCES `academic_years` (`id`) ON DELETE SET NULL ON UPDATE CASCADE,
+  CONSTRAINT `fk_payments_invoice_id` FOREIGN KEY (`invoice_id`) REFERENCES `invoices` (`id`) ON DELETE CASCADE,
+  CONSTRAINT `fk_payments_payment_method_id` FOREIGN KEY (`payment_method_id`) REFERENCES `payment_methods` (`id`),
+  CONSTRAINT `fk_payments_received_by` FOREIGN KEY (`received_by`) REFERENCES `users` (`id`),
+  CONSTRAINT `payments_ibfk_1` FOREIGN KEY (`student_id`) REFERENCES `students` (`id`),
+  CONSTRAINT `payments_ibfk_2` FOREIGN KEY (`term_id`) REFERENCES `terms` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=45 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `payments`
+--
+INSERT INTO `payments` VALUES ('40', NULL, 'PY20250917642', '1', '2025-09-17', '1', 'Tuition', '1', NULL, '135.00', 'Cash', '1', NULL, 'Paid', '', NULL, '1', '2025-09-17 12:22:13'),
+('41', NULL, 'PY20250917708', '2', '2025-09-17', '1', 'Extra Class', '1', NULL, '80.00', 'Cash', '1', NULL, 'Paid', '', NULL, '1', '2025-09-17 12:23:30'),
+('42', NULL, 'PY20250917913', '1', '2025-09-17', '1', 'PTA', '1', '1', '70.00', 'Cash', '1', NULL, 'Paid', '', NULL, '1', '2025-09-17 12:24:09'),
+('43', NULL, 'PY20250918348', '3', '2025-09-18', '1', 'Extra Class', '1', '1', '92.00', 'Cash', '1', NULL, 'Paid', '', NULL, '1', '2025-09-18 09:54:59'),
+('44', NULL, 'PY20250918927', '2', '2025-09-18', '1', 'Tuition', '1', '1', '135.00', 'Mobile Money', '3', NULL, 'Paid', '0245834338 id 458552522633225', NULL, '1', '2025-09-18 11:14:13');
+
+--
+-- Table structure for table `remarks`
+--
+DROP TABLE IF EXISTS `remarks`;
+CREATE TABLE `remarks` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `grade` varchar(5) NOT NULL,
+  `min_mark` int(11) NOT NULL,
+  `max_mark` int(11) NOT NULL,
+  `remark` varchar(100) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `remarks`
+--
+INSERT INTO `remarks` VALUES ('1', 'F', '0', '49', 'Fail'),
+('2', 'D', '50', '59', 'Pass'),
+('3', 'C', '60', '69', 'Good'),
+('4', 'B', '70', '79', 'Very Good'),
+('5', 'A', '80', '100', 'Excellent');
+
+--
+-- Table structure for table `report_remarks`
+--
+DROP TABLE IF EXISTS `report_remarks`;
+CREATE TABLE `report_remarks` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `student_id` int(11) NOT NULL,
+  `term_id` int(11) NOT NULL,
+  `academic_year_id` int(11) NOT NULL,
+  `attendance` varchar(50) DEFAULT NULL,
+  `conduct` varchar(100) DEFAULT NULL,
+  `attitude` varchar(100) DEFAULT NULL,
+  `promoted_to` varchar(50) DEFAULT NULL,
+  `teacher_remark` text DEFAULT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `unique_student_term_year` (`student_id`,`term_id`,`academic_year_id`),
+  KEY `term_id` (`term_id`),
+  KEY `academic_year_id` (`academic_year_id`),
+  CONSTRAINT `report_remarks_ibfk_1` FOREIGN KEY (`student_id`) REFERENCES `students` (`id`),
+  CONSTRAINT `report_remarks_ibfk_2` FOREIGN KEY (`term_id`) REFERENCES `terms` (`id`),
+  CONSTRAINT `report_remarks_ibfk_3` FOREIGN KEY (`academic_year_id`) REFERENCES `academic_years` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `report_remarks`
+--
+INSERT INTO `report_remarks` VALUES ('1', '1', '1', '1', NULL, 'EXCELLENT', 'EXCELLENT', 'PROMOTED', 'Very hard-working guy', '2025-10-06 15:29:03', '2025-10-06 15:36:56');
+
+--
+-- Table structure for table `school_settings`
+--
+DROP TABLE IF EXISTS `school_settings`;
+CREATE TABLE `school_settings` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `school_name` varchar(255) NOT NULL,
+  `school_short_name` varchar(100) DEFAULT NULL,
+  `address` varchar(255) NOT NULL,
+  `phone` varchar(50) DEFAULT NULL,
+  `email` varchar(150) NOT NULL,
+  `headmaster_name` varchar(255) DEFAULT NULL,
+  `app_password` varchar(50) NOT NULL,
+  `logo` varchar(255) DEFAULT NULL,
+  `headmaster_signature` varchar(500) DEFAULT NULL,
+  `motto` text DEFAULT NULL,
+  `favicon` varchar(500) DEFAULT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `school_settings`
+--
+INSERT INTO `school_settings` VALUES ('1', 'Global Evangelical Basic School-Keta/Dzelukorpe', 'GEBSCO', 'P.O. Box 123, Keta, Volta Region, Ghana', '+233 24 123 4567', 'shineakakpo08@gmail.com', 'mr. frank', 'fTkOWW1LTeHX/e20gFDOulyssQ==', 'uploads/1759866788_logo.png', 'uploads/signatures/signature_1759781699_sig.png', 'No Cross No Crown', 'uploads/favicons/favicon_1759867124_logo.png', '2025-08-19 16:41:13', '2025-10-07 11:58:44');
+
+--
+-- Table structure for table `student_accounts`
+--
+DROP TABLE IF EXISTS `student_accounts`;
+CREATE TABLE `student_accounts` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `account_number` varchar(20) NOT NULL,
+  `student_id` int(11) NOT NULL,
+  `account_type` varchar(50) NOT NULL,
+  `current_balance` decimal(10,2) DEFAULT 0.00,
+  `status` enum('active','inactive','closed') DEFAULT 'active',
+  `notes` text DEFAULT NULL,
+  `created_by` int(11) NOT NULL,
+  `closed_at` datetime DEFAULT NULL,
+  `last_transaction_date` datetime DEFAULT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `account_number` (`account_number`),
+  KEY `student_id` (`student_id`),
+  KEY `created_by` (`created_by`),
+  CONSTRAINT `student_accounts_ibfk_1` FOREIGN KEY (`student_id`) REFERENCES `students` (`id`) ON DELETE CASCADE,
+  CONSTRAINT `student_accounts_ibfk_2` FOREIGN KEY (`created_by`) REFERENCES `users` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `student_accounts`
+--
+INSERT INTO `student_accounts` VALUES ('1', 'ACC20251106000001', '1', 'Tuition', '0.00', '', '', '1', NULL, NULL, '2025-11-05 17:48:06', '2025-11-05 17:48:06');
+
+--
+-- Table structure for table `students`
+--
+DROP TABLE IF EXISTS `students`;
+CREATE TABLE `students` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `student_id` varchar(20) NOT NULL,
+  `first_name` varchar(50) NOT NULL,
+  `last_name` varchar(50) NOT NULL,
+  `dob` date NOT NULL,
+  `gender` enum('Male','Female','Other') NOT NULL,
+  `address` text DEFAULT NULL,
+  `parent_name` varchar(100) DEFAULT NULL,
+  `parent_contact` varchar(20) DEFAULT NULL,
+  `email` varchar(100) DEFAULT NULL,
+  `class_id` int(11) DEFAULT NULL,
+  `status` enum('Active','Inactive','Graduated') DEFAULT 'Active',
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `academic_year_id` int(11) DEFAULT NULL,
+  `class_status` enum('active','promoted','repeated','probation','graduated') NOT NULL DEFAULT 'active',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `student_id` (`student_id`),
+  KEY `idx_students_class_status` (`class_status`),
+  KEY `fk_students_academic_year` (`academic_year_id`),
+  CONSTRAINT `fk_students_academic_year` FOREIGN KEY (`academic_year_id`) REFERENCES `academic_years` (`id`) ON UPDATE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `students`
+--
+INSERT INTO `students` VALUES ('1', 'ST2025220', 'Akakpo', 'Theophilus', '0000-00-00', 'Male', 'tttdffd', 'Amenakpor', '0554552456', 'shineakakpe3@gmail.com', '1', 'Active', '2025-08-05 08:29:54', '1', 'active'),
+('2', 'ST2025593', 'Kaledzi', 'Ameforbu', '2015-02-05', 'Male', 'Tegbi', 'Innocential vormawor', '0245834338', 'shineakakpo3@gmail.com', '1', 'Active', '2025-08-05 17:19:50', '1', 'active'),
+('3', 'ST2025776', 'Victoria', 'Mawusene', '2006-01-06', 'Male', 'tttdffd', 'Kwamigah Vincent', '0275803975', 'shineakakpe3@gmail.com', '1', 'Active', '2025-08-06 08:15:07', '1', 'active'),
+('6', 'ST2025213', 'Victor', 'Gakplazi', '2025-08-30', 'Male', '', 'Francis Amenuvorfff', '0240030142', 'shineakakpo3@gmail.com', '16', 'Active', '2025-08-15 16:58:58', '1', 'active'),
+('9', 'ST2025271', 'Amekakunor', 'David', '2012-04-28', 'Male', '', '', '', '', '16', 'Active', '2025-09-04 18:17:56', '1', 'active'),
+('10', 'ST2025316', 'gghgggg', 'tdgddgd', '2002-01-15', 'Male', '', 'Francis Amenuvor gh', '0245834338', 'shineakakpo08@gmail.com', '19', 'Active', '2025-10-15 10:24:57', '1', 'graduated'),
+('11', 'ST2025969', 'gghgggg', 'tdgddgd', '2001-02-15', 'Male', '', '', '', '', '3', 'Active', '2025-10-15 14:14:17', '1', 'promoted'),
+('12', 'ST2025592', 'Eureka', 'Amenakpor', '2017-02-15', 'Male', '', '', '', NULL, '1', 'Active', '2025-10-15 16:13:34', '1', 'promoted'),
+('13', 'STU20255896', 'Mary', 'Hounkpe', '2006-01-04', 'Female', '', '', '', NULL, '2', 'Active', '2025-10-16 10:13:31', '1', ''),
+('14', 'STU20256786', 'Mary', 'Hounkpe', '2006-01-04', 'Female', '', '', '', NULL, '3', 'Active', '2025-10-16 10:29:46', '2', 'promoted');
+
+--
+-- Table structure for table `subjects`
+--
+DROP TABLE IF EXISTS `subjects`;
+CREATE TABLE `subjects` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `subject_name` varchar(100) NOT NULL,
+  `subject_code` varchar(20) NOT NULL,
+  `description` text DEFAULT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `subject_code` (`subject_code`)
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `subjects`
+--
+INSERT INTO `subjects` VALUES ('1', 'Engish Laguage', '', NULL, '2025-08-25 14:15:38'),
+('6', 'English Language', 'ENG-513', 'All the Classes', '2025-08-25 17:54:44');
+
+--
+-- Table structure for table `teachers`
+--
+DROP TABLE IF EXISTS `teachers`;
+CREATE TABLE `teachers` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `user_id` int(11) DEFAULT NULL,
+  `teacher_id` varchar(20) NOT NULL,
+  `first_name` varchar(50) NOT NULL,
+  `last_name` varchar(50) NOT NULL,
+  `email` varchar(100) NOT NULL,
+  `phone` varchar(20) DEFAULT NULL,
+  `specialization` varchar(100) DEFAULT NULL,
+  `status` enum('Active','Inactive') DEFAULT 'Active',
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `teacher_id` (`teacher_id`),
+  UNIQUE KEY `email` (`email`),
+  KEY `idx_teachers_user_id` (`user_id`),
+  CONSTRAINT `fk_teachers_user` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE SET NULL
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `teachers`
+--
+INSERT INTO `teachers` VALUES ('1', '6', 'TCH2025047', 'Richard', 'Nane', 'shineakakpe3@gmail.com', '0245834338', 'Computing and Carrier Technology gg', 'Active', '2025-08-12 08:27:21'),
+('2', NULL, 'TCH2025311', 'Richard', 'Amekudzi', 'shineakakpe13@gmail.com', '+233 24 123 4567', 'Computing and Carrier Technology gg', 'Active', '2025-08-21 13:10:37'),
+('3', '7', 'TCH2025580', 'Mabel', 'Kpormebe', 'shineakakp05@gmail.com', '0245834338', 'English Language', 'Active', '2025-08-21 13:15:08'),
+('4', '8', 'TCH2025605', 'Mr Abel', 'Tornu', 'shineakakp035@gmail.com', '0245834339', 'Mathematics', 'Active', '2025-10-31 14:51:08');
+
+--
+-- Table structure for table `terms`
+--
+DROP TABLE IF EXISTS `terms`;
+CREATE TABLE `terms` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `term_name` varchar(50) NOT NULL,
+  `term_order` int(11) NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `start_date` date DEFAULT NULL,
+  `end_date` date DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `term_name` (`term_name`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `terms`
+--
+INSERT INTO `terms` VALUES ('1', '1st Term', '1', '2025-08-06 17:35:56', NULL, NULL),
+('2', '2nd Term', '2', '2025-08-06 17:35:56', NULL, NULL),
+('3', '3rd Term', '3', '2025-08-06 17:35:56', NULL, NULL);
+
+--
+-- Table structure for table `tuition_details`
+--
+DROP TABLE IF EXISTS `tuition_details`;
+CREATE TABLE `tuition_details` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `billing_id` int(11) NOT NULL,
+  `sub_fee_name` varchar(100) NOT NULL,
+  `sub_fee_amount` decimal(10,2) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `billing_id` (`billing_id`),
+  CONSTRAINT `tuition_details_ibfk_1` FOREIGN KEY (`billing_id`) REFERENCES `billing` (`id`) ON DELETE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=190 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `tuition_details`
+--
+INSERT INTO `tuition_details` VALUES ('187', '99', 'rrrrrrrr', '34.00'),
+('188', '99', 'ssddf', '56.00'),
+('189', '99', 'dddwsw', '45.00');
+
+--
+-- Table structure for table `users`
+--
+DROP TABLE IF EXISTS `users`;
+CREATE TABLE `users` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `username` varchar(50) NOT NULL,
+  `password` varchar(255) NOT NULL,
+  `full_name` varchar(100) NOT NULL,
+  `email` varchar(100) NOT NULL,
+  `role` enum('admin','teacher','staff') NOT NULL DEFAULT 'staff',
+  `signature` varchar(255) DEFAULT NULL,
+  `profile_image` varchar(255) DEFAULT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `username` (`username`),
+  UNIQUE KEY `email` (`email`)
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `users`
+--
+INSERT INTO `users` VALUES ('1', 'admin', '$2y$10$kW4BwCcRfK5RWUMWXrWHJufiRiMtsn3aLZ5xwhE2/ZyTgjSR5IzSm', 'Admin User', 'admin@gebsco.edu', 'admin', '', '68d735a6b9cbc_Screenshot 2025-09-09 172151.png', '2025-08-05 08:28:01'),
+('6', 'richard', '$2y$10$qvUomub4zWF1cEwTzLkrPumA/qub/yG6t4OPZSd1afNA1WJ6iMWqS', 'Richard Nane', 'shineakakpe3@gmail.com', 'teacher', NULL, NULL, '2025-10-30 10:57:31'),
+('7', 'mabel', '$2y$10$vnppuqoPJd.YLGqEwW5v/.RL/8HLmMtbuoXRJrQR8oxtfqKynIsLC', 'Mabel Kpormebe', 'shineakakp05@gmail.com', 'teacher', NULL, NULL, '2025-10-30 14:10:59'),
+('8', 'Mr Abel Tornu', '$2y$10$P5.AfVOEWym63Oy1JhrqP.CKl/Qw2UInJRM.XX54.l3IrqEbxclB6', 'shineakakp035@gmail.com', 'abel@123', 'staff', '', NULL, '2025-11-06 11:40:12');
+

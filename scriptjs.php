@@ -9,6 +9,5 @@
 <script>
     window.allPaymentsData = <?= json_encode($payments); ?>;
 </script>
-<script src="js/payments.js"></script>
 <script src="js/darkmode.js"></script>
 <script src="js/dropdown.js"></script>

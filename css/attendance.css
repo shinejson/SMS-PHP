@@ -1,0 +1,1655 @@
+/* CSS Custom Properties (Variables) for Theming */
+:root {
+    /* Light Mode Defaults */
+    --bg-primary: white;
+    --bg-secondary: #f8f9fa;
+    --bg-tertiary: #fdfdfd;
+    --bg-card: white;
+    --bg-notes: #fff3cd;
+    --bg-selection: #e8f4fd;
+    --text-primary: #333;
+    --text-secondary: #495057;
+    --text-muted: #6c757d;
+    --border: #e9ecef;
+    --border-light: #ddd;
+    --border-heavy: #dee2e6;
+    --accent-primary: #4e73df;
+    --accent-primary-hover: #5a6fd8;
+    --accent-success: #28a745;
+    --accent-danger: #dc3545;
+    --accent-warning: #ffc107;
+    --accent-info: #17a2b8;
+    --accent-purple: #6f42c1;
+    --accent-indigo: #6610f2;
+    --accent-teal: #20c997;
+    --accent-orange: #fd7e14;
+    --shadow-light: rgba(0,0,0,0.05);
+    --shadow-medium: rgba(0,0,0,0.1);
+    --shadow-heavy: rgba(0,0,0,0.3);
+    --shadow-card: 0 4px 6px rgba(0,0,0,0.07);
+    --shadow-card-hover: 0 8px 16px rgba(0,0,0,0.12);
+    --gradient-primary: linear-gradient(135deg, #4e73df 0%, #224abe 100%);
+    --gradient-success: linear-gradient(135deg, #28a745 0%, #20893a 100%);
+    --gradient-danger: linear-gradient(135deg, #dc3545 0%, #bd2130 100%);
+    --gradient-info: linear-gradient(135deg, #17a2b8 0%, #138496 100%);
+    --gradient-warning: linear-gradient(135deg, #ffc107 0%, #e0a800 100%);
+    --gradient-purple: linear-gradient(135deg, #6f42c1 0%, #5a32a3 100%);
+    --gradient-primary-dark: linear-gradient(135deg, #2a4a8e 0%, #1a2d5f 100%);
+    --status-present: #d4edda;
+    --status-absent: #f8d7da;
+    --status-late: #fff3cd;
+    --status-excused: #e2e3e5;
+    --radio-accent: #4e73df;
+    --transition: all 0.3s ease;
+}
+
+/* Dark Mode Variables */
+@media (prefers-color-scheme: dark) {
+    :root {
+        --bg-primary: #121212;
+        --bg-secondary: #1e1e1e;
+        --bg-tertiary: #2c2c2c;
+        --bg-card: #1e1e1e;
+        --bg-notes: #4a3d00;
+        --bg-selection: #1a365d;
+        --text-primary: #e0e0e0;
+        --text-secondary: #b0b0b0;
+        --text-muted: #9e9e9e;
+        --border: #404040;
+        --border-light: #555;
+        --border-heavy: #404040;
+        --shadow-light: rgba(0,0,0,0.5);
+        --shadow-medium: rgba(0,0,0,0.6);
+        --shadow-heavy: rgba(0,0,0,0.8);
+        --shadow-card: 0 4px 6px rgba(0,0,0,0.3);
+        --shadow-card-hover: 0 8px 16px rgba(0,0,0,0.5);
+        --gradient-primary: var(--gradient-primary-dark);
+        --status-present: rgba(76, 175, 80, 0.1);
+        --status-absent: rgba(244, 67, 54, 0.1);
+        --status-late: rgba(255, 193, 7, 0.1);
+        --status-excused: rgba(158, 158, 158, 0.1);
+        --radio-accent: #63b3ed;
+    }
+}
+
+/* Manual Dark Mode Toggle */
+.dark-mode {
+    --bg-primary: #121212 !important;
+    --bg-secondary: #1e1e1e !important;
+    --bg-tertiary: #2c2c2c !important;
+    --bg-card: #1e1e1e !important;
+    --bg-notes: #4a3d00 !important;
+    --bg-selection: #1a365d !important;
+    --text-primary: #e0e0e0 !important;
+    --text-secondary: #b0b0b0 !important;
+    --text-muted: #9e9e9e !important;
+    --border: #404040 !important;
+    --border-light: #555 !important;
+    --border-heavy: #404040 !important;
+    --shadow-light: rgba(0,0,0,0.5) !important;
+    --shadow-medium: rgba(0,0,0,0.6) !important;
+    --shadow-heavy: rgba(0,0,0,0.8) !important;
+    --shadow-card: 0 4px 6px rgba(0,0,0,0.3) !important;
+    --shadow-card-hover: 0 8px 16px rgba(0,0,0,0.5) !important;
+    --gradient-primary: var(--gradient-primary-dark) !important;
+    --status-present: rgba(76, 175, 80, 0.1) !important;
+    --status-absent: rgba(244, 67, 54, 0.1) !important;
+    --status-late: rgba(255, 193, 7, 0.1) !important;
+    --status-excused: rgba(158, 158, 158, 0.1) !important;
+    --radio-accent: #63b3ed !important;
+}
+
+.dark-mode body {
+    background-color: var(--bg-primary);
+    color: var(--text-primary);
+}
+
+/* Global Transitions */
+* {
+    transition: var(--transition);
+}
+
+/* ============================================
+   FILTERS SECTION - REDUCED MARGINS
+   ============================================ */
+.filters-card {
+    background: var(--bg-card);
+    border-radius: 12px;
+    padding: 15px;
+    margin-bottom: 20px;
+    box-shadow: var(--shadow-card);
+    border: 1px solid var(--border);
+}
+
+.filters-card:hover {
+    box-shadow: var(--shadow-card-hover);
+}
+
+.filters-card h3 {
+    margin: 0 0 12px 0;
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--text-primary);
+    border-bottom: 2px solid var(--accent-primary);
+    padding-bottom: 8px;
+}
+
+.filters-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 10px;
+    margin-bottom: 10px;
+}
+
+.filter-group {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.filter-group label {
+    font-weight: 600;
+    font-size: 12px;
+    color: var(--text-secondary);
+    margin-bottom: 2px;
+}
+
+.filter-group select,
+.filter-group input {
+    padding: 8px 10px;
+    border: 1px solid var(--border-light);
+    border-radius: 6px;
+    font-size: 13px;
+    background: var(--bg-primary);
+    color: var(--text-primary);
+}
+
+.filter-group select:focus,
+.filter-group input:focus {
+    outline: none;
+    border-color: var(--accent-primary);
+    box-shadow: 0 0 0 3px rgba(78, 115, 223, 0.1);
+}
+
+.filter-actions {
+    display: flex;
+    gap: 8px;
+    justify-content: flex-end;
+    padding-top: 10px;
+    border-top: 1px solid var(--border);
+}
+
+/* ============================================
+   CARD-LIKE TABLES WITH COLORFUL HEADERS
+   ============================================ */
+.attendance-container {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 20px;
+}
+
+.attendance-card {
+    background: var(--bg-card);
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: var(--shadow-card);
+    border: 1px solid var(--border);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.attendance-card:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-card-hover);
+}
+
+.attendance-card .card-header {
+    background: var(--gradient-primary);
+    color: white;
+    padding: 15px 20px;
+    border-bottom: 3px solid rgba(255, 255, 255, 0.2);
+}
+
+.attendance-card .card-header h3 {
+    margin: 0;
+    font-size: 16px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+/* Table Styles */
+.table-responsive {
+    overflow-x: auto;
+    padding: 20px;
+}
+
+.data-table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    background: var(--bg-card);
+}
+
+/* Colorful Table Headers - Different Colors for Different Tables */
+.data-table thead {
+    position: relative;
+}
+
+.data-table thead tr th {
+    padding: 12px 15px;
+    text-align: left;
+    font-weight: 600;
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: white;
+    border: none;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+}
+
+/* Today's Attendance Table - Primary Blue */
+.attendance-card:first-of-type .data-table thead tr th {
+    background: var(--gradient-primary);
+}
+
+/* Monthly Summary Table - Success Green */
+.attendance-card:last-of-type .data-table thead tr th {
+    background: var(--gradient-success);
+}
+
+/* Add alternating colors for different sections */
+.attendance-card:nth-of-type(3) .data-table thead tr th {
+    background: var(--gradient-info);
+}
+
+.attendance-card:nth-of-type(4) .data-table thead tr th {
+    background: var(--gradient-purple);
+}
+
+/* Table Body */
+.data-table tbody tr {
+    border-bottom: 1px solid var(--border);
+    transition: all 0.2s ease;
+}
+
+.data-table tbody tr:hover {
+    background: var(--bg-secondary);
+    transform: scale(1.01);
+}
+
+.data-table tbody tr:nth-child(even) {
+    background: var(--bg-tertiary);
+}
+
+.data-table tbody tr:nth-child(even):hover {
+    background: var(--bg-secondary);
+}
+
+.data-table tbody tr:first-child td:first-child {
+    border-top-left-radius: 8px;
+}
+
+.data-table tbody tr:first-child td:last-child {
+    border-top-right-radius: 8px;
+}
+
+.data-table tbody tr:last-child td:first-child {
+    border-bottom-left-radius: 8px;
+}
+
+.data-table tbody tr:last-child td:last-child {
+    border-bottom-right-radius: 8px;
+}
+
+.data-table td {
+    padding: 12px 15px;
+    vertical-align: middle;
+    color: var(--text-primary);
+    font-size: 14px;
+}
+
+/* Status Badges */
+.status-badge {
+    display: inline-block;
+    padding: 5px 12px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.status-badge.status-present {
+    background: var(--status-present);
+    color: var(--accent-success);
+    border: 1px solid var(--accent-success);
+}
+
+.status-badge.status-absent {
+    background: var(--status-absent);
+    color: var(--accent-danger);
+    border: 1px solid var(--accent-danger);
+}
+
+.status-badge.status-late {
+    background: var(--status-late);
+    color: #856404;
+    border: 1px solid var(--accent-warning);
+}
+
+.status-badge.status-excused {
+    background: var(--status-excused);
+    color: var(--text-muted);
+    border: 1px solid var(--text-muted);
+}
+
+/* Update the percentage cell styling for dark mode compatibility */
+.percentage-cell {
+    font-weight: 600;
+    text-align: center;
+    padding: 8px 12px !important;
+    border-radius: 6px;
+    color: var(--text-primary) !important; /* Ensure text is always visible */
+}
+
+.percentage-high {
+    background: linear-gradient(135deg, #d4edda 0%, #c3e6cb 100%);
+    color: #155724 !important; /* Dark green text for light mode */
+}
+
+.percentage-medium {
+    background: linear-gradient(135deg, #fff3cd 0%, #ffeaa7 100%);
+    color: #856404 !important; /* Dark yellow text for light mode */
+}
+
+.percentage-low {
+    background: linear-gradient(135deg, #f8d7da 0%, #f5c6cb 100%);
+    color: #721c24 !important; /* Dark red text for light mode */
+}
+/* Manual dark mode toggle support */
+.dark-mode .percentage-high {
+    background: linear-gradient(135deg, rgba(76, 175, 80, 0.2) 0%, rgba(76, 175, 80, 0.3) 100%);
+    color: #4caf50 !important;
+}
+
+.dark-mode .percentage-medium {
+    background: linear-gradient(135deg, rgba(255, 193, 7, 0.2) 0%, rgba(255, 193, 7, 0.3) 100%);
+    color: #ffc107 !important;
+}
+
+.dark-mode .percentage-low {
+    background: linear-gradient(135deg, rgba(244, 67, 54, 0.2) 0%, rgba(244, 67, 54, 0.3) 100%);
+    color: #f44336 !important;
+}
+
+/* Action Buttons in Tables */
+.attendance-actions {
+    display: flex;
+    gap: 8px;
+    justify-content: center;
+}
+
+.btn-icon {
+    padding: 6px 10px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: var(--transition);
+    background: var(--bg-secondary);
+    color: var(--text-primary);
+    border: 1px solid var(--border);
+}
+
+.btn-icon:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px var(--shadow-medium);
+}
+
+.btn-icon.small {
+    padding: 5px 8px;
+    font-size: 12px;
+}
+
+.btn-icon.danger {
+    background: linear-gradient(135deg, #dc3545 0%, #bd2130 100%);
+    color: white;
+    border: none;
+}
+
+.btn-icon.danger:hover {
+    filter: brightness(1.1);
+}
+
+/* Attendance Sheet Styles */
+.attendance-header {
+    background: var(--bg-secondary);
+    padding: 15px;
+    border-radius: 8px;
+    margin-bottom: 15px;
+    border: 1px solid var(--border);
+}
+
+.attendance-header:hover {
+    box-shadow: 0 2px 8px var(--shadow-medium);
+}
+
+.header-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 10px;
+}
+
+.header-item {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.header-item label {
+    font-weight: 600;
+    color: var(--text-secondary);
+    font-size: 13px;
+}
+
+.header-input {
+    padding: 8px 10px;
+    border: 1px solid var(--border-light);
+    border-radius: 6px;
+    font-size: 13px;
+    background: var(--bg-primary);
+    color: var(--text-primary);
+}
+
+.header-input:focus {
+    outline: none;
+    border-color: var(--accent-primary);
+    box-shadow: 0 0 0 3px rgba(78, 115, 223, 0.1);
+}
+
+.student-selection {
+    background: var(--bg-selection);
+    padding: 12px;
+    border-radius: 8px;
+    margin-bottom: 15px;
+    border-left: 4px solid var(--accent-primary);
+}
+
+.student-select {
+    width: 100%;
+    padding: 8px 10px;
+    border: 1px solid var(--border-light);
+    border-radius: 6px;
+    background: var(--bg-primary);
+    color: var(--text-primary);
+    font-size: 13px;
+}
+
+.student-select:focus {
+    border-color: var(--accent-primary);
+    box-shadow: 0 0 0 3px rgba(78, 115, 223, 0.1);
+}
+
+.attendance-sheet-container {
+    background: var(--bg-card);
+    border: 2px solid var(--border-heavy);
+    border-radius: 12px;
+    overflow: hidden;
+    margin-bottom: 15px;
+    box-shadow: var(--shadow-card);
+}
+
+.sheet-header {
+    background: var(--gradient-info);
+    color: white;
+    padding: 12px 20px;
+    text-align: center;
+    border-bottom: 3px solid rgba(255, 255, 255, 0.2);
+}
+
+.sheet-header h4 {
+    margin: 0;
+    font-size: 15px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.table-container {
+    max-height: 400px;
+    overflow-y: auto;
+}
+
+.attendance-sheet-table {
+    width: 100%;
+    border-collapse: collapse;
+    background: var(--bg-card);
+}
+
+.attendance-sheet-table th {
+    background: var(--gradient-info);
+    padding: 12px 15px;
+    text-align: left;
+    font-weight: 600;
+    font-size: 13px;
+    text-transform: uppercase;
+    color: white;
+    border-bottom: 2px solid var(--border-heavy);
+    position: sticky;
+    top: 0;
+    z-index: 10;
+}
+
+.attendance-sheet-table td {
+    padding: 12px 15px;
+    border-bottom: 1px solid var(--border);
+    vertical-align: middle;
+    color: var(--text-primary);
+}
+
+/* Student Info Styles */
+.student-info {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.student-avatar {
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    background: var(--gradient-primary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-weight: bold;
+    font-size: 14px;
+    box-shadow: 0 2px 4px var(--shadow-medium);
+}
+
+.student-avatar:hover {
+    transform: scale(1.1);
+}
+
+.student-details {
+    flex: 1;
+}
+
+.student-name {
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: 2px;
+}
+
+.student-id {
+    font-size: 12px;
+    color: var(--text-muted);
+}
+
+/* Notes Section */
+.attendance-notes {
+    background: var(--bg-notes);
+    padding: 12px;
+    border-radius: 8px;
+    border-left: 4px solid var(--accent-warning);
+}
+
+.attendance-notes textarea {
+    width: 100%;
+    padding: 10px 12px;
+    border: 1px solid var(--border-light);
+    border-radius: 6px;
+    font-size: 13px;
+    resize: vertical;
+    min-height: 70px;
+    background: var(--bg-primary);
+    color: var(--text-primary);
+}
+
+.attendance-notes textarea:focus {
+    border-color: var(--accent-warning);
+    box-shadow: 0 0 0 3px rgba(255, 193, 7, 0.1);
+}
+
+/* Enhanced Modal Styles */
+/* Enhanced Modal Styles for Small Screens */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.5);
+    backdrop-filter: blur(2px);
+    overflow: hidden; /* Prevent body scrolling when modal is open */
+}
+
+.modal-content {
+    background-color: var(--bg-card);
+    margin: 2% auto;
+    border-radius: 12px;
+    width: 90%;
+    max-width: 900px;
+    max-height: 90vh;
+    overflow: hidden;
+    box-shadow: 0 10px 30px var(--shadow-heavy);
+    animation: modalSlideIn 0.3s ease-out;
+    display: flex;
+    flex-direction: column;
+}
+
+@keyframes modalSlideIn {
+    from {
+        opacity: 0;
+        transform: translateY(-50px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 20px;
+    border-bottom: 1px solid var(--border);
+    background: var(--gradient-info);
+    color: white;
+    border-radius: 12px 12px 0 0;
+}
+
+.modal-header h3 {
+    margin: 0;
+    font-size: 16px;
+    font-weight: 600;
+}
+
+.close {
+    font-size: 24px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: color 0.3s ease, transform 0.3s ease;
+    color: white;
+}
+
+.close:hover {
+    color: #f8f9fa;
+    transform: scale(1.1);
+}
+
+.modal-body {
+    padding: 20px;
+    max-height: calc(90vh - 150px);
+    overflow-y: auto;
+    color: var(--text-primary);
+    flex: 1;
+}
+.modal-footer {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    padding: 15px 20px;
+    border-top: 1px solid var(--border);
+    background: var(--bg-secondary);
+    border-radius: 0 0 12px 12px;
+}
+
+/* Form Grid in Modal */
+.form-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 15px;
+    margin-bottom: 20px;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.form-group label {
+    font-weight: 600;
+    color: var(--text-secondary);
+    font-size: 13px;
+}
+
+.form-group select,
+.form-group input {
+    padding: 8px 10px;
+    border: 1px solid var(--border-light);
+    border-radius: 6px;
+    font-size: 13px;
+    background: var(--bg-primary);
+    color: var(--text-primary);
+}
+
+.form-group select:focus,
+.form-group input:focus {
+    outline: none;
+    border-color: var(--accent-primary);
+    box-shadow: 0 0 0 3px rgba(78, 115, 223, 0.1);
+}
+
+/* Button Styles */
+.btn {
+    padding: 8px 16px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 13px;
+    font-weight: 500;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    transition: var(--transition);
+    color: white;
+}
+
+.btn-primary {
+    background: var(--gradient-primary);
+    border: 1px solid var(--accent-primary);
+}
+
+.btn-primary:hover {
+    background: var(--gradient-primary);
+    filter: brightness(1.1);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(78, 115, 223, 0.3);
+}
+
+.btn-secondary {
+    background: var(--bg-tertiary);
+    border: 1px solid var(--border);
+    color: var(--text-secondary);
+}
+
+.btn-secondary:hover {
+    background: var(--bg-secondary);
+    border-color: var(--accent-primary);
+    color: var(--text-primary);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+
+    .filters-card {
+        padding: 12px;
+    }
+    
+    .filters-grid {
+        grid-template-columns: 1fr;
+        gap: 8px;
+    }
+    
+    .header-grid {
+        grid-template-columns: 1fr;
+        gap: 8px;
+    }
+    
+    .data-table {
+        font-size: 12px;
+    }
+    
+    .data-table thead tr th,
+    .data-table td {
+        padding: 8px 10px;
+        font-size: 12px;
+    }
+    
+    .checkbox-group {
+        gap: 10px;
+    }
+    
+    .student-info {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 5px;
+    }
+    
+    .student-avatar {
+        width: 30px;
+        height: 30px;
+        font-size: 12px;
+    }
+    
+    .modal-content {
+        width: 95%;
+        margin: 5% auto;
+    }
+    
+    .form-grid {
+        grid-template-columns: 1fr;
+        gap: 12px;
+    }
+}
+
+/* Improved responsive design for small screens */
+@media (max-width: 768px) {
+    .modal-content {
+        width: 95%;
+        margin: 2% auto;
+        max-height: 95vh;
+        height: 95vh;
+    }
+    
+    .modal-body {
+        max-height: calc(95vh - 140px);
+        padding: 15px;
+        overflow-y: auto;
+        -webkit-overflow-scrolling: touch; /* Smooth scrolling on iOS */
+    }
+    
+    .modal-header {
+        padding: 12px 15px;
+        position: sticky;
+        top: 0;
+        z-index: 20;
+    }
+    
+    .modal-footer {
+        padding: 12px 15px;
+        position: sticky;
+        bottom: 0;
+        background: var(--bg-card);
+        border-top: 1px solid var(--border);
+    }
+    
+    /* Ensure form elements are properly sized on mobile */
+    .header-grid {
+        grid-template-columns: 1fr;
+        gap: 10px;
+    }
+    
+    .header-input, 
+    .student-select,
+    .form-group select,
+    .form-group input {
+        font-size: 16px; /* Prevent zoom on iOS */
+        min-height: 44px; /* Better touch targets */
+    }
+    
+    .attendance-sheet-table {
+        font-size: 14px;
+    }
+    
+  .attendance-sheet-table th,
+.attendance-sheet-table td {
+    padding: 12px 15px;
+    vertical-align: middle;
+    text-align: center; /* Center header text */
+}
+    
+    .checkbox-group {
+        flex-direction: column;
+        gap: 8px;
+        align-items: flex-start;
+    }
+    
+    .checkbox-item {
+        width: 100%;
+        justify-content: space-between;
+    }
+}
+
+/* Scrollbar Styling */
+.table-container::-webkit-scrollbar,
+.modal-body::-webkit-scrollbar {
+    width: 6px;
+}
+
+.table-container::-webkit-scrollbar-track,
+.modal-body::-webkit-scrollbar-track {
+    background: var(--bg-tertiary);
+    border-radius: 3px;
+}
+
+.table-container::-webkit-scrollbar-thumb,
+.modal-body::-webkit-scrollbar-thumb {
+    background: var(--border-light);
+    border-radius: 3px;
+}
+
+.table-container::-webkit-scrollbar-thumb:hover,
+.modal-body::-webkit-scrollbar-thumb:hover {
+    background: var(--text-muted);
+}
+
+/* Selected Student Highlight */
+.student-row.selected {
+    background: var(--bg-selection) !important;
+    border-left: 4px solid var(--accent-primary);
+}
+
+/* Status Indicators for Table Rows */
+.status-present {
+    color: var(--accent-success);
+    font-weight: 600;
+    background-color: var(--status-present);
+}
+
+.status-absent {
+    color: var(--accent-danger);
+    font-weight: 600;
+    background-color: var(--status-absent);
+}
+
+.status-late {
+    color: var(--accent-warning);
+    font-weight: 600;
+    background-color: var(--status-late);
+}
+
+.status-excused {
+    color: var(--text-muted);
+    font-weight: 600;
+    background-color: var(--status-excused);
+}
+
+/* Loading Indicator */
+.loading-indicator {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: rgba(0, 0, 0, 0.8);
+    color: white;
+    padding: 20px;
+    border-radius: 8px;
+    z-index: 10000;
+    text-align: center;
+}
+
+.loading-spinner {
+    border: 3px solid #f3f3f3;
+    border-top: 3px solid var(--accent-primary);
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    animation: spin 1s linear infinite;
+    margin: 0 auto 10px;
+}
+
+.loading-text {
+    font-size: 14px;
+    font-weight: 500;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* Text Selection and Placeholders */
+::selection {
+    background: rgba(78, 115, 223, 0.3);
+    color: var(--text-primary);
+}
+
+::placeholder {
+    color: var(--text-muted);
+}
+
+/* Disabled States */
+select:disabled,
+input:disabled,
+textarea:disabled {
+    background: var(--bg-secondary);
+    color: var(--text-muted);
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+/* Text Center Utility */
+.text-center {
+    text-align: center;
+}
+
+/* Ensure images and icons are visible in dark mode */
+@media (prefers-color-scheme: dark) {
+    img:not([class*="invert"]),
+    svg:not([class*="invert"]) {
+        filter: brightness(0.9);
+    }
+}
+
+.dark-mode img:not([class*="invert"]),
+.dark-mode svg:not([class*="invert"]) {
+    filter: brightness(0.9);
+}
+
+/* Invert certain icons for better visibility */
+.invert-on-dark {
+    filter: invert(1);
+}
+
+.dark-mode .invert-on-dark {
+    filter: invert(1);
+}
+
+/* Page Header Improvements */
+.page-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    padding-bottom: 15px;
+    border-bottom: 2px solid var(--border);
+}
+
+.page-header h1 {
+    margin: 0;
+    font-size: 24px;
+    font-weight: 600;
+    color: var(--text-primary);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.header-actions {
+    display: flex;
+    gap: 10px;
+}
+
+/* Card Enhancements */
+.card {
+    background: var(--bg-card);
+    border-radius: 12px;
+    padding: 20px;
+    box-shadow: var(--shadow-card);
+    border: 1px solid var(--border);
+    transition: all 0.3s ease;
+}
+
+.card:hover {
+    box-shadow: var(--shadow-card-hover);
+    transform: translateY(-2px);
+}
+
+/* Additional Table Color Variations */
+.table-variant-primary thead tr th {
+    background: var(--gradient-primary);
+}
+
+.table-variant-success thead tr th {
+    background: var(--gradient-success);
+}
+
+.table-variant-info thead tr th {
+    background: var(--gradient-info);
+}
+
+.table-variant-warning thead tr th {
+    background: var(--gradient-warning);
+}
+
+.table-variant-danger thead tr th {
+    background: var(--gradient-danger);
+}
+
+.table-variant-purple thead tr th {
+    background: var(--gradient-purple);
+}
+
+/* Empty State Styling */
+.empty-state {
+    text-align: center;
+    padding: 40px 20px;
+    color: var(--text-muted);
+}
+
+.empty-state i {
+    font-size: 48px;
+    margin-bottom: 15px;
+    opacity: 0.5;
+}
+
+.empty-state p {
+    font-size: 16px;
+    margin: 0;
+}
+
+/* Mobile Responsive Adjustments */
+@media (max-width: 480px) {
+    .page-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+    }
+    
+    .header-actions {
+        width: 100%;
+        flex-direction: column;
+    }
+    
+    .header-actions .btn {
+        width: 100%;
+        justify-content: center;
+    }
+    
+    .filter-actions {
+        flex-direction: column;
+    }
+    
+    .filter-actions .btn {
+        width: 100%;
+        justify-content: center;
+    }
+    
+    .attendance-actions {
+        flex-direction: column;
+    }
+    
+    .modal-footer {
+        flex-direction: column-reverse;
+    }
+    
+    .modal-footer .btn {
+        width: 100%;
+        justify-content: center;
+    }
+}
+/* Extra small devices */
+@media (max-width: 480px) {
+    .modal-content {
+        width: 98%;
+        margin: 1% auto;
+        height: 98vh;
+        max-height: 98vh;
+        border-radius: 8px;
+    }
+    
+    .modal-body {
+        max-height: calc(98vh - 120px);
+        padding: 10px;
+    }
+    
+    .attendance-header {
+        padding: 10px;
+    }
+    
+    .student-selection {
+        padding: 8px;
+    }
+    
+    .sheet-header {
+        padding: 10px 15px;
+    }
+    
+    .sheet-header h4 {
+        font-size: 14px;
+    }
+    
+    /* Make table horizontally scrollable on very small screens */
+    .table-container {
+        overflow-x: auto;
+        max-height: 300px;
+    }
+    
+    .attendance-sheet-table {
+        min-width: 500px; /* Ensure table doesn't get too narrow */
+    }
+}
+
+/* Improve scrollbar visibility */
+.modal-body::-webkit-scrollbar {
+    width: 8px;
+}
+
+.modal-body::-webkit-scrollbar-track {
+    background: var(--bg-tertiary);
+    border-radius: 4px;
+}
+
+.modal-body::-webkit-scrollbar-thumb {
+    background: var(--border-light);
+    border-radius: 4px;
+}
+
+.modal-body::-webkit-scrollbar-thumb:hover {
+    background: var(--text-muted);
+}
+
+/* Fix for student filter dropdown width */
+.filter-group select.student-filter {
+    max-width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+/* Ensure all filter elements have consistent width */
+.filters-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 10px;
+    margin-bottom: 10px;
+}
+
+.filter-group {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    min-width: 0; /* Important: prevents flex items from overflowing */
+}
+
+.filter-group select,
+.filter-group input {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 8px 10px;
+    border: 1px solid var(--border-light);
+    border-radius: 6px;
+    font-size: 13px;
+    background: var(--bg-primary);
+    color: var(--text-primary);
+    max-width: 100%;
+}
+
+/* Specific styling for student dropdown options */
+.filter-group select.student-filter option {
+    padding: 8px 12px;
+    font-size: 13px;
+    max-width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+/* Improved responsive design for filters */
+@media (max-width: 768px) {
+    .filters-grid {
+        grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+        gap: 8px;
+    }
+    
+    .filter-group select,
+    .filter-group input {
+        font-size: 14px; /* Better for mobile */
+        min-height: 44px; /* Better touch targets */
+    }
+}
+
+@media (max-width: 480px) {
+    .filters-grid {
+        grid-template-columns: 1fr;
+        gap: 10px;
+    }
+    
+    .filter-group {
+        width: 100%;
+    }
+}
+
+/* Ensure dropdowns don't overflow their containers */
+.filters-card {
+    background: var(--bg-card);
+    border-radius: 12px;
+    padding: 15px;
+    margin-bottom: 20px;
+    box-shadow: var(--shadow-card);
+    border: 1px solid var(--border);
+    overflow: hidden; /* Prevent content from overflowing the card */
+}
+
+.filters-card:hover {
+    box-shadow: var(--shadow-card-hover);
+}
+
+/* Attendance Sheet Table Specific Styles */
+.attendance-sheet-table {
+    width: 100%;
+    border-collapse: collapse;
+    background: var(--bg-card);
+    table-layout: fixed; /* Ensures consistent column widths */
+}
+
+.attendance-sheet-table th {
+    background: var(--gradient-info);
+    padding: 12px 15px;
+    text-align: center;
+    font-weight: 600;
+    font-size: 13px;
+    text-transform: uppercase;
+    color: white;
+    border-bottom: 2px solid var(--border-heavy);
+    position: sticky;
+    top: 0;
+    z-index: 10;
+}
+
+.attendance-sheet-table td {
+    padding: 12px 15px;
+    border-bottom: 1px solid var(--border);
+    vertical-align: middle;
+    color: var(--text-primary);
+    text-align: center;
+}
+
+/* Ensure proper column widths */
+.attendance-sheet-table th:nth-child(1),
+.attendance-sheet-table td:nth-child(1) {
+    width: 40%;
+    text-align: left;
+}
+
+.attendance-sheet-table td:nth-child(2), /* Present column */
+.attendance-sheet-table td:nth-child(3), /* Absent column */
+.attendance-sheet-table td:nth-child(4)  /* Late column */
+{
+    text-align: center;
+}
+.attendance-sheet-table th:nth-child(2),
+.attendance-sheet-table td:nth-child(2),
+.attendance-sheet-table th:nth-child(3),
+.attendance-sheet-table td:nth-child(3),
+.attendance-sheet-table th:nth-child(4),
+.attendance-sheet-table td:nth-child(4) {
+    width: 20%;
+    text-align: center;
+}
+
+/
+
+/* Student info alignment */
+.student-info {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.student-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: var(--gradient-primary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-weight: bold;
+    font-size: 14px;
+    flex-shrink: 0;
+}
+
+.student-details {
+    flex: 1;
+    text-align: left;
+}
+
+.student-name {
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: 2px;
+    font-size: 14px;
+}
+
+.student-id {
+    font-size: 12px;
+    color: var(--text-muted);
+}
+
+/* Hover effects */
+.attendance-sheet-table tbody tr:hover {
+    background: var(--bg-secondary);
+    transform: none; /* Remove scale transform on hover for table rows */
+}
+
+.attendance-sheet-table tbody tr:nth-child(even) {
+    background: var(--bg-tertiary);
+}
+
+.attendance-sheet-table tbody tr:nth-child(even):hover {
+    background: var(--bg-secondary);
+}
+
+/* Responsive design for attendance table */
+@media (max-width: 768px) {
+    .attendance-sheet-table {
+        font-size: 12px;
+    }
+    
+    .attendance-sheet-table th,
+    .attendance-sheet-table td {
+        padding: 8px 10px;
+    }
+    
+    .student-avatar {
+        width: 35px;
+        height: 35px;
+        font-size: 12px;
+    }
+    
+    .student-name {
+        font-size: 13px;
+    }
+    
+    .student-id {
+        font-size: 11px;
+    }
+    
+    .attendance-checkbox input[type="radio"] {
+        width: 16px;
+        height: 16px;
+    }
+}
+
+@media (max-width: 480px) {
+    .attendance-sheet-table th:nth-child(1),
+    .attendance-sheet-table td:nth-child(1) {
+        width: 50%;
+    }
+    
+    .attendance-sheet-table th:nth-child(2),
+    .attendance-sheet-table td:nth-child(2),
+    .attendance-sheet-table th:nth-child(3),
+    .attendance-sheet-table td:nth-child(3),
+    .attendance-sheet-table th:nth-child(4),
+    .attendance-sheet-table td:nth-child(4) {
+        width: 16.66%;
+    }
+    
+    .student-info {
+        gap: 8px;
+    }
+    
+    .student-avatar {
+        width: 30px;
+        height: 30px;
+        font-size: 11px;
+    }
+}
+
+/* Custom radio button styling */
+.custom-radio {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    cursor: pointer;
+    gap: 4px;
+}
+
+.custom-radio input[type="radio"] {
+    appearance: none;
+    width: 20px;
+    height: 20px;
+    border: 2px solid var(--border-light);
+    border-radius: 50%;
+    background: var(--bg-primary);
+    transition: var(--transition);
+    cursor: pointer;
+}
+
+.custom-radio input[type="radio"]:checked {
+    border-color: var(--radio-accent);
+    background: var(--radio-accent);
+    box-shadow: inset 0 0 0 4px var(--bg-primary);
+}
+
+.custom-radio:hover input[type="radio"] {
+    border-color: var(--radio-accent);
+    transform: scale(1.1);
+}
+
+.radio-symbol {
+    font-size: 18px;
+    font-weight: bold;
+}
+
+/* Status colors for symbols */
+.custom-radio[title="Present"] .radio-symbol { 
+    color: var(--accent-success); 
+}
+.custom-radio[title="Absent"] .radio-symbol { 
+    color: var(--accent-danger); 
+}
+.custom-radio[title="Late"] .radio-symbol { 
+    color: var(--accent-warning); 
+}
+
+/* Status colors for symbols */
+.custom-radio[title="Present"] .radio-symbol { color: var(--accent-success); }
+.custom-radio[title="Absent"] .radio-symbol { color: var(--accent-danger); }
+.custom-radio[title="Late"] .radio-symbol { color: var(--accent-warning); }
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .checkbox-group {
+        gap: 12px;
+    }
+    
+    .checkbox-item input[type="radio"] {
+        width: 18px;
+        height: 18px;
+    }
+    
+    .checkbox-item label {
+        font-size: 14px;
+    }
+}
+
+@media (max-width: 480px) {
+    .checkbox-group {
+        gap: 10px;
+    }
+    
+    .checkbox-item input[type="radio"] {
+        width: 16px;
+        height: 16px;
+    }
+    
+    .checkbox-item label {
+        font-size: 14px;
+    }
+    
+    .radio-symbol {
+        font-size: 16px;
+    }
+}
+
+
+
+/* Success Message Modal */
+.success-modal {
+    display: none;
+    position: fixed;
+    z-index: 10000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.5);
+}
+
+.success-modal-content {
+    background-color: #fefefe;
+    margin: 15% auto;
+    padding: 0;
+    border-radius: 10px;
+    width: 400px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    animation: slideDown 0.3s ease-out;
+}
+
+@keyframes slideDown {
+    from {
+        transform: translateY(-50px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+.success-modal-header {
+    background: linear-gradient(135deg, #28a745, #20c997);
+    color: white;
+    padding: 20px;
+    border-radius: 10px 10px 0 0;
+    text-align: center;
+}
+
+.success-modal-header i {
+    font-size: 48px;
+    margin-bottom: 10px;
+    display: block;
+}
+
+.success-modal-header h3 {
+    margin: 0;
+    font-size: 24px;
+}
+
+.success-modal-body {
+    padding: 30px 20px;
+    text-align: center;
+    font-size: 16px;
+    color: #333;
+}
+
+.success-modal-footer {
+    padding: 15px 20px;
+    text-align: center;
+    border-top: 1px solid #eee;
+}
+
+.success-modal-btn {
+    background: #28a745;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background 0.3s ease;
+}
+
+.success-modal-btn:hover {
+    background: #218838;
+}
+
+/* Auto-close animation */
+.success-modal.auto-close .success-modal-content {
+    animation: slideDown 0.3s ease-out, slideUp 0.3s ease-in 2.7s;
+}
+
+@keyframes slideUp {
+    from {
+        transform: translateY(0);
+        opacity: 1;
+    }
+    to {
+        transform: translateY(-50px);
+        opacity: 0;
+    }
+}

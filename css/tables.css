@@ -1,0 +1,926 @@
+/* ============================================
+   ENHANCED TABLE STYLING
+   ============================================ */
+
+/* Table Container with Shadow and Border */
+.table-container {
+    background: var(--card-bg, #ffffff);
+    border-radius: 12px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05), 0 1px 3px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    margin: 20px 0;
+    border: 1px solid rgba(0, 0, 0, 0.06);
+    display: flex;
+    flex-direction: column;
+    max-height: 400px; /* Fixed height for scrolling */
+}
+
+/* Table Wrapper for Individual Scrolling */
+.table-wrapper {
+    flex: 1;
+    overflow: auto;
+    position: relative;
+}
+
+.table-responsive {
+    width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+}
+
+/* Modern Data Table */
+.data-table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    font-size: 14px;
+    background: var(--card-bg, #ffffff);
+    min-width: 600px; /* Ensure table has minimum width */
+}
+
+/* Table Header */
+.data-table thead {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    position: sticky;
+    top: 0;
+    z-index: 10;
+}
+
+.data-table thead th {
+    padding: 16px 20px;
+    text-align: left;
+    font-weight: 600;
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: #ffffff;
+    border: none;
+    white-space: nowrap;
+    position: relative;
+}
+
+.data-table thead th:first-child {
+    padding-left: 24px;
+    border-top-left-radius: 12px;
+}
+
+.data-table thead th:last-child {
+    padding-right: 24px;
+    border-top-right-radius: 12px;
+}
+
+/* Add sort indicators to headers */
+.data-table thead th.sortable {
+    cursor: pointer;
+    user-select: none;
+    transition: background-color 0.2s ease;
+}
+
+.data-table thead th.sortable:hover {
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.data-table thead th.sortable::after {
+    content: '⇅';
+    margin-left: 8px;
+    opacity: 0.5;
+    font-size: 12px;
+}
+
+/* Table Body */
+.data-table tbody tr {
+    transition: all 0.2s ease;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.data-table tbody tr:hover {
+    background: rgba(102, 126, 234, 0.04);
+    transform: translateX(2px);
+    box-shadow: inset 3px 0 0 #667eea;
+}
+
+.data-table tbody tr:last-child {
+    border-bottom: none;
+}
+
+.data-table tbody td {
+    padding: 16px 20px;
+    color: var(--text-color, #333333);
+    vertical-align: middle;
+    border: none;
+}
+
+.data-table tbody td:first-child {
+    padding-left: 24px;
+    font-weight: 500;
+}
+
+.data-table tbody td:last-child {
+    padding-right: 24px;
+}
+
+/* Alternating Row Colors */
+.data-table tbody tr:nth-child(even) {
+    background: rgba(0, 0, 0, 0.02);
+}
+
+/* Status Badges */
+.status-badge {
+    display: inline-block;
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 600;
+    text-transform: capitalize;
+    letter-spacing: 0.3px;
+    white-space: nowrap;
+}
+
+.status-present,
+.status-badge.status-present {
+    background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
+    color: #ffffff;
+    box-shadow: 0 2px 8px rgba(67, 233, 123, 0.3);
+}
+
+.status-absent,
+.status-badge.status-absent {
+    background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
+    color: #ffffff;
+    box-shadow: 0 2px 8px rgba(250, 112, 154, 0.3);
+}
+
+.status-late,
+.status-badge.status-late {
+    background: linear-gradient(135deg, #ffd89b 0%, #19547b 100%);
+    color: #ffffff;
+    box-shadow: 0 2px 8px rgba(255, 216, 155, 0.3);
+}
+
+.status-excused,
+.status-badge.status-excused {
+    background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
+    color: #333333;
+    box-shadow: 0 2px 8px rgba(168, 237, 234, 0.3);
+}
+
+.status-active {
+    background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+    color: #ffffff;
+    box-shadow: 0 2px 8px rgba(79, 172, 254, 0.3);
+}
+
+.status-inactive {
+    background: linear-gradient(135deg, #c3cfe2 0%, #c3cfe2 100%);
+    color: #666666;
+}
+
+.status-pending {
+    background: linear-gradient(135deg, #ffeaa7 0%, #fdcb6e 100%);
+    color: #2d3436;
+}
+
+/* Percentage Cells */
+.percentage-cell {
+    font-weight: 600;
+    font-size: 15px;
+}
+
+.percentage-high {
+    color: #00b894;
+}
+
+.percentage-medium {
+    color: #fdcb6e;
+}
+
+.percentage-low {
+    color: #d63031;
+}
+
+/* Action Buttons in Tables */
+.attendance-actions {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    justify-content: flex-start;
+}
+
+.btn-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    font-size: 14px;
+    background: #f8f9fa;
+    color: #495057;
+}
+
+.btn-icon:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+.btn-icon.primary {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: #ffffff;
+}
+
+.btn-icon.primary:hover {
+    box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+}
+
+.btn-icon.danger {
+    background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
+    color: #ffffff;
+}
+
+.btn-icon.danger:hover {
+    box-shadow: 0 4px 12px rgba(250, 112, 154, 0.4);
+}
+
+.btn-icon.success {
+    background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
+    color: #ffffff;
+}
+
+.btn-icon.success:hover {
+    box-shadow: 0 4px 12px rgba(67, 233, 123, 0.4);
+}
+
+.btn-icon.small {
+    width: 32px;
+    height: 32px;
+    font-size: 13px;
+}
+
+/* Empty State */
+.data-table tbody tr td.text-center {
+    padding: 48px 20px;
+    color: #6c757d;
+    font-style: italic;
+}
+
+.data-table tbody tr td.text-center::before {
+    content: '📋';
+    display: block;
+    font-size: 48px;
+    margin-bottom: 12px;
+    opacity: 0.3;
+}
+
+/* Table Loading State */
+.table-loading {
+    position: relative;
+    pointer-events: none;
+    opacity: 0.6;
+}
+
+.table-loading::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 40px;
+    height: 40px;
+    margin: -20px 0 0 -20px;
+    border: 4px solid rgba(102, 126, 234, 0.2);
+    border-top-color: #667eea;
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
+/* Attendance Sheet Table (Special Styling) */
+.attendance-sheet-table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    font-size: 14px;
+}
+
+.attendance-sheet-table thead {
+    background: linear-gradient(135deg, #2d3436 0%, #000000 100%);
+}
+
+.attendance-sheet-table thead th {
+    padding: 14px 16px;
+    text-align: center;
+    font-weight: 600;
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: #ffffff;
+    border: 2px solid #000000;
+}
+
+.attendance-sheet-table tbody td {
+    padding: 12px 16px;
+    text-align: center;
+    border: 1px solid #dee2e6;
+    background: #ffffff;
+}
+
+.attendance-sheet-table tbody td:first-child {
+    text-align: left;
+    font-weight: 500;
+    background: #f8f9fa;
+}
+
+.attendance-sheet-table tbody tr:hover {
+    background: rgba(102, 126, 234, 0.05);
+}
+
+/* Radio Buttons in Tables */
+.attendance-sheet-table input[type="radio"] {
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+    accent-color: #667eea;
+}
+
+/* Enhanced Table Pagination */
+.table-pagination {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 16px 24px;
+    background: rgba(0, 0, 0, 0.02);
+    border-top: 1px solid rgba(0, 0, 0, 0.06);
+    font-size: 14px;
+}
+
+.pagination-info {
+    color: #6c757d;
+    font-weight: 500;
+}
+
+.pagination-controls {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.pagination-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 8px 16px;
+    border: 1px solid #dee2e6;
+    background: #ffffff;
+    color: #495057;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    font-size: 13px;
+    font-weight: 500;
+}
+
+.pagination-btn:hover:not(:disabled) {
+    background: #667eea;
+    color: #ffffff;
+    border-color: #667eea;
+    transform: translateY(-1px);
+    box-shadow: 0 2px 8px rgba(102, 126, 234, 0.3);
+}
+
+.pagination-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    transform: none;
+}
+
+.pagination-numbers {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    margin: 0 12px;
+}
+
+.page-number {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    border-radius: 6px;
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.page-number:hover:not(.active) {
+    background: rgba(102, 126, 234, 0.1);
+    color: #667eea;
+}
+
+.page-number.active {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: #ffffff;
+    box-shadow: 0 2px 8px rgba(102, 126, 234, 0.3);
+}
+
+/* Table Actions Bar */
+.table-actions {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 16px 24px;
+    background: rgba(0, 0, 0, 0.02);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+}
+
+.table-actions-left {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.table-actions-right {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.export-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 16px;
+    background: #ffffff;
+    border: 1px solid #dee2e6;
+    border-radius: 6px;
+    color: #495057;
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.export-btn:hover {
+    background: #f8f9fa;
+    border-color: #667eea;
+    color: #667eea;
+    transform: translateY(-1px);
+}
+
+/* Responsive Table */
+@media screen and (max-width: 768px) {
+    .table-container {
+        border-radius: 8px;
+        margin: 12px 0;
+        max-height: 350px;
+    }
+    
+    .data-table {
+        font-size: 13px;
+        min-width: 500px;
+    }
+    
+    .data-table thead th {
+        padding: 12px 12px;
+        font-size: 11px;
+    }
+    
+    .data-table tbody td {
+        padding: 12px 12px;
+    }
+    
+    .data-table thead th:first-child,
+    .data-table tbody td:first-child {
+        padding-left: 16px;
+    }
+    
+    .data-table thead th:last-child,
+    .data-table tbody td:last-child {
+        padding-right: 16px;
+    }
+    
+    .status-badge {
+        padding: 4px 8px;
+        font-size: 11px;
+    }
+    
+    .btn-icon {
+        width: 32px;
+        height: 32px;
+        font-size: 12px;
+    }
+    
+    .table-pagination {
+        padding: 12px 16px;
+        flex-direction: column;
+        gap: 12px;
+        align-items: stretch;
+    }
+    
+    .pagination-controls {
+        justify-content: center;
+    }
+    
+    .table-actions {
+        padding: 12px 16px;
+        flex-direction: column;
+        gap: 12px;
+        align-items: stretch;
+    }
+    
+    .table-actions-left,
+    .table-actions-right {
+        justify-content: center;
+    }
+    
+    /* Stack table on small screens */
+    .data-table.stack-on-mobile thead {
+        display: none;
+    }
+    
+    .data-table.stack-on-mobile tbody tr {
+        display: block;
+        margin-bottom: 16px;
+        border: 1px solid rgba(0, 0, 0, 0.1);
+        border-radius: 8px;
+        overflow: hidden;
+    }
+    
+    .data-table.stack-on-mobile tbody td {
+        display: flex;
+        justify-content: space-between;
+        padding: 12px 16px;
+        border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+    }
+    
+    .data-table.stack-on-mobile tbody td:last-child {
+        border-bottom: none;
+    }
+    
+    .data-table.stack-on-mobile tbody td::before {
+        content: attr(data-label);
+        font-weight: 600;
+        color: #667eea;
+        text-transform: uppercase;
+        font-size: 11px;
+        letter-spacing: 0.5px;
+    }
+}
+
+/* Dark Mode Support */
+body.dark-mode .table-container,
+body.dark-mode .data-table {
+    background: #2d3436;
+    border-color: rgba(255, 255, 255, 0.1);
+}
+
+body.dark-mode .data-table tbody td {
+    color: #dfe6e9;
+}
+
+body.dark-mode .data-table tbody tr:nth-child(even) {
+    background: rgba(255, 255, 255, 0.02);
+}
+
+body.dark-mode .data-table tbody tr:hover {
+    background: rgba(102, 126, 234, 0.1);
+}
+
+body.dark-mode .attendance-sheet-table tbody td {
+    background: #2d3436;
+    border-color: rgba(255, 255, 255, 0.1);
+    color: #dfe6e9;
+}
+
+body.dark-mode .attendance-sheet-table tbody td:first-child {
+    background: #1e272e;
+}
+
+body.dark-mode .btn-icon {
+    background: #1e272e;
+    color: #dfe6e9;
+}
+
+body.dark-mode .table-pagination {
+    background: rgba(255, 255, 255, 0.05);
+    border-color: rgba(255, 255, 255, 0.1);
+}
+
+body.dark-mode .pagination-btn {
+    background: #2d3436;
+    border-color: rgba(255, 255, 255, 0.2);
+    color: #dfe6e9;
+}
+
+body.dark-mode .export-btn {
+    background: #2d3436;
+    border-color: rgba(255, 255, 255, 0.2);
+    color: #dfe6e9;
+}
+
+/* Print Styles */
+@media print {
+    .table-container {
+        box-shadow: none;
+        border: 1px solid #000000;
+        max-height: none;
+        break-inside: avoid;
+    }
+    
+    .table-wrapper {
+        overflow: visible;
+    }
+    
+    .data-table {
+        width: 100%;
+        font-size: 12pt;
+    }
+    
+    .data-table thead {
+        background: #000000 !important;
+        color: #ffffff !important;
+    }
+    
+    .data-table thead th {
+        color: #ffffff !important;
+        background: #000000 !important;
+    }
+    
+    .data-table tbody tr {
+        break-inside: avoid;
+    }
+    
+    .data-table tbody tr:hover {
+        background: transparent !important;
+        transform: none !important;
+        box-shadow: none !important;
+    }
+    
+    .btn-icon,
+    .attendance-actions,
+    .table-actions,
+    .table-pagination,
+    .export-btn {
+        display: none !important;
+    }
+    
+    /* Ensure proper contrast for printing */
+    .status-badge {
+        background: #f8f9fa !important;
+        color: #000000 !important;
+        box-shadow: none !important;
+        border: 1px solid #000000;
+    }
+    
+    /* Hide interactive elements */
+    .data-table thead th.sortable::after {
+        display: none;
+    }
+}
+
+/* Additional Utility Classes */
+.table-striped tbody tr:nth-child(odd) {
+    background: rgba(102, 126, 234, 0.03);
+}
+
+.table-bordered {
+    border: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.table-bordered td,
+.table-bordered th {
+    border: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.table-hover tbody tr:hover {
+    background: rgba(102, 126, 234, 0.08);
+}
+
+.table-sm td,
+.table-sm th {
+    padding: 8px 12px;
+    font-size: 13px;
+}
+
+.table-lg td,
+.table-lg th {
+    padding: 20px 24px;
+    font-size: 15px;
+}
+
+/* Scrollbar Styling */
+.table-wrapper::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+.table-wrapper::-webkit-scrollbar-track {
+    background: rgba(0, 0, 0, 0.05);
+    border-radius: 4px;
+}
+
+.table-wrapper::-webkit-scrollbar-thumb {
+    background: rgba(102, 126, 234, 0.3);
+    border-radius: 4px;
+}
+
+.table-wrapper::-webkit-scrollbar-thumb:hover {
+    background: rgba(102, 126, 234, 0.5);
+}
+
+/* Firefox Scrollbar */
+.table-wrapper {
+    scrollbar-width: thin;
+    scrollbar-color: rgba(102, 126, 234, 0.3) rgba(0, 0, 0, 0.05);
+}
+
+/* ============================================
+   ATTENDANCE TABLE SPECIFIC FIXES
+   ============================================ */
+
+/* Attendance Table Container - Fixed Height with Flex */
+.attendance-table-container {
+    background: var(--card-bg, #ffffff);
+    border-radius: 12px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05), 0 1px 3px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    margin: 20px 0;
+    border: 1px solid rgba(0, 0, 0, 0.06);
+    display: flex;
+    flex-direction: column;
+    height: 500px; /* Fixed height for attendance table */
+}
+
+/* Table Wrapper for Attendance - Flexible scrolling area */
+.attendance-table-wrapper {
+    flex: 1;
+    overflow: auto;
+    position: relative;
+    min-height: 200px; /* Ensure minimum height */
+}
+
+/* Attendance table specific styling */
+.attendance-table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    font-size: 14px;
+    background: var(--card-bg, #ffffff);
+    margin-bottom: 0; /* Remove default margin */
+}
+
+/* Ensure attendance table header stays visible */
+.attendance-table thead {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    position: sticky;
+    top: 0;
+    z-index: 10;
+}
+
+.attendance-table thead th {
+    padding: 16px 20px;
+    text-align: left;
+    font-weight: 600;
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: #ffffff;
+    border: none;
+    white-space: nowrap;
+    position: relative;
+}
+
+/* Attendance table body */
+.attendance-table tbody tr {
+    transition: all 0.2s ease;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.attendance-table tbody tr:hover {
+    background: rgba(102, 126, 234, 0.04);
+}
+
+.attendance-table tbody td {
+    padding: 16px 20px;
+    color: var(--text-color, #333333);
+    vertical-align: middle;
+    border: none;
+}
+
+/* Attendance Pagination - Always visible at bottom */
+.attendance-pagination {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 16px 24px;
+    background: rgba(0, 0, 0, 0.02);
+    border-top: 1px solid rgba(0, 0, 0, 0.06);
+    font-size: 14px;
+    flex-shrink: 0; /* Prevent shrinking */
+    min-height: 60px; /* Ensure minimum height */
+}
+
+/* Attendance Actions Bar */
+.attendance-actions-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 16px 24px;
+    background: rgba(0, 0, 0, 0.02);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+    flex-shrink: 0; /* Prevent shrinking */
+}
+
+/* Fix for attendance sheet table */
+.attendance-sheet-container {
+    height: 600px; /* Taller for attendance sheets */
+    display: flex;
+    flex-direction: column;
+}
+
+.attendance-sheet-wrapper {
+    flex: 1;
+    overflow: auto;
+}
+
+.attendance-sheet-table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    font-size: 14px;
+}
+
+.attendance-sheet-table thead {
+    background: linear-gradient(135deg, #2d3436 0%, #000000 100%);
+    position: sticky;
+    top: 0;
+    z-index: 10;
+}
+
+.attendance-sheet-table thead th {
+    padding: 14px 16px;
+    text-align: center;
+    font-weight: 600;
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: #ffffff;
+    border: 2px solid #000000;
+    position: sticky;
+    top: 0;
+}
+
+.attendance-sheet-table tbody td {
+    padding: 12px 16px;
+    text-align: center;
+    border: 1px solid #dee2e6;
+    background: #ffffff;
+}
+
+/* Responsive fixes for attendance tables */
+@media screen and (max-width: 768px) {
+    .attendance-table-container {
+        height: 400px; /* Smaller height on mobile */
+    }
+    
+    .attendance-sheet-container {
+        height: 500px;
+    }
+    
+    .attendance-pagination {
+        flex-direction: column;
+        gap: 12px;
+        padding: 12px 16px;
+    }
+    
+    .attendance-actions-bar {
+        flex-direction: column;
+        gap: 12px;
+        padding: 12px 16px;
+    }
+}
+
+/* Dark mode support for attendance tables */
+body.dark-mode .attendance-table-container,
+body.dark-mode .attendance-sheet-container {
+    background: #2d3436;
+    border-color: rgba(255, 255, 255, 0.1);
+}
+
+body.dark-mode .attendance-pagination,
+body.dark-mode .attendance-actions-bar {
+    background: rgba(255, 255, 255, 0.05);
+    border-color: rgba(255, 255, 255, 0.1);
+}
+
+body.dark-mode .attendance-sheet-table tbody td {
+    background: #2d3436;
+    border-color: rgba(255, 255, 255, 0.1);
+    color: #dfe6e9;
+}

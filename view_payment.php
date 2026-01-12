@@ -2,7 +2,10 @@
 // view_payment.php
 require_once 'config.php';
 require_once 'session.php';
+require_once 'rbac.php';
 
+// For admin-only pages
+requirePermission('admin');
 if (!isset($_GET['id']) || !is_numeric($_GET['id'])) {
     header("Location: payments.php");
     exit();
@@ -30,6 +33,7 @@ if (!$payment) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Payment Details - <?php echo htmlspecialchars($payment['receipt_no']); ?></title>
+    <?php include 'favicon.php'; ?>
     <link rel="stylesheet" href="css/dashboard.css">
     <link rel="stylesheet" href="css/payments.css">
     <link rel="stylesheet" href="css/dark-mode.css">

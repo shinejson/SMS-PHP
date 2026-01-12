@@ -65,20 +65,37 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['form_action'])) {
         }
         $stmt->close();
         
-    } elseif ($action === 'delete_subject') {
-        $id = intval($_POST['id']);
-        
-        $sql = "DELETE FROM subjects WHERE id = ?";
-        $stmt = $conn->prepare($sql);
-        $stmt->bind_param("i", $id);
-        
-        if ($stmt->execute()) {
-            $_SESSION['message'] = "Subject deleted successfully!";
-        } else {
-            $_SESSION['error'] = "Error deleting subject: " . $stmt->error;
-        }
-        $stmt->close();
+    } elseif ($_POST['form_action'] === 'delete_subject') {
+    $subject_id = $_POST['id'];
+    
+    // Check if subject has related records
+    $check_sql = "SELECT COUNT(*) as count FROM class_score_marks WHERE subject_id = ?";
+    $check_stmt = $conn->prepare($check_sql);
+    $check_stmt->bind_param("i", $subject_id);
+    $check_stmt->execute();
+    $result = $check_stmt->get_result();
+    $row = $result->fetch_assoc();
+    
+    if ($row['count'] > 0) {
+        $_SESSION['error'] = "Cannot delete subject. It has " . $row['count'] . " related score records. Please delete the related records first.";
+        header("Location: subjects.php");
+        exit();
     }
+    
+    // Proceed with deletion if no dependencies
+    $sql = "DELETE FROM subjects WHERE id = ?";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("i", $subject_id);
+    
+    if ($stmt->execute()) {
+        $_SESSION['message'] = "Subject deleted successfully!";
+    } else {
+        $_SESSION['error'] = "Error deleting subject: " . $conn->error;
+    }
+    
+    header("Location: subjects.php");
+    exit();
+}
 
     $conn->close();
     header("Location: subjects.php");

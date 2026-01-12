@@ -2,7 +2,10 @@
 // report_sheet.php
 require_once 'config.php';
 require_once 'session.php';
+require_once 'rbac.php';
 
+// For admin-only pages
+requirePermission('admin');
 // Check if user is logged in
 if (!isset($_SESSION['user_id'])) {
     header("Location: login.php");
@@ -360,6 +363,40 @@ $stmt->execute();
 $overallRemarkResult = $stmt->get_result();
 $overallRemarkData = $overallRemarkResult->fetch_assoc();
 $overallPosition = $overallRemarkData ? $overallRemarkData['remark'] : 'FAIL';
+
+// Get report remarks from the new table
+$remarksSql = "SELECT attendance, conduct, attitude, promoted_to, teacher_remark 
+               FROM report_remarks 
+               WHERE student_id = ? AND term_id = ? AND academic_year_id = ?";
+$stmt = $conn->prepare($remarksSql);
+$stmt->bind_param("iii", $studentId, $termId, $academicYearId);
+$stmt->execute();
+$remarksResult = $stmt->get_result();
+$reportRemarks = $remarksResult->fetch_assoc();
+
+// Get total attendance from attendance table
+$attendanceSql = "SELECT COUNT(*) as total_attendance 
+                  FROM attendance 
+                  WHERE student_id = ? AND term_id = ? AND academic_year_id = ? AND status = 'Present'";
+$stmt = $conn->prepare($attendanceSql);
+$stmt->bind_param("iii", $studentId, $termId, $academicYearId);
+$stmt->execute();
+$attendanceResult = $stmt->get_result();
+$attendanceData = $attendanceResult->fetch_assoc();
+$totalAttendance = $attendanceData['total_attendance'] ?? 0;
+
+// Get total school days for this term (you might need to adjust this based on your school calendar)
+$schoolDaysSql = "SELECT COUNT(DISTINCT  attendance_date) as total_days 
+                  FROM attendance 
+                  WHERE term_id = ? AND academic_year_id = ?";
+$stmt = $conn->prepare($schoolDaysSql);
+$stmt->bind_param("ii", $termId, $academicYearId);
+$stmt->execute();
+$schoolDaysResult = $stmt->get_result();
+$schoolDaysData = $schoolDaysResult->fetch_assoc();
+$totalSchoolDays = $schoolDaysData['total_days'] ?? 1; // Default to 1 to avoid division by zero
+
+$attendancePercentage = round(($totalAttendance / $totalSchoolDays) * 100, 1);
 ?>
 
 <!DOCTYPE html>
@@ -368,237 +405,10 @@ $overallPosition = $overallRemarkData ? $overallRemarkData['remark'] : 'FAIL';
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>PUPIL'S REPORT SHEET - <?php echo htmlspecialchars($student['first_name'] . ' ' . $student['last_name']); ?></title>
+    <?php include 'favicon.php'; ?>
     <!-- Add html2pdf library -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
-    <style>
-        @page {
-            size: A4;
-            margin: 0.5in;
-        }
-        
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        
-        body {
-            font-family: 'Times New Roman', serif;
-            font-size: 12px;
-            line-height: 1.4;
-            color: #000;
-            background: #fff;
-            padding: 20px;
-        }
-        
-        .report-sheet {
-            max-width: 8.5in;
-            margin: 0 auto;
-            background: #fff;
-            border: 2px solid #000;
-            padding: 20px;
-        }
-        
-        .header {
-            text-align: center;
-            margin-bottom: 20px;
-            border-bottom: 1px solid #000;
-            padding-bottom: 15px;
-        }
-        
-        .school-logo {
-            width: 60px;
-            height: 60px;
-            border: 1px solid #000;
-            border-radius: 50%;
-            margin: 0 auto 10px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: bold;
-            font-size: 24px;
-            overflow: hidden;
-        }
-        
-        .school-logo img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            border-radius: 50%;
-        }
-        
-        .school-name {
-            font-size: 16px;
-            font-weight: bold;
-            margin-bottom: 5px;
-            letter-spacing: 2px;
-        }
-        
-        .school-location {
-            font-size: 12px;
-            margin-bottom: 3px;
-        }
-        
-        .report-title {
-            font-size: 14px;
-            font-weight: bold;
-            text-decoration: underline;
-            margin-top: 10px;
-        }
-        
-        .student-details {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 20px;
-            margin-bottom: 15px;
-            font-size: 12px;
-        }
-        
-        .detail-line {
-            margin-bottom: 8px;
-            border-bottom: 1px dotted #000;
-            padding-bottom: 2px;
-        }
-        
-        .next-term-info {
-            text-align: center;
-            margin-bottom: 15px;
-            font-size: 12px;
-            border-bottom: 1px solid #000;
-            padding-bottom: 10px;
-        }
-        
-        .grading-scale {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 10px;
-            margin-bottom: 15px;
-            font-size: 10px;
-            text-align: center;
-        }
-        
-        .grade-box {
-            border: 1px solid #000;
-            padding: 5px;
-            font-weight: bold;
-        }
-        
-        .marks-table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-bottom: 20px;
-            font-size: 11px;
-        }
-        
-        .marks-table th,
-        .marks-table td {
-            border: 1px solid #000;
-            padding: 6px;
-            text-align: center;
-            vertical-align: middle;
-        }
-        
-        .marks-table th {
-            background-color: #f5f5f5;
-            font-weight: bold;
-            font-size: 10px;
-        }
-        
-        .subject-cell {
-            text-align: left !important;
-            font-weight: bold;
-            padding-left: 8px;
-        }
-        
-        .marks-table .subject-header {
-            text-align: left;
-            font-weight: bold;
-        }
-        
-        .weight-header {
-            font-size: 9px;
-            line-height: 1.2;
-        }
-        
-        .footer-section {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 20px;
-            margin-top: 15px;
-            font-size: 11px;
-        }
-        
-        .footer-item {
-            margin-bottom: 12px;
-            border-bottom: 1px dotted #000;
-            padding-bottom: 8px;
-        }
-        
-        .signature-section {
-            text-align: center;
-            margin-top: 20px;
-            border-top: 1px solid #000;
-            padding-top: 15px;
-        }
-        
-        .no-cross {
-            text-align: center;
-            font-size: 10px;
-            font-weight: bold;
-            margin-top: 10px;
-        }
-        
-        @media print {
-            body {
-                padding: 0;
-            }
-            
-            .no-print {
-                display: none;
-            }
-        }
-        
-        .actions {
-            text-align: center;
-            margin-top: 20px;
-            padding: 15px;
-            border-top: 2px solid #000;
-        }
-        
-        .btn {
-            display: inline-block;
-            padding: 8px 15px;
-            margin: 0 10px;
-            background: #333;
-            color: white;
-            text-decoration: none;
-            border-radius: 3px;
-            font-size: 12px;
-            cursor: pointer;
-            border: none;
-        }
-        
-        .btn:hover {
-            background: #555;
-        }
-        
-        .btn-pdf {
-            background: #dc3545;
-        }
-        
-        .btn-pdf:hover {
-            background: #c82333;
-        }
-        
-        .overall-pos {
-            font-weight: bold;
-            font-size: 12px;
-            text-align: center;
-            margin-top: 10px;
-            padding: 5px;
-            border: 1px solid #000;
-        }
-    </style>
+    <link rel="stylesheet" type="text/css" href="css/report_sheet.css">
 </head>
 <body>
     <div class="report-sheet" id="report-content">
@@ -710,39 +520,95 @@ $overallPosition = $overallRemarkData ? $overallRemarkData['remark'] : 'FAIL';
             TERM: <?php echo htmlspecialchars($term['term_name'] ?? 'N/A'); ?> |
             OVERALL RANK: <?php echo $overallRank; ?>/<?php echo count($classStudentAverages); ?>
         </div>
+
         
-        <div class="footer-section">
-            <div>
-                <div class="footer-item">
-                    <strong>ATTENDANCE:</strong> .........................
-                </div>
-                <div class="footer-item">
-                    <strong>CONDUCT:</strong> .........................................................................................
-                </div>
-                <div class="footer-item">
-                    <strong>ATTITUDE:</strong> .........................................................................................
-                </div>
-            </div>
-            <div>
-                <div class="footer-item">
-                    <strong>PROMOTED TO:</strong> .........................
-                </div>
-                <div class="footer-item">
-                    <strong>CLASS TEACHER'S REMARK:</strong> .........................................................................................
-                </div>
-                <div style="margin-top: 20px;">
-                    .........................................................................................
-                </div>
-            </div>
+      <div class="footer-section">
+    <div>
+        <div class="footer-item">
+            <strong>ATTENDANCE:</strong> 
+            <span id="attendance-display">
+                <?php echo $totalAttendance . '/' . $totalSchoolDays . ' (' . $attendancePercentage . '%)'; ?>
+            </span>
         </div>
+        <div class="footer-item">
+            <strong>CONDUCT:</strong> 
+            <span id="conduct-display">
+                <?php echo htmlspecialchars($reportRemarks['conduct'] ?? '.........................................................................................'); ?>
+            </span>
+        </div>
+        <div class="footer-item">
+            <strong>ATTITUDE:</strong> 
+            <span id="attitude-display">
+                <?php echo htmlspecialchars($reportRemarks['attitude'] ?? '.........................................................................................'); ?>
+            </span>
+        </div>
+    </div>
+    <div>
+        <div class="footer-item">
+            <strong>PROMOTED TO:</strong> 
+            <span id="promoted-display">
+                <?php echo htmlspecialchars($reportRemarks['promoted_to'] ?? '.........................'); ?>
+            </span>
+        </div>
+        <div class="footer-item">
+            <strong>CLASS TEACHER'S REMARK:</strong> 
+            <span id="teacher-remark-display">
+                <?php echo htmlspecialchars($reportRemarks['teacher_remark'] ?? '.........................................................................................'); ?>
+            </span>
+        </div>
+        <div style="margin-top: 20px; text-align: center;">
+            <button type="button" class="btn btn-edit" onclick="openRemarksModal()" style="padding: 5px 10px; font-size: 10px;">
+                <i class="fas fa-edit"></i> Edit Remarks
+            </button>
+        </div>
+    </div>
+</div>
         
         <div class="signature-section">
-            <strong>HEAD TEACHER'S SIGNATURE:</strong> .........................................................................................
+            <strong>HEAD TEACHER'S SIGNATURE:</strong> <?php  
+    // Fetch school settings including headmaster signature and name
+    $settings_result = $conn->query("SELECT headmaster_name, headmaster_signature FROM school_settings ORDER BY id DESC LIMIT 1");
+    $school_settings = $settings_result->fetch_assoc();
+    
+    if (!empty($school_settings['headmaster_signature'])) {
+        echo '<img src="' . htmlspecialchars($school_settings['headmaster_signature']) . '" alt="Headmaster Signature" style="height: 50px; max-width: 200px;">';
+    } ?>
         </div>
         
-        <div class="no-cross">
-            <strong><?php echo htmlspecialchars($school['motto'] ?? 'NO CROSS NO CROWN'); ?></strong>
+<?php
+// Function to get school motto
+function getSchoolMotto($conn) {
+    static $motto = null;
+    
+    if ($motto === null) {
+        $motto_sql = "SELECT motto FROM school_settings ORDER BY id DESC LIMIT 1";
+        $motto_result = $conn->query($motto_sql);
+        $motto_data = $motto_result->fetch_assoc();
+        $motto = $motto_data['motto'] ?? '';
+    }
+    
+    return $motto;
+}
+
+$school_motto = getSchoolMotto($conn);
+
+// Check if user is admin to show setup reminder
+$is_admin = isset($_SESSION['user_role']) && $_SESSION['user_role'] === 'admin';
+$needs_motto_setup = empty($school_motto) && $is_admin;
+?>
+
+<div class="no-cross">
+    <strong><?php echo htmlspecialchars(empty($school_motto) ? 'NO CROSS NO CROWN' : $school_motto); ?></strong>
+    
+    <?php if ($needs_motto_setup): ?>
+        <div style="margin-top: 5px;">
+            <a href="school_settings.php" style="color: #dc3545; text-decoration: none; font-size: 0.8em;">
+                <i class="fas fa-cog"></i> Set School Motto in Settings
+            </a>
         </div>
+    <?php endif; ?>
+</div>
+
     </div>
 
     <div class="actions no-print">
@@ -752,6 +618,79 @@ $overallPosition = $overallRemarkData ? $overallRemarkData['remark'] : 'FAIL';
         <button onclick="window.close()" class="btn">Close</button>
     </div>
 
+<!-- Remarks Modal -->
+<div id="remarksModal" class="modal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.5); z-index: 1000;">
+    <div class="modal-content" style="background: white; margin: 5% auto; padding: 20px; width: 80%; max-width: 600px; border-radius: 5px;">
+        <span class="close" onclick="closeRemarksModal()" style="float: right; font-size: 28px; cursor: pointer;">&times;</span>
+        <h3>Edit Student Remarks</h3>
+        
+        <form id="remarksForm">
+            <input type="hidden" name="student_id" value="<?php echo $studentId; ?>">
+            <input type="hidden" name="term_id" value="<?php echo $termId; ?>">
+            <input type="hidden" name="academic_year_id" value="<?php echo $academicYearId; ?>">
+            
+            <div class="form-group" style="margin-bottom: 15px;">
+                <label style="display: block; margin-bottom: 5px;"><strong>Attendance:</strong></label>
+                <div style="padding: 8px; background: #f5f5f5; border-radius: 3px;">
+                    <?php echo $totalAttendance . ' days present out of ' . $totalSchoolDays . ' total days (' . $attendancePercentage . '%)'; ?>
+                </div>
+                <small style="color: #666;">* Attendance is automatically calculated from attendance records</small>
+            </div>
+            
+            <div class="form-group" style="margin-bottom: 15px;">
+                <label style="display: block; margin-bottom: 5px;"><strong>Conduct:</strong></label>
+                <select name="conduct" style="width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 3px;">
+                    <option value="">Select Conduct</option>
+                    <option value="EXCELLENT" <?php echo ($reportRemarks['conduct'] ?? '') == 'EXCELLENT' ? 'selected' : ''; ?>>EXCELLENT</option>
+                    <option value="VERY GOOD" <?php echo ($reportRemarks['conduct'] ?? '') == 'VERY GOOD' ? 'selected' : ''; ?>>VERY GOOD</option>
+                    <option value="GOOD" <?php echo ($reportRemarks['conduct'] ?? '') == 'GOOD' ? 'selected' : ''; ?>>GOOD</option>
+                    <option value="SATISFACTORY" <?php echo ($reportRemarks['conduct'] ?? '') == 'SATISFACTORY' ? 'selected' : ''; ?>>SATISFACTORY</option>
+                    <option value="NEEDS IMPROVEMENT" <?php echo ($reportRemarks['conduct'] ?? '') == 'NEEDS IMPROVEMENT' ? 'selected' : ''; ?>>NEEDS IMPROVEMENT</option>
+                    <option value="POOR" <?php echo ($reportRemarks['conduct'] ?? '') == 'POOR' ? 'selected' : ''; ?>>POOR</option>
+                </select>
+            </div>
+            
+            <div class="form-group" style="margin-bottom: 15px;">
+                <label style="display: block; margin-bottom: 5px;"><strong>Attitude:</strong></label>
+                <select name="attitude" style="width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 3px;">
+                    <option value="">Select Attitude</option>
+                    <option value="EXCELLENT" <?php echo ($reportRemarks['attitude'] ?? '') == 'EXCELLENT' ? 'selected' : ''; ?>>EXCELLENT</option>
+                    <option value="VERY GOOD" <?php echo ($reportRemarks['attitude'] ?? '') == 'VERY GOOD' ? 'selected' : ''; ?>>VERY GOOD</option>
+                    <option value="GOOD" <?php echo ($reportRemarks['attitude'] ?? '') == 'GOOD' ? 'selected' : ''; ?>>GOOD</option>
+                    <option value="SATISFACTORY" <?php echo ($reportRemarks['attitude'] ?? '') == 'SATISFACTORY' ? 'selected' : ''; ?>>SATISFACTORY</option>
+                    <option value="NEEDS IMPROVEMENT" <?php echo ($reportRemarks['attitude'] ?? '') == 'NEEDS IMPROVEMENT' ? 'selected' : ''; ?>>NEEDS IMPROVEMENT</option>
+                    <option value="POOR" <?php echo ($reportRemarks['attitude'] ?? '') == 'POOR' ? 'selected' : ''; ?>>POOR</option>
+                </select>
+            </div>
+            
+            <div class="form-group" style="margin-bottom: 15px;">
+                <label style="display: block; margin-bottom: 5px;"><strong>Promoted To:</strong></label>
+                <select name="promoted_to" style="width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 3px;">
+                    <option value="">Select Class</option>
+                    <?php foreach ($classes as $class): ?>
+                    <option value="<?php echo htmlspecialchars($class['class_name']); ?>" 
+                        <?php echo ($reportRemarks['promoted_to'] ?? '') == $class['class_name'] ? 'selected' : ''; ?>>
+                        <?php echo htmlspecialchars($class['class_name']); ?>
+                    </option>
+                    <?php endforeach; ?>
+                    <option value="REPEAT" <?php echo ($reportRemarks['promoted_to'] ?? '') == 'REPEAT' ? 'selected' : ''; ?>>REPEAT</option>
+                    <option value="PROMOTED" <?php echo ($reportRemarks['promoted_to'] ?? '') == 'PROMOTED' ? 'selected' : ''; ?>>PROMOTED</option>
+                    <option value="PROBATION" <?php echo ($reportRemarks['promoted_to'] ?? '') == 'PROBATION' ? 'selected' : ''; ?>>PROBATION</option>
+                </select>
+            </div>
+            
+            <div class="form-group" style="margin-bottom: 15px;">
+                <label style="display: block; margin-bottom: 5px;"><strong>Class Teacher's Remark:</strong></label>
+                <textarea name="teacher_remark" style="width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 3px; height: 100px; resize: vertical;"><?php echo htmlspecialchars($reportRemarks['teacher_remark'] ?? ''); ?></textarea>
+            </div>
+            
+            <div style="text-align: right; margin-top: 20px;">
+                <button type="button" class="btn" onclick="closeRemarksModal()" style="margin-right: 10px;">Cancel</button>
+                <button type="submit" class="btn" style="background: #28a745;">Save Changes</button>
+            </div>
+        </form>
+    </div>
+</div>
     <script>
         // Function to generate PDF
         function generatePDF() {
@@ -803,6 +742,53 @@ $overallPosition = $overallRemarkData ? $overallRemarkData['remark'] : 'FAIL';
                 window.location.href = url;
             }
         }
+        // Modal functions
+function openRemarksModal() {
+    document.getElementById('remarksModal').style.display = 'block';
+}
+
+function closeRemarksModal() {
+    document.getElementById('remarksModal').style.display = 'none';
+}
+
+// Handle form submission
+document.getElementById('remarksForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+    
+    const formData = new FormData(this);
+    
+    fetch('save_report_remarks.php', {
+        method: 'POST',
+        body: formData
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.status === 'success') {
+            // Update the display values
+            document.getElementById('conduct-display').textContent = data.remarks.conduct || '.........................................................................................';
+            document.getElementById('attitude-display').textContent = data.remarks.attitude || '.........................................................................................';
+            document.getElementById('promoted-display').textContent = data.remarks.promoted_to || '.........................';
+            document.getElementById('teacher-remark-display').textContent = data.remarks.teacher_remark || '.........................................................................................';
+            
+            closeRemarksModal();
+            alert('Remarks saved successfully!');
+        } else {
+            alert('Error saving remarks: ' + data.message);
+        }
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        alert('An error occurred while saving remarks.');
+    });
+});
+
+// Close modal when clicking outside
+window.onclick = function(event) {
+    const modal = document.getElementById('remarksModal');
+    if (event.target === modal) {
+        closeRemarksModal();
+    }
+}
     </script>
 </body>
 </html>

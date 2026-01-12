@@ -139,6 +139,9 @@
 /* ========================================= */
 /* === Modal Styles === */
 /* ========================================= */
+/* ========================================= */
+/* === Modal Styles === */
+/* ========================================= */
 .modal {
     display: none;
     position: fixed;
@@ -148,12 +151,13 @@
     width: 100%;
     height: 100%;
     background-color: rgba(0, 0, 0, 0.5);
+    overflow-y: auto; /* ✅ allow modal backdrop to scroll */
 }
 
 .modal-content {
     background-color: #fff;
     margin: 5% auto;
-    padding: 20px;
+    padding: 0;
     border-radius: 8px;
     width: 500px;
     max-width: 90%;
@@ -161,6 +165,23 @@
     position: relative;
     animation-name: animatetop;
     animation-duration: 0.4s;
+    max-height: 85vh; /* ✅ Limit maximum height */
+    display: flex;
+    flex-direction: column;
+    overflow: hidden; /* ✅ Prevent modal-content from scrolling */
+}
+
+@media (max-width: 768px) {
+    .modal-content {
+        margin: 10% auto;
+        max-height: 80vh; /* ✅ Limit height to 80% of viewport on small screens */
+        padding: 15px; /* Reduce padding for better fit */
+    }
+}
+
+/* ✅ Ensure form is scrollable when content overflows */
+#userForm {
+    max-height: 100%;
 }
 
 .modal .close {
@@ -176,6 +197,48 @@
     color: #333;
 }
 
+/* ========================================= */
+/* === Responsive Styles === */
+/* ========================================= */
+@media (max-width: 768px) {
+    .modal-content {
+        margin: 5% auto; /* ✅ Reduced from 10% for better spacing */
+        max-height: 90vh; /* ✅ Increased to 90% for better utilization */
+        padding: 15px;
+    }
+    
+    .form-actions {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .btn-cancel, .btn-submit {
+        width: 100%;
+        margin-right: 0;
+    }
+
+    .dataTables_wrapper .dt-buttons {
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+    
+    /* ✅ Better form layout for mobile */
+    .form-row {
+        flex-direction: column;
+        gap: 0;
+    }
+    
+    /* ✅ Ensure form elements are mobile-friendly */
+    .form-group input,
+    .form-group select {
+        font-size: 16px; /* ✅ Prevents zoom on iOS */
+    }
+}
+
+/* ✅ Prevent horizontal scrolling */
+.modal-content {
+    box-sizing: border-box; /* ✅ Include padding in width calculation */
+}
 /* ========================================= */
 /* === Form Styles === */
 /* ========================================= */
@@ -395,25 +458,248 @@ body.dark-mode .dataTables_wrapper .dataTables_paginate .paginate_button:hover {
 /* ========================================= */
 /* === Responsive Styles === */
 /* ========================================= */
+
+
+
+#imagePreview img {
+    border-radius: 5px;
+    border: 1px solid #ddd;
+    padding: 5px;
+}
+
+.form-row {
+    display: flex;
+    gap: 15px;
+}
+
+.form-row .form-group {
+    flex: 1;
+}
+
 @media (max-width: 768px) {
-    .modal-content {
-        margin: 10% auto;
-    }
-
-    .form-actions {
+    .form-row {
         flex-direction: column;
-        gap: 10px;
-    }
-
-    .btn-cancel, .btn-submit {
-        width: 100%;
-        margin-right: 0;
-    }
-
-    .dataTables_wrapper .dt-buttons {
-        flex-wrap: wrap;
-        justify-content: center;
+        gap: 0;
     }
 }
 
+/* ========================================= */
+/* === DataTable Controls & Search === */
+/* ========================================= */
 
+/* DataTable wrapper styling */
+.dataTables_wrapper {
+    position: relative;
+}
+
+/* Top controls container */
+.dataTables_wrapper .top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+    flex-wrap: wrap;
+    gap: 15px;
+}
+
+/* Search input styling */
+.dataTables_wrapper .dataTables_filter {
+    margin-bottom: 0;
+}
+
+.dataTables_wrapper .dataTables_filter input {
+    padding: 8px 12px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 14px;
+    width: 250px;
+    transition: all 0.3s ease;
+}
+
+.dataTables_wrapper .dataTables_filter input:focus {
+    outline: none;
+    border-color: #4e73df;
+    box-shadow: 0 0 0 0.2rem rgba(78, 115, 223, 0.25);
+}
+
+/* Length menu styling */
+.dataTables_wrapper .dataTables_length {
+    margin-bottom: 0;
+}
+
+.dataTables_wrapper .dataTables_length select {
+    padding: 6px 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 14px;
+    margin: 0 5px;
+}
+
+/* Buttons container */
+.dataTables_wrapper .dt-buttons {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+/* Export button styles */
+.dataTables_wrapper .dt-button {
+    background-color: #1cc88a;
+    color: white !important;
+    border: none;
+    padding: 8px 12px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 13px;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    text-decoration: none;
+}
+
+.dataTables_wrapper .dt-button:hover {
+    background-color: #17a673;
+    transform: translateY(-1px);
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+}
+
+/* Individual button colors */
+.dataTables_wrapper .btn-dt-copy {
+    background-color: #6c757d;
+}
+
+.dataTables_wrapper .btn-dt-copy:hover {
+    background-color: #5a6268;
+}
+
+.dataTables_wrapper .btn-dt-csv {
+    background-color: #20c997;
+}
+
+.dataTables_wrapper .btn-dt-csv:hover {
+    background-color: #1ba87e;
+}
+
+.dataTables_wrapper .btn-dt-excel {
+    background-color: #198754;
+}
+
+.dataTables_wrapper .btn-dt-excel:hover {
+    background-color: #157347;
+}
+
+.dataTables_wrapper .btn-dt-pdf {
+    background-color: #dc3545;
+}
+
+.dataTables_wrapper .btn-dt-pdf:hover {
+    background-color: #bb2d3b;
+}
+
+.dataTables_wrapper .btn-dt-print {
+    background-color: #6f42c1;
+}
+
+.dataTables_wrapper .btn-dt-print:hover {
+    background-color: #5e32b1;
+}
+
+/* Bottom controls */
+.dataTables_wrapper .bottom {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 15px;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.dataTables_wrapper .dataTables_info {
+    color: #6c757d;
+    font-size: 14px;
+}
+
+.dataTables_wrapper .dataTables_paginate {
+    margin-top: 0;
+}
+
+.dataTables_wrapper .dataTables_paginate .paginate_button {
+    padding: 6px 12px;
+    margin: 0 2px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    color: #4e73df;
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+
+.dataTables_wrapper .dataTables_paginate .paginate_button:hover {
+    background-color: #4e73df;
+    color: white !important;
+    border-color: #4e73df;
+}
+
+.dataTables_wrapper .dataTables_paginate .paginate_button.current {
+    background-color: #4e73df;
+    color: white !important;
+    border-color: #4e73df;
+}
+
+/* Responsive design for DataTable controls */
+@media (max-width: 768px) {
+    .dataTables_wrapper .top {
+        flex-direction: column;
+        align-items: stretch;
+    }
+    
+    .dataTables_wrapper .dataTables_filter {
+        order: -1;
+    }
+    
+    .dataTables_wrapper .dataTables_filter input {
+        width: 100%;
+    }
+    
+    .dataTables_wrapper .dt-buttons {
+        justify-content: center;
+    }
+    
+    .dataTables_wrapper .bottom {
+        flex-direction: column;
+        text-align: center;
+    }
+}
+
+/* Dark mode styles for DataTable controls */
+body.dark-mode .dataTables_wrapper .dataTables_filter input {
+    background-color: #2e2e2e;
+    border-color: #444;
+    color: #f8f9fa;
+}
+
+body.dark-mode .dataTables_wrapper .dataTables_length select {
+    background-color: #2e2e2e;
+    border-color: #444;
+    color: #f8f9fa;
+}
+
+body.dark-mode .dataTables_wrapper .dataTables_info {
+    color: #d1d3e2;
+}
+
+body.dark-mode .dataTables_wrapper .dataTables_paginate .paginate_button {
+    background-color: #2e2e2e;
+    border-color: #444;
+    color: #d1d3e2;
+}
+
+body.dark-mode .dataTables_wrapper .dataTables_paginate .paginate_button:hover {
+    background-color: #4e73df;
+    color: white !important;
+}
+
+body.dark-mode .dataTables_wrapper .dataTables_paginate .paginate_button.current {
+    background-color: #4e73df;
+    color: white !important;
+}

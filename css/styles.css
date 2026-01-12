@@ -178,14 +178,8 @@
     background-color: #6a6c7b;
 }
 
-/* ========================================= */
-/* === Modal Styles === */
-/* ========================================= */
 .modal {
-     display: none; /* Hidden by default */
-    position: fixed;
-    justify-content: center;
-    align-items: center;
+    display: none;
     position: fixed;
     z-index: 1000;
     left: 0;
@@ -193,42 +187,111 @@
     width: 100%;
     height: 100%;
     background-color: rgba(0, 0, 0, 0.5);
-   
-    justify-content: center;
-    align-items: center;
+    overflow-y: auto; /* ✅ allow modal backdrop to scroll */
+    padding: 20px 0; /* ✅ add vertical padding for spacing */
 }
 
 .modal-content {
     background-color: #fff;
-    padding: 15px;
-    border: 1px solid #888;
+    padding: 20px;
     border-radius: 8px;
     width: 90%;
     max-width: 450px;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    margin: 20px auto; /* ✅ centered with auto margins */
     position: relative;
-    animation-name: animatetop;
-    animation-duration: 0.4s;
+    max-height: calc(100vh - 40px); /* ✅ leave space for padding */
+    overflow-y: auto; /* ✅ enable scroll inside content if needed */
+    box-sizing: border-box;
 }
 
-.modal-content h2 {
-    margin-bottom: 1rem;
-    color: var(--primary-color);
+/* Improved mobile responsiveness */
+@media (max-width: 768px) {
+    .modal {
+        padding: 10px 0; /* Less padding on mobile */
+        align-items: flex-start; /* Start from top instead of center */
+    }
+    
+    .modal-content {
+        width: 95%;
+        max-width: 100%;
+        margin: 10px auto;
+        padding: 15px;
+        max-height: calc(100vh - 20px);
+    }
 }
 
-.modal .close {
-    position: absolute;
-    right: 20px;
-    top: 15px;
-    font-size: 24px;
-    cursor: pointer;
-    color: #aaa;
+@media (max-width: 480px) {
+    .modal-content {
+        width: 98%;
+        padding: 12px;
+        border-radius: 4px;
+    }
 }
 
-.modal .close:hover {
-    color: #333;
-}
+/* ========================================= */
+/* === Import Instructions Styles === */
+/* ========================================= */
+      .import-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+        .import-instructions {
+            background: #e3f2fd;
+            padding: 1rem;
+            border-radius: 4px;
+            margin: 1rem 0;
+            font-size: 0.9rem;
+        }
+        .import-instructions ol {
+            margin: 0.5rem 0 0 1.5rem;
+            padding: 0;
+        }
+        .import-instructions li {
+            margin: 0.3rem 0;
+        }
+        .file-input-wrapper {
+            position: relative;
+            display: inline-block;
 
+        }
+
+        body.dark-mode.file-input-label{
+            background-color: #e0e0e0;
+        }
+        .file-input-wrapper input[type=file] {
+            position: absolute;
+            left: -9999px;
+
+            
+        }
+        .file-input-label {
+            display: inline-block;
+            padding: 0.5rem 1rem;
+            background: #2c3e50;
+            border: 2px dashed #ccc;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.3s;
+            color: white;
+        }
+        .file-input-label:hover {
+            background: gold;
+            border-color: #999;
+            color: black;
+        }
+        .file-input-label i {
+            margin-right: 0.5rem;
+
+        }
+        .selected-file {
+            margin-top: 0.5rem;
+            padding: 0.5rem;
+            background: #f9f9f9;
+            border-radius: 4px;
+            font-size: 0.9rem;
+        }
 /* ========================================= */
 /* === Form Styles === */
 /* ========================================= */
@@ -322,7 +385,6 @@ body.dark-mode .form-group textarea {
 }
 
 body.dark-mode .btn-primary {
-    /* New style for Add Student button in dark mode */
     background-color: #1cc88a;
     color: white;
 }
@@ -406,90 +468,6 @@ body.dark-mode #studentsTable.dataTable tbody tr {
     color: #f8f9fa;
 }
 
-body.dark-mode #studentsTable.dataTable tbody tr.odd {
-    background-color: #212121;
-}
-
-body.dark-mode #studentsTable.dataTable tbody tr.even {
-    background-color: #1a1a1a;
-}
-
-body.dark-mode #studentsTable.dataTable tbody td {
-    border-top: 1px solid #2e2e2e;
-}
-
-body.dark-mode .dataTables_wrapper .dataTables_paginate .paginate_button {
-    color: #e0e0e0 !important;
-    border: 1px solid #444 !important;
-}
-
-body.dark-mode .dataTables_wrapper .dataTables_paginate .paginate_button.current {
-    background: #4e73df !important;
-    color: white !important;
-    border: 1px solid #4e73df !important;
-}
-
-body.dark-mode .dataTables_wrapper .dataTables_paginate .paginate_button:hover {
-    background: #3a5bc7 !important;
-    color: white !important;
-}
-
-/* ========================================= */
-/* === Animations === */
-/* ========================================= */
-@keyframes animatetop {
-    from { top: -200px; opacity: 0; }
-    to { top: 0; opacity: 1; }
-}
-
-/* ========================================= */
-/* === Responsive Styles === */
-/* ========================================= */
-@media (max-width: 768px) {
-    .modal-content {
-        margin: 10% auto;
-    }
-
-    .form-actions {
-        flex-direction: column;
-        gap: 10px;
-    }
-
-    .btn-cancel, .btn-submit {
-        width: 100%;
-        margin-right: 0;
-    }
-
-    .dataTables_wrapper .dt-buttons {
-        flex-wrap: wrap;
-        justify-content: center;
-    }
-}
-/* Add this CSS to your main stylesheet or create alerts.css */
-
-/* Alert base styles */
-.alert {
-    opacity: 1;
-    transition: opacity 0.5s ease-out, transform 0.5s ease-out;
-    transform: translateY(0);
-    margin-bottom: 1rem;
-    padding: 0.75rem 1rem;
-    border-radius: 4px;
-    position: relative;
-    cursor: pointer; /* Indicates alerts are clickable to dismiss */
-}
-
-/* Fade-out animation */
-.alert.fade-out {
-    opacity: 0;
-    transform: translateY(-10px);
-    margin-bottom: 0;
-    padding-top: 0;
-    padding-bottom: 0;
-    height: 0;
-    overflow: hidden;
-}
-
 /* Success alert styling */
 .alert-success {
     background-color: #d4edda;
@@ -558,4 +536,360 @@ body.dark-mode .alert-warning {
 
 .alert .close-btn:hover {
     opacity: 1;
+}
+
+/* Filter Section Styles */
+.filter-section {
+    background: #f8f9fa;
+    padding: 1.5rem;
+    border-radius: 8px;
+    margin-bottom: 1.5rem;
+    border: 1px solid #e3e6f0;
+}
+
+.filter-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1rem;
+    align-items: end;
+}
+
+.filter-group {
+    margin-bottom: 0;
+}
+
+.filter-group label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+    color: #4e4e4e;
+    font-size: 0.9rem;
+}
+
+.filter-group select {
+    width: 100%;
+    padding: 0.6rem;
+    border: 1px solid #d1d3e2;
+    border-radius: 4px;
+    font-size: 0.9rem;
+    background-color: white;
+}
+
+.filter-actions {
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+}
+
+.btn-filter {
+    background-color: #4e73df;
+    color: white;
+    border: none;
+    padding: 0.6rem 1.2rem;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    transition: background-color 0.3s;
+}
+
+.btn-filter:hover {
+    background-color: #2e59d9;
+}
+
+.btn-reset {
+    background-color: #6c757d;
+    color: white;
+    border: none;
+    padding: 0.6rem 1.2rem;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    transition: background-color 0.3s;
+}
+
+.btn-reset:hover {
+    background-color: #5a6268;
+}
+
+/* Class Status Badges */
+.status-badge {
+    padding: 0.3rem 0.6rem;
+    border-radius: 12px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    text-transform: capitalize;
+}
+
+.status-active { background-color: #d4edda; color: #155724; }
+.status-promoted { background-color: #cce7ff; color: #004085; }
+.status-repeated { background-color: #fff3cd; color: #856404; }
+.status-probation { background-color: #f8d7da; color: #721c24; }
+.status-graduated { background-color: #e2e3e5; color: #383d41; }
+
+/* Dark mode adjustments */
+body.dark-mode .filter-section {
+    background-color: #2a3042;
+    border-color: #3a4256;
+}
+
+body.dark-mode .filter-group label {
+    color: #d1d3e2;
+}
+
+body.dark-mode .filter-group select {
+    background-color: #3a4256;
+    border-color: #4a5063;
+    color: #f8f9fa;
+}
+
+/* Rest of your existing styles remain the same */
+.form-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
+    margin-bottom: 1.5rem;
+}
+
+.form-group.full-width {
+    grid-column: 1 / -1;
+}
+
+@media (max-width: 600px) {
+    .form-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .filter-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+.btn-cancel {
+    background-color: #f4f4f4;
+    color: #333;
+    border: 1px solid #ccc;
+    padding: 10px 16px;
+    font-size: 14px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.btn-cancel:hover {
+    background-color: #e0e0e0;
+}
+
+.btn-danger {
+    background-color: #e74c3c;
+    color: white;
+    border: none;
+    padding: 10px 16px;
+    font-size: 14px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.btn-danger:hover {
+    background-color: #c0392b;
+}
+
+/* ========================================= */
+/* === View Modal Specific Styles (Redesigned) === */
+/* ========================================= */
+.view-details {
+    padding: 1rem; /* Added padding around the details */
+    border: 1px solid #eee; /* Light border for definition */
+    border-radius: 8px;
+    background-color: #f9f9f9; /* Slightly different background for visual separation */
+    margin-bottom: 1.5rem; /* Space below the details block */
+}
+
+.view-details p {
+    display: flex; /* Use flexbox for alignment */
+    justify-content: space-between; /* Distribute space between label and value */
+    align-items: baseline; /* Align text baselines */
+    margin-bottom: 0.8rem; /* Increased margin between detail lines */
+    line-height: 1.4; /* Improved line spacing */
+    padding-bottom: 0.3rem; /* Small padding below each line */
+    border-bottom: 1px dotted #e0e0e0; /* Dotted line separator */
+}
+
+.view-details p:last-child {
+    border-bottom: none; /* No border for the last item */
+    margin-bottom: 0;
+    padding-bottom: 0;
+}
+
+.view-details strong {
+    flex-shrink: 0; /* Prevent label from shrinking */
+    width: 140px; /* Slightly wider fixed width for labels */
+    font-weight: 600;
+    color: #555;
+    text-align: left; /* Align labels to the left */
+    margin-right: 1rem; /* Space between label and value */
+}
+
+.view-details span {
+    flex-grow: 1; /* Allow value to take remaining space */
+    color: #333;
+    text-align: right; /* Align values to the right */
+    word-break: break-word; /* Break long words */
+}
+
+/* Dark mode adjustments for view modal */
+body.dark-mode .view-details {
+    background-color: #212121;
+    border-color: #3a3a3a;
+}
+
+body.dark-mode .view-details strong {
+    color: rgba(255,255,255,0.8);
+}
+
+body.dark-mode .view-details span {
+    color: var(--dark-mode-text);
+}
+
+body.dark-mode .view-details p {
+    border-bottom: 1px dotted #4a4a4a;
+}
+
+/* DataTable Button Styles */
+.dataTables_wrapper .dt-buttons {
+    margin-bottom: 15px;
+}
+
+.dataTables_wrapper .dt-button {
+    background: #4e73df !important;
+    color: white !important;
+    border: none !important;
+    border-radius: 4px !important;
+    padding: 8px 15px !important;
+    margin-right: 5px !important;
+    font-size: 14px !important;
+}
+
+.dataTables_wrapper .dt-button:hover {
+    background: #2e59d9 !important;
+    transform: translateY(-1px);
+}
+
+/* Ensure table is visible */
+#studentsTable {
+    width: 100% !important;
+    border-collapse: collapse;
+}
+
+/* Fix for responsive tables */
+.dataTables_wrapper .dataTables_length,
+.dataTables_wrapper .dataTables_filter,
+.dataTables_wrapper .dataTables_info,
+.dataTables_wrapper .dataTables_paginate {
+    margin: 10px 0;
+}
+
+/* Loading state for filters */
+.btn-filter:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+.alert-warning {
+    background-color: #fff3cd;
+    border: 1px solid #ffeaa7;
+    color: #856404;
+    padding: 0.75rem 1rem;
+    border-radius: 4px;
+    margin-bottom: 1rem;
+}
+
+.btn-submit:disabled {
+    background-color: #6c757d !important;
+    cursor: not-allowed;
+}
+
+/* Notifications */
+.custom-notification {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    padding: 15px 20px;
+    border-radius: 5px;
+    color: white;
+    z-index: 10000;
+    max-width: 400px;
+    opacity: 0;
+    transform: translateX(100%);
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}
+
+.custom-notification.show {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+.notification-success {
+    background-color: #28a745;
+    border-left: 4px solid #1e7e34;
+}
+
+.notification-error {
+    background-color: #dc3545;
+    border-left: 4px solid #c82333;
+}
+
+.notification-info {
+    background-color: #17a2b8;
+    border-left: 4px solid #138496;
+}
+
+.notification-warning {
+    background-color: #ffc107;
+    border-left: 4px solid #e0a800;
+    color: #212529;
+}
+
+.notification-content {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.notification-content i {
+    font-size: 18px;
+}
+
+.import-instructions {
+    background-color: #f9f9f9;
+    padding: 1rem;
+    border-radius: 4px;
+    margin-bottom: 1rem;
+    border: 1px solid #e3e6f0;
+}
+.import-instructions strong {
+    color: #333;
+    font-weight: 600;
+}
+.import-instructions ol {
+    margin-top: 0.5rem;
+    padding-left: 1.5rem;
+    color: #4e4e4e;
+}
+.import-instructions li {
+    margin-bottom: 0.5rem;
+}
+
+/* === DARK MODE FIX === */
+body.dark-mode .import-instructions {
+    background-color: #2a2a2a;
+    border-color: #3a3a3a;
+}
+body.dark-mode .import-instructions strong {
+    color: #ffffff;
+}
+body.dark-mode .import-instructions ol,
+body.dark-mode .import-instructions li {
+    color: #f0f0f0;
 }

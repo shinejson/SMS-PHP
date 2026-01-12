@@ -1,7 +1,10 @@
 <?php
 require_once 'config.php';
 require_once 'session.php';
+require_once 'rbac.php';
 
+// For admin-only pages
+requirePermission('admin');
 // Fetch all subjects from the database
 $subjects = [];
 $sql = "SELECT * FROM subjects ORDER BY subject_name";
@@ -19,20 +22,21 @@ if ($result && $result->num_rows > 0) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="mobile-web-app-capable" content="yes">
     <title>Subject Management - GEBSCO</title>
+    <?php include 'favicon.php'; ?>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link rel="stylesheet" href="css/dashboard.css">
     <link rel="stylesheet" type="text/css" href="css/db.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.2.2/css/buttons.dataTables.min.css">
-    <link rel="icon" href="images/favicon.ico">
     <link rel="stylesheet" href="css/dropdown.css">
     <link rel="stylesheet" href="css/subjects.css">
 </head>
 <body>
   <?php include 'sidebar.php'; ?>
     
-    <main class="main-content">
+    <main class="main-content subject-page">
         <?php include 'topnav.php'; ?>
         
         <div class="content-wrapper">
@@ -156,5 +160,6 @@ if ($result && $result->num_rows > 0) {
     <script src="https://cdn.datatables.net/buttons/2.2.2/js/buttons.print.min.js"></script> 
     <script src="js/darkmode.js"></script>
     <script src="js/subjects.js"></script>
+    <script src="js/dashboard.js"></script>
 </body>
 </html>

@@ -1,0 +1,12 @@
+ALTER TABLE exam_score_marks 
+ADD CONSTRAINT fk_exam_score_marks_term
+FOREIGN KEY (term_id) REFERENCES term(id)
+ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE class_score_marks
+ADD CONSTRAINT fk_exam_score_marks_term
+FOREIGN KEY (term_id) REFERENCES term(id)
+ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE midterm_marks 
+ADD CONSTRAINT fk_exam_score_marks_term
+FOREIGN KEY (term_id) REFERENCES term(id)
+ON DELETE RESTRICT ON UPDATE CASCADE;

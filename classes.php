@@ -2,7 +2,10 @@
 require_once 'config.php';
 require_once 'session.php';
 include 'classcontrol.php'; // Handles POST, sets $_SESSION flash, populates $classes and $teachers
+require_once 'rbac.php';
 
+// For admin-only pages
+requirePermission('admin');
 // --- CSRF Token (create if not set) ---
 if (empty($_SESSION['csrf_token'])) {
     $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
@@ -17,16 +20,15 @@ function e($v) { return htmlspecialchars((string)$v, ENT_QUOTES, 'UTF-8'); }
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="mobile-web-app-capable" content="yes">
     <title>Class Management - GEBSCO</title>
-
+    <?php include 'favicon.php'; ?>
     <link rel="stylesheet" type="text/css" href="css/dashboard.css">
     <link rel="stylesheet" type="text/css" href="css/db.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.2.2/css/buttons.dataTables.min.css">
-    <link rel="icon" href="images/favicon.ico">
     <link rel="stylesheet" type="text/css" href="css/classes.css">
-    <link rel="stylesheet" href="css/dropdown.css">
 </head>
 <body>
     <?php include 'sidebar.php'; ?>
@@ -68,7 +70,6 @@ function e($v) { return htmlspecialchars((string)$v, ENT_QUOTES, 'UTF-8'); }
                     <table id="classesTable" class="display">
                         <thead>
                             <tr>
-                                <th scope="col">ID</th>
                                 <th scope="col">Class Name</th>
                                 <th scope="col">Academic Year</th>
                                 <th scope="col">Class Teacher</th>
@@ -77,59 +78,58 @@ function e($v) { return htmlspecialchars((string)$v, ENT_QUOTES, 'UTF-8'); }
                                 <th scope="col">Actions</th>
                             </tr>
                         </thead>
-                 <!-- Update your classes table tbody section -->
-<!-- Update your classes table tbody section -->
-<tbody>
-    <?php foreach ($classes as $class): ?>
-    <tr>
-        <td><?php echo htmlspecialchars($class['id']); ?></td>
-        <td><?php echo htmlspecialchars($class['class_name']); ?></td>
-        <td><?php echo htmlspecialchars($class['academic_year']); ?></td>
-          <td>
-         <span class="badge"><?php echo e($class['student_count']); ?> students</span>
-         </td> 
-        <td>
-            <?php 
-            if ($class['class_teacher_id']) {
-                echo htmlspecialchars($class['first_name'] . ' ' . $class['last_name']);
-            } else {
-                echo '<span style="color: #6c757d; font-style: italic;">No teacher assigned</span>';
-            }
-            ?>
-        </td>
-        <td><?php echo htmlspecialchars($class['description']); ?></td>
-        <td>
-            <button class="btn-icon edit-class" 
-                    data-id="<?php echo $class['id']; ?>"
-                    data-class-name="<?php echo htmlspecialchars($class['class_name']); ?>"
-                    data-academic-year="<?php echo htmlspecialchars($class['academic_year']); ?>"
-                    data-teacher-id="<?php echo $class['class_teacher_id']; ?>"
-                    data-description="<?php echo htmlspecialchars($class['description']); ?>"
-                    title="Edit">
-                <i class="fas fa-edit"></i>
-            </button>
-            
-            <button class="btn-icon delete-class" 
-                    data-id="<?php echo $class['id']; ?>"
-                    data-class-name="<?php echo htmlspecialchars($class['class_name']); ?>"
-                    data-billing-count="<?php echo $class['billing_count']; ?>"
-                    data-student-count="<?php echo $class['student_count']; ?>"
-                    data-assignment-count="<?php echo $class['assignment_count']; ?>"
-                    data-attendance-count="<?php echo $class['attendance_count']; ?>"
-                    title="Delete"
-                    <?php if ($class['billing_count'] > 0 || $class['student_count'] > 0 || $class['assignment_count'] > 0 || $class['attendance_count'] > 0): ?>
-                        style="color: #ffc107 !important; background-color: rgba(255, 193, 7, 0.1) !important;"
-                    <?php endif; ?>
-                    >
-                <i class="fas fa-trash"></i>
-                <?php if ($class['billing_count'] > 0 || $class['student_count'] > 0 || $class['assignment_count'] > 0 || $class['attendance_count'] > 0): ?>
-                    <i class="fas fa-exclamation-triangle" style="font-size: 10px; margin-left: 2px;"></i>
-                <?php endif; ?>
-            </button>
-        </td>
-    </tr>
-    <?php endforeach; ?>
-</tbody>
+                        <tbody>
+                            <?php foreach ($classes as $class): ?>
+                            <tr>
+                                <td><?php echo htmlspecialchars($class['class_name']); ?></td>
+                                <td><?php echo htmlspecialchars($class['academic_year']); ?></td>
+                                <td>
+                                    <?php 
+                                    if ($class['class_teacher_id']) {
+                                        echo htmlspecialchars($class['first_name'] . ' ' . $class['last_name']);
+                                    } else {
+                                        echo '<span style="color: #6c757d; font-style: italic;">No teacher assigned</span>';
+                                    }
+                                    ?>
+                                </td>
+                                <td>
+                                    <span class="student-count <?php echo $class['student_count'] > 0 ? 'has-students' : 'no-students'; ?>">
+                                        <?php echo $class['student_count']; ?>
+                                    </span>
+                                </td>
+                                <td><?php echo htmlspecialchars($class['description']); ?></td>
+                                <td>
+                                    <button class="btn-icon edit-class" 
+                                            data-id="<?php echo $class['id']; ?>"
+                                            data-class-name="<?php echo htmlspecialchars($class['class_name']); ?>"
+                                            data-academic-year="<?php echo htmlspecialchars($class['academic_year']); ?>"
+                                            data-teacher-id="<?php echo $class['class_teacher_id']; ?>"
+                                            data-description="<?php echo htmlspecialchars($class['description']); ?>"
+                                            title="Edit">
+                                        <i class="fas fa-edit"></i>
+                                    </button>
+                                    
+                                    <button class="btn-icon delete-class" 
+                                            data-id="<?php echo $class['id']; ?>"
+                                            data-class-name="<?php echo htmlspecialchars($class['class_name']); ?>"
+                                            data-billing-count="<?php echo $class['billing_count']; ?>"
+                                            data-student-count="<?php echo $class['student_count']; ?>"
+                                            data-assignment-count="<?php echo $class['assignment_count']; ?>"
+                                            data-attendance-count="<?php echo $class['attendance_count']; ?>"
+                                            title="Delete"
+                                            <?php if ($class['billing_count'] > 0 || $class['student_count'] > 0 || $class['assignment_count'] > 0 || $class['attendance_count'] > 0): ?>
+                                                style="color: #ffc107 !important; background-color: rgba(255, 193, 7, 0.1) !important;"
+                                            <?php endif; ?>
+                                            >
+                                        <i class="fas fa-trash"></i>
+                                        <?php if ($class['billing_count'] > 0 || $class['student_count'] > 0 || $class['assignment_count'] > 0 || $class['attendance_count'] > 0): ?>
+                                            <i class="fas fa-exclamation-triangle" style="font-size: 10px; margin-left: 2px;"></i>
+                                        <?php endif; ?>
+                                    </button>
+                                </td>
+                            </tr>
+                            <?php endforeach; ?>
+                        </tbody>
                     </table>
                 </div>
             </div>
@@ -156,15 +156,12 @@ function e($v) { return htmlspecialchars((string)$v, ENT_QUOTES, 'UTF-8'); }
                 <div class="form-group">
                     <label for="academic_year">Academic Year*</label>
                     <select id="academic_year" name="academic_year" required>
-                        <?php
-                        $current_year = (int)date('Y');
-                        for ($i = -2; $i <= 2; $i++) {
-                            $year = $current_year + $i;
-                            $val = $year . '-' . ($year + 1);
-                            $selected = ($i === 0) ? 'selected' : '';
-                            echo '<option value="' . e($val) . "\" $selected>" . e($val) . '</option>';
-                        }
-                        ?>
+                        <option value="">Select Academic Year</option>
+                        <?php foreach ($academic_years as $year): ?>
+                            <option value="<?php echo e($year['year_name']); ?>" <?php echo $year['is_current'] ? 'selected' : ''; ?>>
+                                <?php echo e($year['year_name']); ?>
+                            </option>
+                        <?php endforeach; ?>
                     </select>
                 </div>
 
@@ -227,12 +224,12 @@ function e($v) { return htmlspecialchars((string)$v, ENT_QUOTES, 'UTF-8'); }
 
     <!-- Your existing scripts -->
     <script src="js/darkmode.js"></script>
-    <script src="js/dropdown.js"></script>
+    <script src="js/dashboard.js"></script>
     <script src="js/classes.js"></script>
     <!-- Add this script block before your classes.js inclusion -->
-<script>
-    // Make CSRF token available to JavaScript
-    window.csrfToken = <?php echo json_encode($_SESSION['csrf_token'] ?? ''); ?>;
-</script>
+    <script>
+        // Make CSRF token available to JavaScript
+        window.csrfToken = <?php echo json_encode($_SESSION['csrf_token'] ?? ''); ?>;
+    </script>
 </body>
 </html>

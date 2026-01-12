@@ -93,7 +93,9 @@ $examWeight = (int)$weights['exam_weight'];
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="mobile-web-app-capable" content="yes">
     <title>Master Marks Sheet - GEBSCO</title>
+     <?php include 'favicon.php'; ?>
     <link rel="stylesheet" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.2.2/css/buttons.dataTables.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
@@ -184,35 +186,41 @@ $examWeight = (int)$weights['exam_weight'];
                 <button class="btn-clear-filters" id="clearFiltersBtnMaster">
                     <i class="fas fa-sync-alt"></i> Clear Filters
                 </button>
+
+                <a href="transcript.php" target="_blank" class="transcript-link" rel="noopener noreferrer">
+                    <button class="btn-transcript">
+                        <i class="fas fa-file-alt"></i> Transcript
+                    </button>
+                </a>
+
             </div>
-            
             <div class="table-container">
                 <div class="table-responsive">
                     <!-- In the table header, add the Rank column -->
-            <table id="masterMarksTable" class="table table-striped table-bordered w-100">
-                <thead>
-                    <tr>
-                        <th>Student Name</th>
-                        <th>Class</th>
-                        <th>Subject</th>
-                        <th>Term</th>
-                        <th>Academic Year</th>
-                        <th>Midterm Total</th>
-                        <th>Midterm Weighted</th>
-                        <th>Class Score Total</th>
-                        <th>Class Score Weighted</th>
-                        <th>Exam Score Total</th>
-                        <th>Exam Score Weighted</th>
-                        <th>Final Grade</th>
-                        <th>Rank</th> <!-- Add this column -->
-                        <th>Grade</th>
-                        <th>Remarks</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <!-- Data will be populated by JavaScript -->
-                </tbody>
-            </table>
+   <table id="masterMarksTable" class="table table-striped table-bordered w-100">
+    <thead>
+        <tr>
+            <th>Student Name</th>
+            <th>Class</th>
+            <th>Subject</th>
+            <th>Term</th>
+            <th>Academic Year</th>
+            <th>Midterm Total</th>
+            <th>Midterm Weighted</th>
+            <th>Class Score Total</th>
+            <th>Class Score Weighted</th>
+            <th>Exam Score Total</th>
+            <th>Exam Score Weighted</th>
+            <th>Final Grade</th>
+            <th>Rank</th>
+            <th>Grade</th>
+            <th>Remarks</th>
+        </tr>
+    </thead>
+    <tbody>
+        <!-- Data will be populated by JavaScript -->
+    </tbody>
+</table>
                 </div>
             </div>
         </div>
@@ -227,211 +235,8 @@ $examWeight = (int)$weights['exam_weight'];
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
+    <script src="js/master-mark-score.js"></script>
     <script src="js/dashboard.js"></script>
     <script src="js/darkmode.js"></script>
-        <script>
-    document.addEventListener("DOMContentLoaded", function() {
-
-        // Get all dropdown toggle buttons
-        document.querySelectorAll(".sidebar-nav .dropdown-toggle").forEach(toggle => {
-            toggle.addEventListener("click", function (e) {
-                e.preventDefault();
-                const parentLi = this.parentElement;
-
-                // Close all other dropdowns
-                document.querySelectorAll(".sidebar-nav .dropdown").forEach(item => {
-                    // Check if the current dropdown is not the one being clicked
-                    if (item !== parentLi) {
-                        item.classList.remove("open");
-                    }
-                });
-
-                // Toggle the 'open' class on the clicked dropdown's parent list item
-                parentLi.classList.toggle("open");
-            });
-        });
-
-        // Add logic for the dark mode toggle
-        const darkModeToggle = document.getElementById('darkModeToggle');
-        if (darkModeToggle) {
-            darkModeToggle.addEventListener('change', function() {
-                document.body.classList.toggle('dark-mode', this.checked);
-            });
-        }
-    });
-    </script>
-    <script>
-        // Master Marks Table functionality
-        let masterMarksTable = null;
-        
-        $(document).ready(function() {
-            initMasterMarksTable();
-        });
-
-        function initMasterMarksTable() {
-            // Show loading state
-            $('#masterMarksTable tbody').html('<tr><td colspan="14" class="text-center">Loading data...</td></tr>');
-            
-            // Fetch data from server
-            fetch('get_master_marks.php')
-                .then(response => {
-                    if (!response.ok) {
-                        throw new Error('Network response was not ok');
-                    }
-                    return response.json();
-                })
-                .then(data => {
-                    // Check if we got an error response
-                    if (data.error) {
-                        $('#masterMarksTable tbody').html('<tr><td colspan="14" class="text-center">Error: ' + data.error + '</td></tr>');
-                        return;
-                    }
-                    
-                    if (data.length === 0) {
-                        $('#masterMarksTable tbody').html('<tr><td colspan="14" class="text-center">No data available</td></tr>');
-                        return;
-                    }
-                    
-                    console.log('Loaded ' + data.length + ' records'); // Debug log
-                    
-                    // Initialize DataTable
-                    masterMarksTable = $('#masterMarksTable').DataTable({
-                        data: data,
-                        responsive: true,
-                        dom: 'Bfrtip',
-                        buttons: [
-                            'copy', 'excel', 'pdf', 'print'
-                        ],
-                        pageLength: 25,
-                        lengthMenu: [[10, 25, 50, 100, -1], [10, 25, 50, 100, "All"]],
-// In the DataTable columns definition, add the rank column:
-columns: [
-    { 
-        data: 'student_name',
-        render: function(data, type, row) {
-            if (type === 'display') {
-                // Use the actual IDs from the row data
-                return `<a href="report_sheet.php?student_id=${row.student_id}&term_id=${row.term_id}&academic_year_id=${row.academic_year_id}" 
-                           class="student-link" target="_blank">
-                           ${data} <i class="fas fa-external-link-alt"></i>
-                        </a>`;
-            }
-            return data;
-        }
-    },
-    { data: 'class_name' },
-    { data: 'subject_name' },
-    { data: 'term' },
-    { data: 'academic_year' },
-    { data: 'midterm_total', render: $.fn.dataTable.render.number(',', '.', 2) },
-    { data: 'midterm_weighted', render: $.fn.dataTable.render.number(',', '.', 2) },
-    { data: 'class_score_total', render: $.fn.dataTable.render.number(',', '.', 2) },
-    { data: 'class_score_weighted', render: $.fn.dataTable.render.number(',', '.', 2) },
-    { data: 'exam_score_total', render: $.fn.dataTable.render.number(',', '.', 2) },
-    { data: 'exam_score_weighted', render: $.fn.dataTable.render.number(',', '.', 2) },
-    { data: 'final_grade', render: $.fn.dataTable.render.number(',', '.', 2) },
-    { 
-        data: 'rank',
-        render: function(data, type, row) {
-            if (type === 'display') {
-                // Add badge styling for rank
-                let badgeClass = 'badge-secondary';
-                if (data === 1) badgeClass = 'badge-gold';
-                else if (data === 2) badgeClass = 'badge-silver';
-                else if (data === 3) badgeClass = 'badge-bronze';
-                
-                return `<span class="badge ${badgeClass}">${data}</span>`;
-            }
-            return data;
-        }
-    },
-    { 
-        data: 'grade',
-        render: function(data, type, row) {
-            if (type === 'display') {
-                let badgeClass = 'badge-secondary';
-                switch(data) {
-                    case 'A': badgeClass = 'badge-success'; break;
-                    case 'B': badgeClass = 'badge-primary'; break;
-                    case 'C': badgeClass = 'badge-info'; break;
-                    case 'D': badgeClass = 'badge-warning'; break;
-                    case 'F': badgeClass = 'badge-danger'; break;
-                }
-                return `<span class="badge ${badgeClass}">${data}</span>`;
-            }
-            return data;
-        }
-    },
-    { data: 'remark' }
-],
-                        initComplete: function() {
-                            // Add custom filtering
-                            setupMasterTableFilters();
-                        }
-                    });
-                })
-                .catch(error => {
-                    console.error('Error loading master marks data:', error);
-                    $('#masterMarksTable tbody').html('<tr><td colspan="14" class="text-center">Error loading data. Please check the console for details.</td></tr>');
-                });
-        }
-        
-            function setupMasterTableFilters() {
-                // Class filter (now column 1)
-                $('#classFilterMaster').on('change', function() {
-                    masterMarksTable.column(1).search(this.value).draw();
-                });
-                
-                // Term filter (now column 3)
-                $('#termFilterMaster').on('change', function() {
-                    masterMarksTable.column(3).search(this.value).draw();
-                });
-                
-                // Academic Year filter (now column 4)
-                $('#yearFilterMaster').on('change', function() {
-                    masterMarksTable.column(4).search(this.value).draw();
-                });
-                
-                // Student filter (column 0)
-                $('#studentFilterMaster').on('change', function() {
-                    masterMarksTable.column(0).search(this.value).draw();
-                });
-                
-                // Clear filters
-                $('#clearFiltersBtnMaster').on('click', function() {
-                    $('#classFilterMaster, #termFilterMaster, #yearFilterMaster, #studentFilterMaster').val('');
-                    masterMarksTable.columns().search('').draw();
-                });
-            }
-
-        document.addEventListener("DOMContentLoaded", function() {
-            // Get all dropdown toggle buttons
-            document.querySelectorAll(".sidebar-nav .dropdown-toggle").forEach(toggle => {
-                toggle.addEventListener("click", function (e) {
-                    e.preventDefault();
-                    const parentLi = this.parentElement;
-
-                    // Close all other dropdowns
-                    document.querySelectorAll(".sidebar-nav .dropdown").forEach(item => {
-                        // Check if the current dropdown is not the one being clicked
-                        if (item !== parentLi) {
-                            item.classList.remove("open");
-                        }
-                    });
-
-                    // Toggle the 'open' class on the clicked dropdown's parent list item
-                    parentLi.classList.toggle("open");
-                });
-            });
-
-            // Add logic for the dark mode toggle
-            const darkModeToggle = document.getElementById('darkModeToggle');
-            if (darkModeToggle) {
-                darkModeToggle.addEventListener('change', function() {
-                    document.body.classList.toggle('dark-mode', this.checked);
-                });
-            }
-        });
-    </script>
 </body>
 </html>

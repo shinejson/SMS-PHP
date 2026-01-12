@@ -305,7 +305,21 @@ if ($total_paid < $billing_amount) {
     </div>
     <div class="signature-section">
     <div class="signature-box">
-        <p>______________________________</p>
+         <?php
+    // Fetch school settings including headmaster signature and name
+    $settings_result = $conn->query("SELECT headmaster_name, headmaster_signature FROM school_settings ORDER BY id DESC LIMIT 1");
+    $school_settings = $settings_result->fetch_assoc();
+    
+    if (!empty($school_settings['headmaster_signature'])) {
+        echo '<img src="' . htmlspecialchars($school_settings['headmaster_signature']) . '" alt="Headmaster Signature" style="height: 60px; max-width: 200px;">';
+    }
+    
+    if (!empty($school_settings['headmaster_name'])) {
+        echo '<p style="margin-top: 5px; font-weight: bold;">' . htmlspecialchars($school_settings['headmaster_name']) . '</p>';
+    }
+    ?>
+    <p><strong>Headmaster</strong></p>
+    <p>Date: <?php echo date('F j, Y'); ?></p>
         <p><strong>Authorized Signature</strong></p>
     </div>
 </div>

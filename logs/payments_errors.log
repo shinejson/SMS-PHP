@@ -1,0 +1,150 @@
+2025-09-08 19:02:33 - Failed to retrieve payments - Context: {"error":"Unknown column 'p.updated_at' in 'field list'"}
+2025-09-08 19:12:06 - Failed to retrieve payments - Context: {"error":"Unknown column 'p.updated_at' in 'field list'"}
+2025-09-08 19:12:32 - Failed to retrieve payments - Context: {"error":"Unknown column 'p.updated_at' in 'field list'"}
+2025-09-08 19:16:47 - Failed to retrieve payments - Context: {"error":"Unknown column 'p.updated_at' in 'field list'"}
+2025-09-08 19:17:00 - Failed to retrieve payments - Context: {"error":"Unknown column 'p.updated_at' in 'field list'"}
+2025-09-08 19:17:15 - Failed to retrieve payments - Context: {"error":"Unknown column 'p.updated_at' in 'field list'"}
+2025-09-08 19:17:22 - Failed to retrieve payments - Context: {"error":"Unknown column 'p.updated_at' in 'field list'"}
+2025-09-08 19:17:30 - Failed to retrieve payments - Context: {"error":"Unknown column 'p.updated_at' in 'field list'"}
+2025-09-08 19:20:38 - Failed to retrieve payments - Context: {"error":"Unknown column 'p.updated_at' in 'field list'"}
+2025-09-08 19:20:47 - Failed to retrieve payments - Context: {"error":"Unknown column 'p.updated_at' in 'field list'"}
+2025-09-08 19:26:03 - Failed to retrieve payments - Context: {"error":"Unknown column 'p.updated_at' in 'field list'"}
+2025-09-08 19:26:08 - Failed to retrieve payments - Context: {"error":"Unknown column 'p.updated_at' in 'field list'"}
+2025-09-08 19:26:18 - Failed to retrieve payments - Context: {"error":"Unknown column 'p.updated_at' in 'field list'"}
+2025-09-08 19:26:49 - Failed to retrieve payments - Context: {"error":"Unknown column 'p.updated_at' in 'field list'"}
+2025-09-08 19:27:01 - Failed to retrieve payments - Context: {"error":"Unknown column 'p.updated_at' in 'field list'"}
+2025-09-08 19:27:33 - Failed to retrieve payments - Context: {"error":"Unknown column 'p.updated_at' in 'field list'"}
+2025-09-08 19:29:49 - Failed to retrieve payments - Context: {"error":"Unknown column 'p.updated_at' in 'field list'"}
+2025-09-08 19:31:17 - Failed to retrieve payments - Context: {"error":"Unknown column 'p.updated_at' in 'field list'"}
+2025-09-08 19:31:57 - Failed to retrieve payments - Context: {"error":"Unknown column 'p.updated_at' in 'field list'"}
+2025-09-08 19:31:58 - Failed to retrieve payments - Context: {"error":"Unknown column 'p.updated_at' in 'field list'"}
+2025-09-08 19:31:59 - Failed to retrieve payments - Context: {"error":"Unknown column 'p.updated_at' in 'field list'"}
+2025-09-08 19:32:00 - Failed to retrieve payments - Context: {"error":"Unknown column 'p.updated_at' in 'field list'"}
+2025-09-08 19:32:53 - Failed to retrieve payments - Context: {"error":"Unknown column 'p.updated_at' in 'field list'"}
+2025-09-08 19:32:54 - Failed to retrieve payments - Context: {"error":"Unknown column 'p.updated_at' in 'field list'"}
+2025-09-08 19:35:43 - Failed to retrieve payments - Context: {"error":"Unknown column 'p.updated_at' in 'field list'"}
+2025-09-08 19:49:34 - Failed to retrieve payments - Context: {"error":"Unknown column 'p.updated_at' in 'field list'"}
+2025-09-08 19:49:43 - Failed to retrieve payments - Context: {"error":"Unknown column 'p.updated_at' in 'field list'"}
+2025-09-08 19:49:45 - Failed to retrieve payments - Context: {"error":"Unknown column 'p.updated_at' in 'field list'"}
+2025-09-08 19:49:46 - Failed to retrieve payments - Context: {"error":"Unknown column 'p.updated_at' in 'field list'"}
+2025-09-08 19:50:16 - Failed to retrieve payments - Context: {"error":"Unknown column 'p.updated_at' in 'field list'"}
+2025-09-08 19:50:17 - Failed to retrieve payments - Context: {"error":"Unknown column 'p.updated_at' in 'field list'"}
+2025-09-08 20:02:16 - Failed to retrieve payments - Context: {"error":"Unknown column 'p.updated_at' in 'field list'"}
+2025-09-08 20:02:27 - Failed to retrieve payments - Context: {"error":"Unknown column 'p.updated_at' in 'field list'"}
+2025-09-08 20:03:19 - Failed to retrieve payments - Context: {"error":"Unknown column 'p.updated_at' in 'field list'"}
+2025-09-08 20:03:21 - Failed to retrieve payments - Context: {"error":"Unknown column 'p.updated_at' in 'field list'"}
+2025-09-08 20:04:34 - Failed to retrieve payments - Context: {"error":"Unknown column 'p.updated_at' in 'field list'"}
+2025-09-08 20:04:55 - Failed to retrieve payments - Context: {"error":"Unknown column 'p.updated_at' in 'field list'"}
+2025-09-08 20:05:22 - Failed to retrieve payments - Context: {"error":"Unknown column 'p.updated_at' in 'field list'"}
+2025-09-08 20:06:46 - Failed to retrieve payments - Context: {"error":"Unknown column 'p.updated_at' in 'field list'"}
+2025-09-08 20:06:49 - Failed to retrieve payments - Context: {"error":"Unknown column 'p.updated_at' in 'field list'"}
+2025-09-08 20:09:36 - Failed to retrieve payments - Context: {"error":"Unknown column 'p.updated_at' in 'field list'"}
+2025-09-08 20:09:56 - Failed to retrieve payments - Context: {"error":"Unknown column 'p.updated_at' in 'field list'"}
+2025-09-08 20:10:11 - Failed to retrieve payments - Context: {"error":"Unknown column 'p.updated_at' in 'field list'"}
+2025-09-08 20:10:39 - Failed to retrieve payments - Context: {"error":"Unknown column 'p.updated_at' in 'field list'"}
+2025-09-08 20:14:09 - Failed to retrieve payments - Context: {"error":"Unknown column 'p.updated_at' in 'field list'"}
+2025-09-08 20:19:31 - Failed to retrieve payments: Unknown column 'p.updated_at' in 'field list' - Context: {"file":"C:\\xampp\\htdocs\\gebsco\\payments.php","line":483,"user_id":1,"sql_error":"Unknown column 'p.updated_at' in 'field list'"}
+2025-09-08 20:20:57 - Failed to retrieve payments: Unknown column 'p.updated_at' in 'field list' - Context: {"file":"C:\\xampp\\htdocs\\gebsco\\payments.php","line":483,"user_id":1,"sql_error":"Unknown column 'p.updated_at' in 'field list'"}
+2025-09-08 20:21:15 - Failed to retrieve payments: Unknown column 'p.updated_at' in 'field list' - Context: {"file":"C:\\xampp\\htdocs\\gebsco\\payments.php","line":483,"user_id":1,"sql_error":"Unknown column 'p.updated_at' in 'field list'"}
+2025-09-08 20:21:22 - Failed to retrieve payments: Unknown column 'p.updated_at' in 'field list' - Context: {"file":"C:\\xampp\\htdocs\\gebsco\\payments.php","line":483,"user_id":1,"sql_error":"Unknown column 'p.updated_at' in 'field list'"}
+2025-09-08 20:21:29 - Failed to retrieve payments: Unknown column 'p.updated_at' in 'field list' - Context: {"file":"C:\\xampp\\htdocs\\gebsco\\payments.php","line":483,"user_id":1,"sql_error":"Unknown column 'p.updated_at' in 'field list'"}
+2025-09-08 20:21:46 - Failed to retrieve payments: Unknown column 'p.updated_at' in 'field list' - Context: {"file":"C:\\xampp\\htdocs\\gebsco\\payments.php","line":483,"user_id":1,"sql_error":"Unknown column 'p.updated_at' in 'field list'"}
+2025-09-08 20:22:31 - Failed to retrieve payments: Unknown column 'p.updated_at' in 'field list' - Context: {"file":"C:\\xampp\\htdocs\\gebsco\\payments.php","line":483,"user_id":1,"sql_error":"Unknown column 'p.updated_at' in 'field list'"}
+2025-09-08 20:23:24 - Failed to retrieve payments: Unknown column 'p.updated_at' in 'field list' - Context: {"file":"C:\\xampp\\htdocs\\gebsco\\payments.php","line":483,"user_id":1,"sql_error":"Unknown column 'p.updated_at' in 'field list'"}
+2025-09-08 20:25:54 - Failed to retrieve payments: Unknown column 'p.updated_at' in 'field list' - Context: {"file":"C:\\xampp\\htdocs\\gebsco\\payments.php","line":483,"user_id":1,"sql_error":"Unknown column 'p.updated_at' in 'field list'"}
+2025-09-08 20:30:31 - Failed to retrieve payments: Unknown column 'p.updated_at' in 'field list' - Context: {"file":"C:\\xampp\\htdocs\\gebsco\\payments.php","line":483,"user_id":1,"sql_error":"Unknown column 'p.updated_at' in 'field list'"}
+2025-09-08 20:34:07 - Failed to retrieve payments: Unknown column 'p.updated_at' in 'field list' - Context: {"file":"C:\\xampp\\htdocs\\gebsco\\payments.php","line":483,"user_id":1,"sql_error":"Unknown column 'p.updated_at' in 'field list'"}
+2025-09-08 20:36:00 - Failed to retrieve payments: Unknown column 'p.updated_at' in 'field list' - Context: {"file":"C:\\xampp\\htdocs\\gebsco\\payments.php","line":487,"user_id":1,"sql_error":"Unknown column 'p.updated_at' in 'field list'"}
+2025-09-08 20:40:14 - Failed to retrieve payments: Unknown column 'p.updated_at' in 'field list' - Context: {"file":"C:\\xampp\\htdocs\\gebsco\\payments.php","line":487,"user_id":1,"sql_error":"Unknown column 'p.updated_at' in 'field list'"}
+2025-09-08 20:40:22 - Failed to retrieve payments: Unknown column 'p.updated_at' in 'field list' - Context: {"file":"C:\\xampp\\htdocs\\gebsco\\payments.php","line":487,"user_id":1,"sql_error":"Unknown column 'p.updated_at' in 'field list'"}
+2025-09-08 20:45:18 - Failed to retrieve payments: Unknown column 'p.updated_at' in 'field list' - Context: {"file":"C:\\xampp\\htdocs\\gebsco\\payments.php","line":487,"user_id":1,"sql_error":"Unknown column 'p.updated_at' in 'field list'"}
+2025-09-08 20:46:05 - Failed to retrieve payments: Unknown column 'p.updated_at' in 'field list' - Context: {"file":"C:\\xampp\\htdocs\\gebsco\\payments.php","line":487,"user_id":1,"sql_error":"Unknown column 'p.updated_at' in 'field list'"}
+2025-09-08 20:46:08 - Failed to retrieve payments: Unknown column 'p.updated_at' in 'field list' - Context: {"file":"C:\\xampp\\htdocs\\gebsco\\payments.php","line":487,"user_id":1,"sql_error":"Unknown column 'p.updated_at' in 'field list'"}
+2025-09-08 20:47:06 - Failed to retrieve payments: Unknown column 'p.updated_at' in 'field list' - Context: {"file":"C:\\xampp\\htdocs\\gebsco\\payments.php","line":487,"user_id":1,"sql_error":"Unknown column 'p.updated_at' in 'field list'"}
+2025-09-08 20:47:37 - Failed to retrieve payments: Unknown column 'p.updated_at' in 'field list' - Context: {"file":"C:\\xampp\\htdocs\\gebsco\\payments.php","line":487,"user_id":1,"sql_error":"Unknown column 'p.updated_at' in 'field list'"}
+2025-09-08 20:47:53 - Failed to retrieve payments: Unknown column 'p.updated_at' in 'field list' - Context: {"file":"C:\\xampp\\htdocs\\gebsco\\payments.php","line":487,"user_id":1,"sql_error":"Unknown column 'p.updated_at' in 'field list'"}
+2025-09-08 20:48:33 - Failed to retrieve payments: Unknown column 'p.updated_at' in 'field list' - Context: {"file":"C:\\xampp\\htdocs\\gebsco\\payments.php","line":487,"user_id":1,"sql_error":"Unknown column 'p.updated_at' in 'field list'"}
+2025-09-08 20:48:35 - Failed to retrieve payments: Unknown column 'p.updated_at' in 'field list' - Context: {"file":"C:\\xampp\\htdocs\\gebsco\\payments.php","line":487,"user_id":1,"sql_error":"Unknown column 'p.updated_at' in 'field list'"}
+2025-09-08 20:48:42 - Failed to retrieve payments: Unknown column 'p.updated_at' in 'field list' - Context: {"file":"C:\\xampp\\htdocs\\gebsco\\payments.php","line":487,"user_id":1,"sql_error":"Unknown column 'p.updated_at' in 'field list'"}
+2025-09-08 20:48:43 - Failed to retrieve payments: Unknown column 'p.updated_at' in 'field list' - Context: {"file":"C:\\xampp\\htdocs\\gebsco\\payments.php","line":487,"user_id":1,"sql_error":"Unknown column 'p.updated_at' in 'field list'"}
+2025-09-08 20:48:45 - Failed to retrieve payments: Unknown column 'p.updated_at' in 'field list' - Context: {"file":"C:\\xampp\\htdocs\\gebsco\\payments.php","line":487,"user_id":1,"sql_error":"Unknown column 'p.updated_at' in 'field list'"}
+2025-09-08 21:09:00 - Failed to load payments: Unknown column 'p.updated_at' in 'field list'
+2025-09-08 21:09:27 - Failed to load payments: Unknown column 'p.updated_at' in 'field list'
+2025-09-08 21:09:31 - Failed to load payments: Unknown column 'p.updated_at' in 'field list'
+2025-09-08 21:11:23 - Failed to load payments: Unknown column 'p.updated_at' in 'field list'
+2025-09-08 21:11:34 - Failed to load payments: Unknown column 'p.updated_at' in 'field list'
+2025-09-08 22:55:50 - Failed to retrieve payments: Unknown column 'b.academic_year_id' in 'where clause' - Context: {"file":"C:\\xampp\\htdocs\\gebsco\\payments.php","line":493,"user_id":1,"sql_error":"Unknown column 'b.academic_year_id' in 'where clause'"}
+2025-09-08 22:56:01 - Failed to retrieve payments: Unknown column 'b.academic_year_id' in 'where clause' - Context: {"file":"C:\\xampp\\htdocs\\gebsco\\payments.php","line":493,"user_id":1,"sql_error":"Unknown column 'b.academic_year_id' in 'where clause'"}
+2025-09-08 22:56:12 - Failed to retrieve payments: Unknown column 'b.academic_year_id' in 'where clause' - Context: {"file":"C:\\xampp\\htdocs\\gebsco\\payments.php","line":493,"user_id":1,"sql_error":"Unknown column 'b.academic_year_id' in 'where clause'"}
+2025-09-08 23:01:37 - Failed to retrieve payments: Unknown column 'b.academic_year_id' in 'where clause' - Context: {"file":"C:\\xampp\\htdocs\\gebsco\\payments.php","line":518,"user_id":1,"sql_error":"Unknown column 'b.academic_year_id' in 'where clause'"}
+2025-09-08 23:02:07 - Failed to retrieve payments: Unknown column 'b.academic_year_id' in 'where clause' - Context: {"file":"C:\\xampp\\htdocs\\gebsco\\payments.php","line":518,"user_id":1,"sql_error":"Unknown column 'b.academic_year_id' in 'where clause'"}
+2025-09-08 23:02:08 - Failed to retrieve payments: Unknown column 'b.academic_year_id' in 'where clause' - Context: {"file":"C:\\xampp\\htdocs\\gebsco\\payments.php","line":518,"user_id":1,"sql_error":"Unknown column 'b.academic_year_id' in 'where clause'"}
+2025-09-08 23:02:18 - Failed to retrieve payments: Unknown column 'b.academic_year_id' in 'where clause' - Context: {"file":"C:\\xampp\\htdocs\\gebsco\\payments.php","line":518,"user_id":1,"sql_error":"Unknown column 'b.academic_year_id' in 'where clause'"}
+2025-09-08 23:03:53 - Failed to retrieve payments: Unknown column 'b.academic_year_id' in 'where clause' - Context: {"file":"C:\\xampp\\htdocs\\gebsco\\payments.php","line":518,"user_id":1,"sql_error":"Unknown column 'b.academic_year_id' in 'where clause'"}
+2025-09-08 23:03:54 - Failed to retrieve payments: Unknown column 'b.academic_year_id' in 'where clause' - Context: {"file":"C:\\xampp\\htdocs\\gebsco\\payments.php","line":518,"user_id":1,"sql_error":"Unknown column 'b.academic_year_id' in 'where clause'"}
+2025-09-08 23:03:55 - Failed to retrieve payments: Unknown column 'b.academic_year_id' in 'where clause' - Context: {"file":"C:\\xampp\\htdocs\\gebsco\\payments.php","line":518,"user_id":1,"sql_error":"Unknown column 'b.academic_year_id' in 'where clause'"}
+2025-09-08 23:03:56 - Failed to retrieve payments: Unknown column 'b.academic_year_id' in 'where clause' - Context: {"file":"C:\\xampp\\htdocs\\gebsco\\payments.php","line":518,"user_id":1,"sql_error":"Unknown column 'b.academic_year_id' in 'where clause'"}
+2025-09-08 23:03:56 - Failed to retrieve payments: Unknown column 'b.academic_year_id' in 'where clause' - Context: {"file":"C:\\xampp\\htdocs\\gebsco\\payments.php","line":518,"user_id":1,"sql_error":"Unknown column 'b.academic_year_id' in 'where clause'"}
+2025-09-08 23:03:57 - Failed to retrieve payments: Unknown column 'b.academic_year_id' in 'where clause' - Context: {"file":"C:\\xampp\\htdocs\\gebsco\\payments.php","line":518,"user_id":1,"sql_error":"Unknown column 'b.academic_year_id' in 'where clause'"}
+2025-09-08 23:03:58 - Failed to retrieve payments: Unknown column 'b.academic_year_id' in 'where clause' - Context: {"file":"C:\\xampp\\htdocs\\gebsco\\payments.php","line":518,"user_id":1,"sql_error":"Unknown column 'b.academic_year_id' in 'where clause'"}
+2025-09-08 23:08:02 - Failed to retrieve payments: Unknown column 'b.academic_year_id' in 'where clause' - Context: {"file":"C:\\xampp\\htdocs\\gebsco\\payments.php","line":485,"user_id":1,"sql_error":"Unknown column 'b.academic_year_id' in 'where clause'"}
+2025-09-08 23:09:40 - Failed to retrieve payments: Unknown column 'b.academic_year_id' in 'where clause' - Context: {"file":"C:\\xampp\\htdocs\\gebsco\\payments.php","line":485,"user_id":1,"sql_error":"Unknown column 'b.academic_year_id' in 'where clause'"}
+2025-09-08 23:10:59 - Failed to retrieve payments: Unknown column 'b.academic_year_id' in 'where clause' - Context: {"file":"C:\\xampp\\htdocs\\gebsco\\payments.php","line":485,"user_id":1,"sql_error":"Unknown column 'b.academic_year_id' in 'where clause'"}
+2025-09-08 23:13:36 - Failed to retrieve payments: Unknown column 'b.academic_year_id' in 'where clause' - Context: {"file":"C:\\xampp\\htdocs\\gebsco\\payments.php","line":485,"user_id":1,"sql_error":"Unknown column 'b.academic_year_id' in 'where clause'"}
+2025-09-08 23:13:38 - Failed to retrieve payments: Unknown column 'b.academic_year_id' in 'where clause' - Context: {"file":"C:\\xampp\\htdocs\\gebsco\\payments.php","line":485,"user_id":1,"sql_error":"Unknown column 'b.academic_year_id' in 'where clause'"}
+2025-09-08 23:13:39 - Failed to retrieve payments: Unknown column 'b.academic_year_id' in 'where clause' - Context: {"file":"C:\\xampp\\htdocs\\gebsco\\payments.php","line":485,"user_id":1,"sql_error":"Unknown column 'b.academic_year_id' in 'where clause'"}
+2025-09-08 23:13:40 - Failed to retrieve payments: Unknown column 'b.academic_year_id' in 'where clause' - Context: {"file":"C:\\xampp\\htdocs\\gebsco\\payments.php","line":485,"user_id":1,"sql_error":"Unknown column 'b.academic_year_id' in 'where clause'"}
+2025-09-08 23:16:13 - Failed to retrieve payments: Unknown column 'b.academic_year_id' in 'where clause' - Context: {"file":"C:\\xampp\\htdocs\\gebsco\\payments.php","line":485,"user_id":1,"sql_error":"Unknown column 'b.academic_year_id' in 'where clause'"}
+2025-09-08 23:16:16 - Failed to retrieve payments: Unknown column 'b.academic_year_id' in 'where clause' - Context: {"file":"C:\\xampp\\htdocs\\gebsco\\payments.php","line":485,"user_id":1,"sql_error":"Unknown column 'b.academic_year_id' in 'where clause'"}
+2025-09-08 23:17:18 - Failed to retrieve payments: Unknown column 'b.academic_year_id' in 'where clause' - Context: {"file":"C:\\xampp\\htdocs\\gebsco\\payments.php","line":485,"user_id":1,"sql_error":"Unknown column 'b.academic_year_id' in 'where clause'"}
+2025-09-08 23:18:58 - Failed to retrieve payments: Unknown column 'b.academic_year_id' in 'where clause' - Context: {"file":"C:\\xampp\\htdocs\\gebsco\\payments.php","line":485,"user_id":1,"sql_error":"Unknown column 'b.academic_year_id' in 'where clause'"}
+2025-09-08 23:19:00 - Failed to retrieve payments: Unknown column 'b.academic_year_id' in 'where clause' - Context: {"file":"C:\\xampp\\htdocs\\gebsco\\payments.php","line":485,"user_id":1,"sql_error":"Unknown column 'b.academic_year_id' in 'where clause'"}
+2025-09-08 23:21:26 - Failed to retrieve payments: Unknown column 'b.academic_year_id' in 'where clause' - Context: {"file":"C:\\xampp\\htdocs\\gebsco\\payments.php","line":489,"user_id":1,"sql_error":"Unknown column 'b.academic_year_id' in 'where clause'"}
+2025-09-08 23:22:38 - Failed to retrieve payments: Unknown column 'b.academic_year_id' in 'where clause' - Context: {"file":"C:\\xampp\\htdocs\\gebsco\\payments.php","line":489,"user_id":1,"sql_error":"Unknown column 'b.academic_year_id' in 'where clause'"}
+2025-09-08 23:23:36 - Failed to retrieve payments: Unknown column 'b.academic_year_id' in 'where clause' - Context: {"file":"C:\\xampp\\htdocs\\gebsco\\payments.php","line":489,"user_id":1,"sql_error":"Unknown column 'b.academic_year_id' in 'where clause'"}
+2025-09-08 23:28:14 - Failed to retrieve payments: Unknown column 'b.academic_year_id' in 'where clause' - Context: {"file":"C:\\xampp\\htdocs\\gebsco\\payments.php","line":483,"user_id":1,"sql_error":"Unknown column 'b.academic_year_id' in 'where clause'"}
+2025-09-08 23:30:11 - Failed to retrieve payments: Unknown column 'b.academic_year_id' in 'where clause' - Context: {"file":"C:\\xampp\\htdocs\\gebsco\\payments.php","line":502,"user_id":1,"sql_error":"Unknown column 'b.academic_year_id' in 'where clause'"}
+2025-09-08 23:30:34 - Failed to retrieve payments: Unknown column 'b.academic_year_id' in 'where clause' - Context: {"file":"C:\\xampp\\htdocs\\gebsco\\payments.php","line":502,"user_id":1,"sql_error":"Unknown column 'b.academic_year_id' in 'where clause'"}
+2025-09-08 23:30:55 - Failed to retrieve payments: Unknown column 'b.academic_year_id' in 'where clause' - Context: {"file":"C:\\xampp\\htdocs\\gebsco\\payments.php","line":502,"user_id":1,"sql_error":"Unknown column 'b.academic_year_id' in 'where clause'"}
+2025-09-08 23:34:13 - Failed to retrieve payments: Unknown column 'b.academic_year_id' in 'where clause' - Context: {"file":"C:\\xampp\\htdocs\\gebsco\\payments.php","line":502,"user_id":1,"sql_error":"Unknown column 'b.academic_year_id' in 'where clause'"}
+2025-09-08 23:35:30 - Failed to retrieve payments: Unknown column 'b.academic_year_id' in 'where clause' - Context: {"file":"C:\\xampp\\htdocs\\gebsco\\payments.php","line":502,"user_id":1,"sql_error":"Unknown column 'b.academic_year_id' in 'where clause'"}
+2025-09-08 23:35:34 - Failed to retrieve payments: Unknown column 'b.academic_year_id' in 'where clause' - Context: {"file":"C:\\xampp\\htdocs\\gebsco\\payments.php","line":502,"user_id":1,"sql_error":"Unknown column 'b.academic_year_id' in 'where clause'"}
+2025-09-08 23:40:58 - Failed to retrieve payments: Unknown column 'b.academic_year_id' in 'where clause' - Context: {"file":"C:\\xampp\\htdocs\\gebsco\\payments.php","line":502,"user_id":1,"sql_error":"Unknown column 'b.academic_year_id' in 'where clause'"}
+2025-09-08 23:41:39 - Failed to retrieve payments: Unknown column 'b.academic_year_id' in 'where clause' - Context: {"file":"C:\\xampp\\htdocs\\gebsco\\payments.php","line":502,"user_id":1,"sql_error":"Unknown column 'b.academic_year_id' in 'where clause'"}
+2025-09-08 23:42:21 - Failed to retrieve payments: Unknown column 'b.academic_year_id' in 'where clause' - Context: {"file":"C:\\xampp\\htdocs\\gebsco\\payments.php","line":498,"user_id":1,"sql_error":"Unknown column 'b.academic_year_id' in 'where clause'"}
+2025-09-08 23:42:22 - Failed to retrieve payments: Unknown column 'b.academic_year_id' in 'where clause' - Context: {"file":"C:\\xampp\\htdocs\\gebsco\\payments.php","line":498,"user_id":1,"sql_error":"Unknown column 'b.academic_year_id' in 'where clause'"}
+2025-09-08 23:42:23 - Failed to retrieve payments: Unknown column 'b.academic_year_id' in 'where clause' - Context: {"file":"C:\\xampp\\htdocs\\gebsco\\payments.php","line":498,"user_id":1,"sql_error":"Unknown column 'b.academic_year_id' in 'where clause'"}
+2025-09-08 23:42:40 - Failed to retrieve payments: Unknown column 'b.academic_year_id' in 'where clause' - Context: {"file":"C:\\xampp\\htdocs\\gebsco\\payments.php","line":498,"user_id":1,"sql_error":"Unknown column 'b.academic_year_id' in 'where clause'"}
+2025-09-08 23:42:41 - Failed to retrieve payments: Unknown column 'b.academic_year_id' in 'where clause' - Context: {"file":"C:\\xampp\\htdocs\\gebsco\\payments.php","line":498,"user_id":1,"sql_error":"Unknown column 'b.academic_year_id' in 'where clause'"}
+2025-09-08 23:42:42 - Failed to retrieve payments: Unknown column 'b.academic_year_id' in 'where clause' - Context: {"file":"C:\\xampp\\htdocs\\gebsco\\payments.php","line":498,"user_id":1,"sql_error":"Unknown column 'b.academic_year_id' in 'where clause'"}
+2025-09-08 23:42:43 - Failed to retrieve payments: Unknown column 'b.academic_year_id' in 'where clause' - Context: {"file":"C:\\xampp\\htdocs\\gebsco\\payments.php","line":498,"user_id":1,"sql_error":"Unknown column 'b.academic_year_id' in 'where clause'"}
+2025-09-08 23:42:43 - Failed to retrieve payments: Unknown column 'b.academic_year_id' in 'where clause' - Context: {"file":"C:\\xampp\\htdocs\\gebsco\\payments.php","line":498,"user_id":1,"sql_error":"Unknown column 'b.academic_year_id' in 'where clause'"}
+2025-09-08 23:42:44 - Failed to retrieve payments: Unknown column 'b.academic_year_id' in 'where clause' - Context: {"file":"C:\\xampp\\htdocs\\gebsco\\payments.php","line":498,"user_id":1,"sql_error":"Unknown column 'b.academic_year_id' in 'where clause'"}
+2025-09-08 23:42:44 - Failed to retrieve payments: Unknown column 'b.academic_year_id' in 'where clause' - Context: {"file":"C:\\xampp\\htdocs\\gebsco\\payments.php","line":498,"user_id":1,"sql_error":"Unknown column 'b.academic_year_id' in 'where clause'"}
+2025-09-08 23:47:19 - Failed to retrieve payments: Unknown column 'b.academic_year_id' in 'where clause' - Context: {"file":"C:\\xampp\\htdocs\\gebsco\\payments.php","line":493,"user_id":1,"sql_error":"Unknown column 'b.academic_year_id' in 'where clause'"}
+2025-09-08 23:47:28 - Failed to retrieve payments: Unknown column 'b.academic_year_id' in 'where clause' - Context: {"file":"C:\\xampp\\htdocs\\gebsco\\payments.php","line":493,"user_id":1,"sql_error":"Unknown column 'b.academic_year_id' in 'where clause'"}
+2025-09-08 23:47:43 - Failed to retrieve payments: Unknown column 'b.academic_year_id' in 'where clause' - Context: {"file":"C:\\xampp\\htdocs\\gebsco\\payments.php","line":493,"user_id":1,"sql_error":"Unknown column 'b.academic_year_id' in 'where clause'"}
+2025-09-08 23:47:54 - Failed to retrieve payments: Unknown column 'b.academic_year_id' in 'where clause' - Context: {"file":"C:\\xampp\\htdocs\\gebsco\\payments.php","line":493,"user_id":1,"sql_error":"Unknown column 'b.academic_year_id' in 'where clause'"}
+2025-09-08 23:48:31 - Failed to retrieve payments: Unknown column 'b.academic_year_id' in 'where clause' - Context: {"file":"C:\\xampp\\htdocs\\gebsco\\payments.php","line":493,"user_id":1,"sql_error":"Unknown column 'b.academic_year_id' in 'where clause'"}
+2025-09-08 23:51:05 - Failed to retrieve payments: Unknown column 'b.academic_year_id' in 'where clause' - Context: {"file":"C:\\xampp\\htdocs\\gebsco\\payments.php","line":493,"user_id":1,"sql_error":"Unknown column 'b.academic_year_id' in 'where clause'"}
+2025-09-08 23:51:08 - Failed to retrieve payments: Unknown column 'b.academic_year_id' in 'where clause' - Context: {"file":"C:\\xampp\\htdocs\\gebsco\\payments.php","line":493,"user_id":1,"sql_error":"Unknown column 'b.academic_year_id' in 'where clause'"}
+2025-09-08 23:51:09 - Failed to retrieve payments: Unknown column 'b.academic_year_id' in 'where clause' - Context: {"file":"C:\\xampp\\htdocs\\gebsco\\payments.php","line":493,"user_id":1,"sql_error":"Unknown column 'b.academic_year_id' in 'where clause'"}
+2025-09-08 23:51:24 - Failed to retrieve payments: Unknown column 'b.academic_year_id' in 'where clause' - Context: {"file":"C:\\xampp\\htdocs\\gebsco\\payments.php","line":493,"user_id":1,"sql_error":"Unknown column 'b.academic_year_id' in 'where clause'"}
+2025-09-09 01:14:19 - Failed to retrieve payments: Unknown column 'b.academic_year_id' in 'where clause' - Context: {"file":"C:\\xampp\\htdocs\\gebsco\\payments.php","line":494,"user_id":1,"sql_error":"Unknown column 'b.academic_year_id' in 'where clause'"}
+2025-09-09 02:20:29 - Failed to load payments: Unknown column 'p.updated_at' in 'field list'
+2025-09-09 02:20:37 - Failed to load payments: Unknown column 'p.updated_at' in 'field list'
+2025-09-09 02:21:10 - Failed to load payments: Unknown column 'academic_year_id' in 'where clause'
+2025-09-09 02:21:18 - Failed to load payments: Unknown column 'academic_year_id' in 'where clause'
+2025-09-09 02:22:53 - Failed to load payments: Unknown column 'academic_year_id' in 'where clause'
+2025-09-09 02:33:40 - Failed to load payments: Unknown column 'academic_year_id' in 'where clause'
+2025-09-09 02:33:43 - Failed to load payments: Unknown column 'academic_year_id' in 'where clause'
+2025-09-09 02:35:08 - Failed to load payments: Unknown column 'academic_year_id' in 'where clause'
+2025-09-09 02:37:51 - Failed to load payments: Unknown column 'year_name' in 'where clause'
+2025-09-09 02:40:16 - Failed to load payments: Unknown column 'academic_year_id' in 'where clause'
+2025-09-09 03:07:14 - Failed to load payments: Unknown column 'academic_year_id' in 'where clause'
+2025-09-09 03:22:07 - Failed to load payments: Unknown column 'academic_year_id' in 'where clause'
+2025-09-09 03:36:48 - Failed to load payments: Unknown column 'p.updated_at' in 'field list' - Context: {"mysql_error":"Unknown column 'p.updated_at' in 'field list'","line":513}
+2025-09-09 03:45:00 - Failed to load payments: Unknown column 'p.student_id' in 'where clause'
+2025-09-09 03:45:07 - Failed to load payments: Unknown column 'p.student_id' in 'where clause'
+2025-09-09 03:47:10 - Failed to load payments: Unknown column 'p.student_id' in 'where clause'
+2025-09-09 03:51:01 - Failed to load payments: Unknown column 'p.student_id' in 'where clause'

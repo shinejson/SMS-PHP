@@ -1,0 +1,1 @@
+<a href="bill-report.php" class="btn btn-secondary" style="background-color: #007BFF; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px;"><i class="fas fa-file-invoice"></i>View Report</a>

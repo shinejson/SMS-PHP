@@ -2,7 +2,10 @@
 <?php
 require_once 'config.php';
 require_once 'session.php';
+require_once 'rbac.php';
 
+// For admin-only pages
+requirePermission('admin');
 // Initialize CSRF token
 if (!isset($_SESSION['csrf_token'])) {
     $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
@@ -361,6 +364,7 @@ if ($marksResult && $marksResult->num_rows > 0) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Marks Management - GEBSCO</title>
+    <?php include 'favicon.php'; ?>
     <link rel="stylesheet" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link rel="icon" href="images/favicon.ico">
@@ -487,60 +491,60 @@ if ($marksResult && $marksResult->num_rows > 0) {
                         <button id="viewScoresBtn" class="btn-secondary"> <i class="fas fa-eye"></i>View Raw Scores</button>
                   </div>
                     <!-- Class Filter Dropdown -->
-          <div class="filter-controls">
-                    <div class="filter-group">
-                        <label for="classFilter">Filter by Class:</label>
-                        <select id="classFilter">
-                            <option value="">All Classes</option>
-                            <?php foreach ($classes as $class): ?>
-                                <option value="<?php echo htmlspecialchars($class['id']); ?>">
-                                    <?php echo htmlspecialchars($class['class_name']); ?>
-                                </option>
-                            <?php endforeach; ?>
-                        </select>
-                    </div>
+   <div class="filter-controls">
+    <div class="filter-group">
+        <label for="classFilter">Filter by Class:</label>
+        <select id="classFilter">
+            <option value="">All Classes</option>
+            <?php foreach ($classes as $class): ?>
+                <option value="<?php echo htmlspecialchars($class['id']); ?>">
+                    <?php echo htmlspecialchars($class['class_name']); ?>
+                </option>
+            <?php endforeach; ?>
+        </select>
+    </div>
 
-                    <div class="filter-group">
-                        <label for="subjectFilter">Filter by Subject:</label>
-                        <select id="subjectFilter">
-                            <option value="">All Subjects</option>
-                            <?php foreach ($subjects as $subject): ?>
-                                <option value="<?php echo htmlspecialchars($subject['subject_id']); ?>">
-                                    <?php echo htmlspecialchars($subject['subject_name']); ?>
-                                </option>
-                            <?php endforeach; ?>
-                        </select>
-                    </div>
+    <div class="filter-group">
+        <label for="subjectFilter">Filter by Subject:</label>
+        <select id="subjectFilter">
+            <option value="">All Subjects</option>
+            <?php foreach ($subjects as $subject): ?>
+                <option value="<?php echo htmlspecialchars($subject['subject_id']); ?>">
+                    <?php echo htmlspecialchars($subject['subject_name']); ?>
+                </option>
+            <?php endforeach; ?>
+        </select>
+    </div>
 
-                    <div class="filter-group">
-                        <label for="studentFilter">Filter by Student:</label>
-                        <select id="studentFilter">
-                            <option value="">All Students</option>
-                            <?php foreach ($students as $student): ?>
-                                <option value="<?php echo htmlspecialchars($student['student_id']); ?>">
-                                    <?php echo htmlspecialchars($student['first_name'] . ' ' . $student['last_name']); ?>
-                                </option>
-                            <?php endforeach; ?>
-                        </select>
-                    </div>
-                    <!-- Add this to your filters section in marks.php -->
-                <div class="filter-group">
-                    <label for="yearFilter">Academic Year:</label>
-                    <select id="yearFilter" class="filter-select">
-                        <option value="">All Academic Years</option>
-                        <?php 
-                        $yearQuery = "SELECT * FROM academic_years ORDER BY year_name DESC";
-                        $yearResult = mysqli_query($conn, $yearQuery);
-                        while ($year = mysqli_fetch_assoc($yearResult)) {
-                            $isCurrent = $year['is_current'] ? 'data-is-current="1"' : '';
-                            echo "<option value='{$year['academic_year_id']}' $isCurrent>{$year['year_name']}</option>";
-                        }
-                        ?>
-                    </select>
+    <div class="filter-group">
+        <label for="studentFilter">Filter by Student:</label>
+        <select id="studentFilter">
+            <option value="">All Students</option>
+            <?php foreach ($students as $student): ?>
+                <option value="<?php echo htmlspecialchars($student['student_id']); ?>">
+                    <?php echo htmlspecialchars($student['first_name'] . ' ' . $student['last_name']); ?>
+                </option>
+            <?php endforeach; ?>
+        </select>
+    </div>
 
-                </div>
-                    
-                </div>
+    <div class="filter-group">
+        <label for="yearFilter">Academic Year:</label>
+        <select id="yearFilter" class="filter-select">
+            <option value="">All Academic Years</option>
+            <?php 
+            $yearQuery = "SELECT * FROM academic_years ORDER BY year_name DESC";
+            $yearResult = mysqli_query($conn, $yearQuery);
+            while ($year = mysqli_fetch_assoc($yearResult)) {
+                $isCurrent = $year['is_current'] ? 'data-is-current="1"' : '';
+                echo "<option value='{$year['academic_year_id']}' $isCurrent>{$year['year_name']}</option>";
+            }
+            ?>
+        </select>
+    </div>
+    
+    <button id="clearFilters" class="btn-clear-filters">Clear Filters</button>
+</div>
                     <div class="filter-group">
                     <button id="clearFilters" class="btn-clear-filters">Clear Filters</button>
                     </div>

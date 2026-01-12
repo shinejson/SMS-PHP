@@ -1,0 +1,1046 @@
+/* ============================================================
+   REPORT PAGE - COMPLETE CSS
+   ============================================================ */
+
+/* Base Layout Adjustments for Report Page */
+body {
+    margin: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: #f3f4f6;
+}
+
+/* Main Wrapper - Adjusted for report page */
+.main-wrapper {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    transition: margin-left 0.3s ease;
+    margin-left: 250px; /* Match your standard sidebar width */
+    transition: margin-left 0.3s ease;
+}
+
+/* When sidebar is hidden */
+.sidebar-hidden ~ .main-wrapper {
+    margin-left: 0;
+}
+
+/* Report Layout Container */
+.report-layout {
+    display: flex;
+    height: calc(100vh - 70px); /* Subtract top nav height */
+    overflow: hidden;
+    background: #f9fafb;
+}
+
+/* ============================================================
+   REPORT SIDEBAR (Secondary Navigation)
+   ============================================================ */
+
+.report-sidebar {
+    width: 280px;
+    min-width: 280px;
+    background: #ffffff;
+    border-right: 1px solid #e5e7eb;
+    overflow-y: auto;
+    flex-shrink: 0;
+    transition: all 0.3s ease;
+    box-shadow: 2px 0 8px rgba(0, 0, 0, 0.05);
+}
+
+/* Report Sidebar Header */
+.report-sidebar-header {
+    padding: 1.5rem;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.report-sidebar-header i {
+    font-size: 1.5rem;
+}
+
+.report-sidebar-header h3 {
+    margin: 0;
+    font-size: 1.1rem;
+    font-weight: 600;
+}
+
+/* Report Navigation */
+.report-nav {
+    padding: 1rem 0;
+}
+
+.report-nav > ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.report-category {
+    margin-bottom: 0.5rem;
+}
+
+.report-toggle {
+    display: flex;
+    align-items: center;
+    padding: 0.875rem 1.25rem;
+    color: #374151;
+    text-decoration: none;
+    font-weight: 500;
+    transition: all 0.2s ease;
+    cursor: pointer;
+    border-left: 3px solid transparent;
+    background: transparent;
+}
+
+.report-toggle:hover {
+    background: #f3f4f6;
+    border-left-color: #667eea;
+    color: #667eea;
+}
+
+.report-category.active > .report-toggle {
+    background: #eef2ff;
+    border-left-color: #667eea;
+    color: #667eea;
+}
+
+.report-toggle i:first-child {
+    width: 20px;
+    margin-right: 0.75rem;
+    text-align: center;
+}
+
+.report-toggle span {
+    flex: 1;
+}
+
+.report-arrow {
+    font-size: 0.75rem;
+    transition: transform 0.3s ease;
+    margin-left: auto;
+}
+
+.report-category.active > .report-toggle .report-arrow {
+    transform: rotate(180deg);
+}
+
+/* Report Submenu */
+.report-submenu {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease;
+    background: #f9fafb;
+}
+
+.report-submenu.active {
+    max-height: 500px;
+}
+
+.report-submenu li {
+    border-bottom: 1px solid #f3f4f6;
+}
+
+.report-submenu li:last-child {
+    border-bottom: none;
+}
+
+.report-submenu li a {
+    display: flex;
+    align-items: center;
+    padding: 0.75rem 1.25rem 0.75rem 3.25rem;
+    color: #6b7280;
+    text-decoration: none;
+    transition: all 0.2s ease;
+    font-size: 0.9rem;
+}
+
+.report-submenu li a:hover {
+    background: #e5e7eb;
+    color: #667eea;
+}
+
+.report-submenu li a.active {
+    background: #dbeafe;
+    color: #2563eb;
+    font-weight: 500;
+    border-left: 3px solid #2563eb;
+}
+
+.report-submenu li a i {
+    width: 16px;
+    margin-right: 0.75rem;
+    font-size: 0.85rem;
+    text-align: center;
+}
+
+/* ============================================================
+   REPORT CONTENT AREA
+   ============================================================ */
+
+.report-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+    background: #f9fafb;
+    padding: 1.5rem;
+}
+
+/* Report Header */
+.report-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+    flex-wrap: wrap;
+    gap: 1rem;
+    background: white;
+    padding: 1.25rem;
+    border-radius: 0.5rem;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.report-header h1 {
+    margin: 0;
+    font-size: 1.75rem;
+    color: #111827;
+    font-weight: 600;
+}
+
+.report-actions {
+    display: flex;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+}
+
+/* ============================================================
+   BUTTONS
+   ============================================================ */
+
+.btn {
+    padding: 0.625rem 1.25rem;
+    border: none;
+    border-radius: 0.375rem;
+    font-size: 0.875rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    text-decoration: none;
+}
+
+.btn:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.btn:active {
+    transform: translateY(0);
+}
+
+.btn-primary {
+    background: #667eea;
+    color: white;
+}
+
+.btn-primary:hover {
+    background: #5568d3;
+}
+
+.btn-secondary {
+    background: #6b7280;
+    color: white;
+}
+
+.btn-secondary:hover {
+    background: #4b5563;
+}
+
+.btn-success {
+    background: #10b981;
+    color: white;
+}
+
+.btn-success:hover {
+    background: #059669;
+}
+
+.btn-danger {
+    background: #ef4444;
+    color: white;
+}
+
+.btn-danger:hover {
+    background: #dc2626;
+}
+
+.btn i {
+    font-size: 0.875rem;
+}
+
+/* ============================================================
+   CARD COMPONENT
+   ============================================================ */
+
+.card {
+    background: white;
+    border-radius: 0.5rem;
+    padding: 1.5rem;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    margin-bottom: 1.5rem;
+}
+
+/* ============================================================
+   REPORT FILTERS
+   ============================================================ */
+
+.report-filters h3 {
+    margin: 0 0 1.25rem 0;
+    font-size: 1.1rem;
+    color: #374151;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-weight: 600;
+}
+
+.filter-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1rem;
+    align-items: end;
+}
+
+.filter-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.filter-group label {
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: #374151;
+}
+
+.filter-group .btn {
+    width: 100%;
+    justify-content: center;
+}
+
+/* Form Controls */
+.form-control {
+    width: 100%;
+    padding: 0.625rem 0.875rem;
+    border: 1px solid #d1d5db;
+    border-radius: 0.375rem;
+    font-size: 0.875rem;
+    transition: all 0.2s ease;
+    background: white;
+    color: #374151;
+}
+
+.form-control:focus {
+    outline: none;
+    border-color: #667eea;
+    box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+}
+
+.form-control:disabled {
+    background: #f3f4f6;
+    color: #9ca3af;
+    cursor: not-allowed;
+}
+
+/* ============================================================
+   REPORT DISPLAY AREA
+   ============================================================ */
+
+.report-display {
+    flex: 1;
+    min-height: 400px;
+}
+
+#reportContent {
+    min-height: 400px;
+}
+
+/* Empty State */
+.empty-state {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 4rem 2rem;
+    text-align: center;
+    color: #9ca3af;
+}
+
+.empty-state i {
+    margin-bottom: 1.5rem;
+    opacity: 0.5;
+    color: #d1d5db;
+}
+
+.empty-state h3 {
+    color: #6b7280;
+    margin: 0 0 0.5rem 0;
+    font-size: 1.25rem;
+}
+
+.empty-state p {
+    color: #9ca3af;
+    margin: 0;
+    font-size: 0.95rem;
+}
+
+/* ============================================================
+   REPORT TABLE
+   ============================================================ */
+
+.table-responsive {
+    width: 100%;
+    overflow-x: auto;
+}
+
+.report-table {
+    width: 100%;
+    border-collapse: collapse;
+    background: white;
+    font-size: 0.875rem;
+}
+
+.report-table thead {
+    background: #f9fafb;
+    position: sticky;
+    top: 0;
+    z-index: 5;
+}
+
+.report-table th {
+    padding: 1rem;
+    text-align: left;
+    font-weight: 600;
+    color: #374151;
+    border-bottom: 2px solid #e5e7eb;
+    white-space: nowrap;
+}
+
+.report-table td {
+    padding: 1rem;
+    border-bottom: 1px solid #e5e7eb;
+    color: #6b7280;
+}
+
+.report-table tbody tr:hover {
+    background: #f9fafb;
+}
+
+.report-table tbody tr:last-child td {
+    border-bottom: none;
+}
+
+/* Badge Component */
+.badge {
+    display: inline-block;
+    padding: 0.25rem 0.75rem;
+    border-radius: 9999px;
+    font-size: 0.75rem;
+    font-weight: 500;
+}
+
+.badge-success {
+    background: #d1fae5;
+    color: #065f46;
+}
+
+.badge-warning {
+    background: #fef3c7;
+    color: #92400e;
+}
+
+.badge-danger {
+    background: #fee2e2;
+    color: #991b1b;
+}
+
+.badge-info {
+    background: #dbeafe;
+    color: #1e40af;
+}
+
+/* ============================================================
+   RESPONSIVE DESIGN
+   ============================================================ */
+
+@media (max-width: 1200px) {
+    .report-sidebar {
+        width: 240px;
+        min-width: 240px;
+    }
+    
+    .filter-grid {
+        grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    }
+}
+
+@media (max-width: 992px) {
+    .main-wrapper {
+        margin-left: 0;
+    }
+    
+    .report-sidebar {
+        width: 220px;
+        min-width: 220px;
+    }
+    
+    .report-header h1 {
+        font-size: 1.5rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .report-layout {
+        flex-direction: column;
+        height: auto;
+    }
+    
+    .report-sidebar {
+        width: 100%;
+        min-width: 100%;
+        height: auto;
+        max-height: 400px;
+        border-right: none;
+        border-bottom: 1px solid #e5e7eb;
+        position: sticky;
+        top: 0;
+        z-index: 100;
+    }
+    
+    .report-content {
+        height: auto;
+        padding: 1rem;
+    }
+    
+    .report-header {
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 1rem;
+    }
+    
+    .report-header h1 {
+        font-size: 1.25rem;
+    }
+    
+    .report-actions {
+        width: 100%;
+        flex-direction: column;
+    }
+    
+    .report-actions .btn {
+        width: 100%;
+        justify-content: center;
+    }
+    
+    .filter-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .report-table {
+        font-size: 0.8rem;
+    }
+    
+    .report-table th,
+    .report-table td {
+        padding: 0.75rem 0.5rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .report-sidebar-header {
+        padding: 1rem;
+    }
+    
+    .report-sidebar-header h3 {
+        font-size: 1rem;
+    }
+    
+    .report-toggle {
+        padding: 0.75rem 1rem;
+        font-size: 0.875rem;
+    }
+    
+    .report-submenu li a {
+        padding: 0.625rem 1rem 0.625rem 2.5rem;
+        font-size: 0.85rem;
+    }
+    
+    .card {
+        padding: 1rem;
+    }
+    
+    .btn {
+        padding: 0.5rem 1rem;
+        font-size: 0.8rem;
+    }
+}
+
+/* ============================================================
+   SCROLLBAR STYLING
+   ============================================================ */
+
+.report-sidebar::-webkit-scrollbar,
+.report-content::-webkit-scrollbar {
+    width: 6px;
+}
+
+.report-sidebar::-webkit-scrollbar-track,
+.report-content::-webkit-scrollbar-track {
+    background: #f3f4f6;
+}
+
+.report-sidebar::-webkit-scrollbar-thumb,
+.report-content::-webkit-scrollbar-thumb {
+    background: #d1d5db;
+    border-radius: 3px;
+}
+
+.report-sidebar::-webkit-scrollbar-thumb:hover,
+.report-content::-webkit-scrollbar-thumb:hover {
+    background: #9ca3af;
+}
+
+/* ============================================================
+   PRINT STYLES
+   ============================================================ */
+
+@media print {
+    .sidebar,
+    .top-nav,
+    .report-sidebar,
+    .report-header .report-actions,
+    .report-filters {
+        display: none !important;
+    }
+    
+    .main-wrapper {
+        margin-left: 0;
+    }
+    
+    .report-content {
+        padding: 0;
+        background: white;
+    }
+    
+    .card {
+        box-shadow: none;
+        border: 1px solid #e5e7eb;
+    }
+    
+    .report-table {
+        page-break-inside: auto;
+    }
+    
+    .report-table tr {
+        page-break-inside: avoid;
+        page-break-after: auto;
+    }
+    
+    .report-table thead {
+        display: table-header-group;
+    }
+}
+
+/* ============================================================
+   LOADING SPINNER
+   ============================================================ */
+
+.fa-spin {
+    animation: fa-spin 1s infinite linear;
+}
+
+@keyframes fa-spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* ============================================================
+   UTILITY CLASSES
+   ============================================================ */
+
+.text-center {
+    text-align: center;
+}
+
+.text-right {
+    text-align: right;
+}
+
+.mt-1 { margin-top: 0.5rem; }
+.mt-2 { margin-top: 1rem; }
+.mt-3 { margin-top: 1.5rem; }
+
+.mb-1 { margin-bottom: 0.5rem; }
+.mb-2 { margin-bottom: 1rem; }
+.mb-3 { margin-bottom: 1.5rem; }
+
+.p-1 { padding: 0.5rem; }
+.p-2 { padding: 1rem; }
+.p-3 { padding: 1.5rem; }
+
+
+/* ============================================================
+   HAMBURGER MENU FOR MOBILE
+   ============================================================ */
+
+.main-sidebar-toggle {
+    display: none;
+    position: fixed;
+    top: 80px;
+    left: 20px;
+    z-index: 1001;
+    background: #667eea;
+    color: white;
+    border: none;
+    padding: 0.75rem;
+    border-radius: 0.5rem;
+    cursor: pointer;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+}
+
+.main-sidebar-toggle:hover {
+    background: #5568d3;
+    transform: scale(1.05);
+}
+
+.main-sidebar-toggle i {
+    font-size: 1.25rem;
+}
+
+/* Sidebar Overlay */
+.sidebar-overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 999;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.sidebar-overlay.active {
+    display: block;
+    opacity: 1;
+}
+
+/* Mobile Sidebar Adjustments */
+@media (max-width: 992px) {
+    .main-sidebar-toggle {
+        display: block;
+    }
+    
+    /* Hide main sidebar by default on mobile */
+    .sidebar {
+        transform: translateX(-100%);
+        position: fixed;
+        z-index: 1000;
+        height: 100vh;
+        transition: transform 0.3s ease;
+    }
+    
+    .sidebar.mobile-active {
+        transform: translateX(0);
+    }
+    
+    .main-wrapper {
+        margin-left: 0 !important;
+    }
+}
+
+@media (max-width: 768px) {
+    .main-sidebar-toggle {
+        top: 70px;
+        left: 15px;
+        padding: 0.625rem;
+    }
+    
+    .main-sidebar-toggle i {
+        font-size: 1.1rem;
+    }
+}
+
+/* ============================================================
+   TABS-STYLE HORIZONTAL NAVIGATION FOR SMALL SCREENS
+   ============================================================ */
+
+@media (max-width: 768px) {
+    .report-layout {
+        flex-direction: column;
+        height: auto;
+    }
+    
+    .report-sidebar {
+        width: 100%;
+        min-width: 100%;
+        height: auto;
+        max-height: none;
+        border-right: none;
+        border-bottom: 2px solid #e5e7eb;
+        position: sticky;
+        top: 0;
+        z-index: 100;
+        background: white;
+    }
+    
+    .report-sidebar-header {
+        padding: 1rem 1.5rem;
+        background: #667eea;
+    }
+    
+    /* Horizontal tabs navigation */
+    .report-nav > ul {
+        display: flex;
+        flex-direction: row;
+        overflow-x: auto;
+        overflow-y: hidden;
+        -webkit-overflow-scrolling: touch;
+        padding: 0;
+        gap: 0;
+        scroll-behavior: smooth;
+        background: #f9fafb;
+        border-bottom: 2px solid #e5e7eb;
+    }
+    
+    .report-category {
+        margin-bottom: 0;
+        flex: 1;
+        min-width: 140px;
+        position: relative;
+    }
+    
+    .report-toggle {
+        padding: 1rem 0.75rem;
+        border-left: none;
+        border-bottom: 3px solid transparent;
+        border-radius: 0;
+        white-space: nowrap;
+        font-size: 0.85rem;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        gap: 0.5rem;
+        background: transparent;
+        height: 100%;
+        transition: all 0.2s ease;
+    }
+    
+    .report-toggle:hover {
+        background: white;
+        border-left: none;
+        border-bottom-color: #667eea;
+        color: #667eea;
+    }
+    
+    .report-category.active > .report-toggle {
+        background: white;
+        border-left: none;
+        border-bottom-color: #667eea;
+        color: #667eea;
+    }
+    
+    .report-toggle i:first-child {
+        margin-right: 0;
+        margin-bottom: 0;
+        font-size: 1.5rem;
+        width: auto;
+    }
+    
+    .report-toggle span {
+        font-size: 0.75rem;
+        font-weight: 600;
+        line-height: 1.2;
+    }
+    
+    .report-arrow {
+        display: none !important;
+    }
+    
+    /* Full-width dropdown submenu */
+    .report-submenu {
+        position: absolute;
+        top: 100%;
+        left: 0;
+        width: 100vw;
+        background: white;
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+        z-index: 99;
+        max-height: 0;
+        overflow: hidden;
+        margin-left: calc(-50vw + 50%);
+    }
+    
+    .report-submenu.active {
+        max-height: 350px;
+        overflow-y: auto;
+        border-bottom: 2px solid #e5e7eb;
+    }
+    
+    .report-submenu li {
+        border-bottom: 1px solid #f3f4f6;
+    }
+    
+    .report-submenu li:last-child {
+        border-bottom: none;
+    }
+    
+    .report-submenu li a {
+        padding: 1rem 1.5rem;
+        font-size: 0.9rem;
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+    }
+    
+    .report-submenu li a i {
+        width: 20px;
+        margin-right: 0;
+        text-align: center;
+    }
+    
+    .report-submenu li a:hover {
+        background: #f3f4f6;
+    }
+    
+    .report-submenu li a.active {
+        background: #eef2ff;
+        color: #667eea;
+        border-left: none;
+    }
+    
+    /* Smooth scrollbar */
+    .report-nav > ul::-webkit-scrollbar {
+        height: 3px;
+    }
+    
+    .report-nav > ul::-webkit-scrollbar-track {
+        background: #e5e7eb;
+    }
+    
+    .report-nav > ul::-webkit-scrollbar-thumb {
+        background: #667eea;
+        border-radius: 2px;
+    }
+    
+    .report-content {
+        height: auto;
+        padding: 1rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .report-category {
+        min-width: 100px;
+    }
+    
+    .report-toggle {
+        padding: 0.75rem 0.5rem;
+        gap: 0.375rem;
+    }
+    
+    .report-toggle i:first-child {
+        font-size: 1.25rem;
+    }
+    
+    .report-toggle span {
+        font-size: 0.7rem;
+    }
+    
+    .report-submenu li a {
+        padding: 0.875rem 1rem;
+        font-size: 0.85rem;
+    }
+}
+
+
+
+/* ============================================================
+   MOBILE NAVIGATION FIXES
+   ============================================================ */
+
+@media (max-width: 768px) {
+    /* Ensure the nav container is the anchor for the dropdown */
+    .report-nav {
+        position: relative !important;
+        display: flex !important;
+        overflow-x: auto !important; /* Allows swiping the tabs left/right */
+        overflow-y: visible !important;
+        white-space: nowrap;
+        background: white;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    /* Keep category static so dropdown can be 100% width of the screen */
+    .report-category {
+        position: static !important;
+    }
+
+    /* THE FIX: Change fixed to absolute */
+    .report-submenu {
+        position: absolute !important;
+        top: 100%; /* Places it exactly at the bottom of the tab bar */
+        left: 0;
+        width: 100%;
+        background: white;
+        z-index: 999;
+        
+        /* Reset heights for animation */
+        max-height: 0;
+        overflow: hidden;
+        transition: max-height 0.3s ease-in-out;
+        box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+        border: none;
+        margin: 0;
+    }
+
+    /* Show dropdown when the PARENT is active */
+    .report-category.active .report-submenu {
+        max-height: 70vh; /* Large enough to show all links */
+        overflow-y: auto;
+        border-bottom: 2px solid #e5e7eb;
+    }
+
+    /* Fix the arrow rotation */
+    .report-category.active .report-arrow {
+        transform: rotate(180deg);
+    }
+
+    /* Make links easier to tap on mobile */
+    .report-submenu li a {
+        padding: 15px 20px !important;
+        display: flex;
+        align-items: center;
+        border-bottom: 1px solid #f3f4f6;
+        width: 100%;
+        white-space: normal; /* Wrap text if long */
+    }
+}
+
+
